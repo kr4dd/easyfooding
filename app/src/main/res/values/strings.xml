@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">EasyFooding</string>
+    <string name="buscarypedir">Busca y pide tu comida a domicilio.</string>
+    <string name="saludouser">Hola user</string>
+    <string name="buscarcomida">Busca tu comida favorita...</string>
+    <string name="categorias">Categorías</string>
+    <string name="recomendaciones">Recomendaciones</string>
+    <string name="resultadosbusqueda">Resultados de tu búsqueda:</string>
+    <string name="busquedavacia">No se han obtenido resultados para tu búsqueda. Prueba otra vez.</string>
+
+    <string name="inicio">Inicio</string>
+    <string name="perfil">Perfil</string>
+    <string name="carrito">Carrito</string>
+    <string name="pedidos">Pedidos</string>
+    <string name="ajustes">Ajustes</string>
+</resources>

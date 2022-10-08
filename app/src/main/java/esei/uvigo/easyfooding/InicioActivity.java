@@ -99,7 +99,7 @@ public class InicioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                //startActivity(new Intent(InicioActivity.this, CarritoActivity.class));
+                startActivity(new Intent(InicioActivity.this, CarritoActivity.class));
             }
         });
 
@@ -109,7 +109,7 @@ public class InicioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                //startActivity(new Intent(InicioActivity.this, PedidosActivity.class));
+                startActivity(new Intent(InicioActivity.this, PedidosActivity.class));
             }
         });
 

@@ -13,4 +13,16 @@
     <string name="carrito">Carrito</string>
     <string name="pedidos">Pedidos</string>
     <string name="ajustes">Ajustes</string>
+
+
+    <string name="elementosCarrito">Precio comida:</string>
+    <string name="impuestos"> Impuestos:</string>
+    <string name="envio"> Envio</string>
+    <string name="total">Total</string>
+    <string name="pagar">Pagar</string>
+    <string name="contacto">Pedidos</string>
+    <string name="conf">Ajustes</string>
+    <string name="carro">Carrito</string>
+    <string name="vacio">No tienes productos en el carrito</string>
+    <string name="gracias">¡Gracias por tu fidelidad!</string>
 </resources>

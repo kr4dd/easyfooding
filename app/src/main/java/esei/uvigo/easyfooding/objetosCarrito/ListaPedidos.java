@@ -6,19 +6,33 @@ public class ListaPedidos {
     private String fecha;
     private String direccion;
     private String localidad;
-    private int codioPostal;
+    private float codigoPostal;
     private double importe;
     private String observaciones;
 
-    public ListaPedidos(int num_pedido, String nombreUsuario, String fecha, String direccion, String localidad, int codioPostal, double importe, String observaciones) {
+    public ListaPedidos(int num_pedido, String nombreUsuario, String fecha, String direccion, String localidad, float codigoPostal, double importe, String observaciones) {
         this.num_pedido = num_pedido;
         this.nombreUsuario = nombreUsuario;
         this.fecha = fecha;
         this.direccion = direccion;
         this.localidad = localidad;
-        this.codioPostal = codioPostal;
+        this.codigoPostal = codigoPostal;
         this.importe = importe;
         this.observaciones = observaciones;
+    }
+
+    @Override
+    public String toString() {
+        return "ListaPedidos{" +
+                "num_pedido=" + num_pedido +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", localidad='" + localidad + '\'' +
+                ", codioPostal=" + codigoPostal +
+                ", importe=" + importe +
+                ", observaciones='" + observaciones + '\'' +
+                '}';
     }
 
     public double getImporte() {
@@ -49,8 +63,8 @@ public class ListaPedidos {
         return localidad;
     }
 
-    public int getCodioPostal() {
-        return codioPostal;
+    public float getCodioPostal() {
+        return codigoPostal;
     }
 
     public String getObservaciones() {
@@ -77,8 +91,8 @@ public class ListaPedidos {
         this.localidad = localidad;
     }
 
-    public void setCodioPostal(int codioPostal) {
-        this.codioPostal = codioPostal;
+    public void setCodioPostal(float codioPostal) {
+        this.codigoPostal = codioPostal;
     }
 
     public void setObservaciones(String observaciones) {

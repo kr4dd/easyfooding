@@ -2,6 +2,7 @@ package esei.uvigo.easyfooding;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +48,16 @@ public class CarritoActivity extends AppCompatActivity {
     rellenarArrays();
     // insertamos los datos en la lista
     crearLista();
+
+    // Accion para mandar al usuario a la actividad de pago
+    ConstraintLayout pagar = findViewById(R.id.pagar);
+    pagar.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            // TODO, hacer la funcion de pago mandando lo que tenga el TextView a otra pestaña
+          }
+        });
   }
 
   // metodo que nos permite rellenar el array de objetos comida para mostrarlo luego en la lista
@@ -66,6 +77,9 @@ public class CarritoActivity extends AppCompatActivity {
     DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
     precio.setText(df.format(total));
   }
+
+
+
 
   private void crearLista() {
     LinearLayoutManager linearLayoutManager =

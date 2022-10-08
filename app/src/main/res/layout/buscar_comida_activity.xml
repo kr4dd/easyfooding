@@ -11,15 +11,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView_titulo_busqueda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"
             android:gravity="center"
-            android:text="@string/resultadosbusqueda"
             android:textColor="#000000"
             android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="@tools:sample/cities" />
 
         <ListView
             android:id="@+id/listViewItems"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/mensajeBusquedaVacia"
+            android:id="@+id/mensajeBusquedaFallida"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20sp"

@@ -6,7 +6,10 @@
     <string name="categorias">Categorías</string>
     <string name="recomendaciones">Recomendaciones</string>
     <string name="resultadosbusqueda">Resultados de tu búsqueda:</string>
-    <string name="busquedavacia">No se han obtenido resultados para tu búsqueda. Prueba otra vez.</string>
+    <string name="busquedafallida">No se han obtenido resultados para tu búsqueda. Prueba otra vez.</string>
+    <string name="descripcion">Descripción</string>
+    <string name="preciototal">Precio Total</string>
+    <string name="addcarrito">Añadir al carrito</string>
 
     <string name="inicio">Inicio</string>
     <string name="perfil">Perfil</string>

@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DatabaseAccess {
     private SQLiteOpenHelper openHelper;
@@ -98,8 +100,73 @@ public class DatabaseAccess {
         return toret;
     }
 
+    //Obtener los ids de las comidas dado un nombre
+    public ArrayList<String> getDatosComidaPorId(String codigo_comida){
+        ArrayList<String> toret = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select nombre, descripcion, precio, valoracion, calorias, tiempo_preparacion\n" +
+                                        "from comidas \n" +
+                                        "where codigo_comida = ?", new String[]{codigo_comida});
 
+        while(cursor.moveToNext()){
+            for (int i = 0; i < cursor.getColumnCount(); i++) {
+                String elemento = cursor.getString(i);
+                toret.add(elemento);
+            }
+        }
+        return toret;
+    }
 
+    //Obtener los ids de las comidas dado un nombre de comida
+    public ArrayList<Integer> getCodigoComidaPorNombre(String nombreComida){
+        ArrayList<Integer> toret =  new ArrayList<>();
+
+        //Añadir lso porcentajes antes de ejecutar la sentencia SQL con Like
+        String [] selectionArgs = new String[] { "%" + nombreComida + "%" };
+
+        Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre like(?)" ,selectionArgs);
+        while(cursor.moveToNext()){
+            int elemento = Integer.parseInt(cursor.getString(0));
+            toret.add(elemento);
+        }
+        return toret;
+    }
+
+    //Obtener el nombre de 5 comidas aleatorias
+    public ArrayList<String> getNombreComidasRandom(){
+        ArrayList<String> toret = new ArrayList<>();
+
+        String [] selectionArgs = new String[] { "%bebida%" };
+
+        Cursor cursor = db.rawQuery("select nombre\n" +
+                                        "from comidas \n" +
+                                        "where categoria not like(?)", selectionArgs);
+        while(cursor.moveToNext()){
+                String elemento = cursor.getString(0);
+                toret.add(elemento);
+                System.out.println(elemento);
+        }
+        return toret;
+    }
+
+    /*
+    //Obtener el nombre de 5 comidas aleatorias
+    public Map<String,String> getNombreComidasRandom(){
+        Map<String,String> toret = new HashMap<String, String>();
+
+        String [] selectionArgs = new String[] { "%bebida%" };
+
+        Cursor cursor = db.rawQuery("select codigo_comida, nombre\n" +
+                "from comidas \n" +
+                "where categoria not like(?)", selectionArgs);
+        while(cursor.moveToNext()){
+            String clave = cursor.getString(0);
+            String valor = cursor.getString(1);
+            toret.put(clave, valor);
+            System.out.println(toret.get(clave));
+        }
+        return toret;
+    }
+    */
 
 
 }

@@ -114,27 +114,6 @@ public class DatabaseAccess {
                                         "from comidas \n" +
                                         "where codigo_comida = ?", new String[]{codigo_comida});
 
-    public  ArrayList<ListaPedidos> historial(String usuario) {
-        Cursor c = db.rawQuery("SELECT * FROM pedidos WHERE nombre_usuario = ?", new String[]{usuario});
-        StringBuffer buffer = new StringBuffer();
-        ArrayList<ListaPedidos> courseModalArrayList = new ArrayList<>();
-
-        while(c.moveToNext()){
-            int num_ped = Integer.parseInt(c.getString(0));
-            String user = c.getString(1);
-            String fecha =  c.getString(2);
-            String direccion = c.getString(3);
-            String loc = c.getString(4);
-            float codigo = Integer.parseInt(c.getString(5));
-            double tot = Double.parseDouble(c.getString(6));
-            String obs = c.getString(7);
-
-            ListaPedidos l = new ListaPedidos(num_ped,user,fecha,direccion,loc,codigo,tot,obs);
-            courseModalArrayList.add(l);
-        }
-
-        return courseModalArrayList;
-    }
         while(cursor.moveToNext()){
             for (int i = 0; i < cursor.getColumnCount(); i++) {
                 String elemento = cursor.getString(i);
@@ -196,4 +175,55 @@ public class DatabaseAccess {
      * }
      */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public  ArrayList<ListaPedidos> historial(String usuario) {
+        Cursor c = db.rawQuery("SELECT * FROM pedidos WHERE nombre_usuario = ?", new String[]{usuario});
+        StringBuffer buffer = new StringBuffer();
+        ArrayList<ListaPedidos> courseModalArrayList = new ArrayList<>();
+
+        while(c.moveToNext()){
+            int num_ped = Integer.parseInt(c.getString(0));
+            String user = c.getString(1);
+            String fecha =  c.getString(2);
+            String direccion = c.getString(3);
+            String loc = c.getString(4);
+            float codigo = Integer.parseInt(c.getString(5));
+            double tot = Double.parseDouble(c.getString(6));
+            String obs = c.getString(7);
+
+            ListaPedidos l = new ListaPedidos(num_ped,user,fecha,direccion,loc,codigo,tot,obs);
+            courseModalArrayList.add(l);
+        }
+
+        return courseModalArrayList;
+    }
 }

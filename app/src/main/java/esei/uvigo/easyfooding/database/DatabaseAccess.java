@@ -1,5 +1,6 @@
 package esei.uvigo.easyfooding.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import esei.uvigo.easyfooding.objetosCarrito.LineaPedidos;
 import esei.uvigo.easyfooding.objetosCarrito.ListaPedidos;
 
 public class DatabaseAccess {
@@ -204,7 +206,7 @@ public class DatabaseAccess {
 
 
 
-
+    //querys de Carrito y de historial pedidos
     public  ArrayList<ListaPedidos> historial(String usuario) {
         Cursor c = db.rawQuery("SELECT * FROM pedidos WHERE nombre_usuario = ?", new String[]{usuario});
         StringBuffer buffer = new StringBuffer();
@@ -225,5 +227,35 @@ public class DatabaseAccess {
         }
 
         return courseModalArrayList;
+    }
+
+    public  ArrayList<LineaPedidos> getLineaPedidos(int numPedido){
+        String toQuery = String.valueOf(numPedido);
+        Cursor c = db.rawQuery("SELECT * FROM linea_pedidos WHERE num_pedido = ?", new String[]{toQuery});
+        ArrayList<LineaPedidos> toret = new ArrayList<>();
+        while(c.moveToNext()){
+            int num_linea = Integer.parseInt(c.getString(0));
+            int num_pedidio = Integer.parseInt(c.getString(1));
+            int codigo_comida = Integer.parseInt(c.getString(2));
+            int cantidad = Integer.parseInt(c.getString(3));
+            double precio_linea = Double.parseDouble(c.getString(4));
+
+            LineaPedidos l = new LineaPedidos(num_linea,num_pedidio,codigo_comida,cantidad,precio_linea);
+            toret.add(l);
+        }
+        return toret;
+    }
+    public void setPedido (String nombreUsr, String fecha,String dir, String localidad, int cp, double importe, String obs){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("nombre_usuario",nombreUsr);
+        contentValues.put("fecha_pedido",fecha);
+        contentValues.put("direccion_envio",dir);
+        contentValues.put("localidad_envio",localidad);
+        contentValues.put("codigo_postal_envio",cp);
+        contentValues.put("importe_total",importe);
+        contentValues.put("observaciones",obs);
+
+        db.insert("pedido", null, contentValues);
     }
 }

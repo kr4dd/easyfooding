@@ -46,18 +46,32 @@ public class CarritoActivity extends AppCompatActivity {
     cambiarActividad();
     // Recuperamos los datos de compra
     rellenarArrays();
-    // insertamos los datos en la lista
-    crearLista();
+    if(listaComida.size()<1){
+      ConstraintLayout vacio = findViewById(R.id.vacio);
+      vacio.setVisibility(View.VISIBLE);
+    }else{
+      ConstraintLayout vacio = findViewById(R.id.vacio);
+      vacio.setVisibility(View.INVISIBLE);
+      // insertamos los datos en la lista
+      crearLista();
+    }
 
     // Accion para mandar al usuario a la actividad de pago
     ConstraintLayout pagar = findViewById(R.id.pagar);
-    pagar.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            // TODO, hacer la funcion de pago mandando lo que tenga el TextView a otra pestaña
-          }
-        });
+    if(listaComida.size()>0){
+      pagar.setOnClickListener(
+              new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                  finish();
+                  Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
+                  TextView total = findViewById(R.id.suma);
+                  String suma = total.getText().toString();
+                  intent.putExtra("importe", suma);
+                  startActivity(intent);
+                }
+              });
+    }
   }
 
   // metodo que nos permite rellenar el array de objetos comida para mostrarlo luego en la lista
@@ -66,20 +80,19 @@ public class CarritoActivity extends AppCompatActivity {
     listaComida.add(new Comida("Banana", R.drawable.banana, 5.50, 2, 8));
     TextView precio = findViewById(R.id.suma);
 
-    // una vez rellenada seteamos los valores iniciales
-    double total = 0;
-    for (int i = 0; i < listaComida.size(); i++) {
-      total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
-      Toast.makeText(CarritoActivity.this, String.valueOf(total), Toast.LENGTH_LONG).show();
+    // una vez rellenada seteamos los valores iniciales si no esta vacia
+    if (listaComida.size() > 0) {
+      double total = 0;
+      for (int i = 0; i < listaComida.size(); i++) {
+        total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
+        Toast.makeText(CarritoActivity.this, String.valueOf(total), Toast.LENGTH_LONG).show();
+      }
+      double iva = total * precioImpuestos;
+      total = total + iva + precioEnvio;
+      DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
+      precio.setText(df.format(total));
     }
-    double iva = total * precioImpuestos;
-    total = total + iva + precioEnvio;
-    DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
-    precio.setText(df.format(total));
   }
-
-
-
 
   private void crearLista() {
     LinearLayoutManager linearLayoutManager =

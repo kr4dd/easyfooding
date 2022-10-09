@@ -28,4 +28,14 @@
     <string name="carro">Carrito</string>
     <string name="vacio">No tienes productos en el carrito</string>
     <string name="gracias">¡Gracias por tu fidelidad!</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="lineaVacia">Sin pedidos que mostrar</string>
+    <string name="volverPedidos">Volver a pedidos</string>
+    <string name="direccion">Dirección</string>
+    <string name="localidad">Localidad</string>
+    <string name="codigoPostal">Codigo Postal</string>
+    <string name="obs">Observaciones</string>
+    <string name="procesoPago">Procesando el pago</string>
+    <string name="efectivo">Paga al repartidor</string>
+    <string name="targeta">Paga con targeta</string>
 </resources>

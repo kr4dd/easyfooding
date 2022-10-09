@@ -2,6 +2,7 @@ package esei.uvigo.easyfooding;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class PedidosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedidos);
+        getSupportActionBar().hide();
         cambiarActividad();
         getHistorial();
     }
@@ -38,17 +39,25 @@ public class PedidosActivity extends AppCompatActivity {
         dataBaseAccess.open();
 
         //ejecutamos query
-
         res = dataBaseAccess.historial("pepe");
 
-        for(int i = 0; i<res.size();i++){
-            Toast.makeText(PedidosActivity.this,res.get(i).toString(),Toast.LENGTH_LONG).show();
+        if(res.size() > 0){
+            ListView list = findViewById(R.id.ticket);
+            TextView vacio = findViewById(R.id.sinPedidos);
+            list.setVisibility(View.VISIBLE);
+            vacio.setVisibility(View.INVISIBLE);
+            //rellenamos la lista llamando a la clase adaptadora
+            ArrayAdapter<ListaPedidos> adapter = new listaAdapter(PedidosActivity.this,0,res);
+            ListView historial = findViewById(R.id.ticket);
+            historial.setAdapter(adapter);
+        }else{
+            //anunciamos que no hay nada
+            ListView list = findViewById(R.id.ticket);
+            TextView vacio = findViewById(R.id.sinPedidos);
+            list.setVisibility(View.INVISIBLE);
+            vacio.setVisibility(View.VISIBLE);
         }
-        //rellenamos la lista llamando a la clase adaptadora
-
-        ArrayAdapter<ListaPedidos> adapter = new listaAdapter(PedidosActivity.this,0,res);
-        ListView historial = findViewById(R.id.historial);
-        historial.setAdapter(adapter);
+        dataBaseAccess.close();
     }
 
 
@@ -67,9 +76,9 @@ public class PedidosActivity extends AppCompatActivity {
 
         public View getView(int position, View convertView, ViewGroup parent){
             ListaPedidos objActual = listaHistorial.get(position);
-            //Toast.makeText(PedidosActivity.this,objActual.getCodioPostal(),Toast.LENGTH_LONG).show();
+
             //inflamos le layout personalizado
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(PedidosActivity.LAYOUT_INFLATER_SERVICE);//cuidado aqui
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(PedidosActivity.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.historial_compras,null);
 
             TextView nombre_usuario = view.findViewById(R.id.nombre_usuario);
@@ -89,8 +98,8 @@ public class PedidosActivity extends AppCompatActivity {
             localidad.setText(objActual.getLocalidad());
 
             double total = objActual.getImporte();
-            DecimalFormat df = new DecimalFormat("###,###,###,##0");
-            String mostar = df.format(total);
+            DecimalFormat df = new DecimalFormat("###,###,###,##0.0");
+            String mostar = df.format(total) + "€";
             pTotal.setText(mostar);
 
             //añadimos funcionalidad al detalle

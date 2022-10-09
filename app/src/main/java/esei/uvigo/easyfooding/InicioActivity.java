@@ -11,15 +11,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class InicioActivity extends AppCompatActivity {
-
-    private RecyclerView.Adapter adapterCategorias, adapterRecomendaciones;
-    private RecyclerView recyclerViewCategorias, recyclerViewRecomendaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +40,10 @@ public class InicioActivity extends AppCompatActivity {
         //Generar dinamicamente ScrollViewHorizontal de categorias
         construirListaCategorias(databaseAccess);
 
-        //TODO Generar dinamicamente ScrollViewHorizontal de recomendaciones
-        //construirListaRecomendaciones(databaseAccess);
+        //Generar dinamicamente ScrollViewHorizontal de recomendaciones
+        construirListaRecomendaciones(databaseAccess);
+
+        funcionalidadesBarraBusqueda();
 
         databaseAccess.close();
     }
@@ -164,8 +165,64 @@ public class InicioActivity extends AppCompatActivity {
         }
     }
 
-    //TODO
     private void construirListaRecomendaciones(DatabaseAccess databaseAccess){
+        databaseAccess.open();
+        ArrayList <String> nombresComidas = databaseAccess.getNombreComidasRandom();
+        databaseAccess.close();
+
+        LinearLayout layoutHorizontalRecomendaciones = findViewById(R.id.layoutHorizontalRecomendaciones);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT );
+
+
+        for (int i=0; i<4; i++){
+            Button button = new Button(this);
+
+            //Asignamos propiedades de layout al boton
+            lp.setMargins(10, 10, 10, 10);
+            button.setLayoutParams(lp);
+            button.setBackgroundResource(R.drawable.categoria_background);
+
+            //Asignamos Texto al botón
+            button.setText(nombresComidas.get(i));
+            button.setTextColor(Color.BLACK);
+            button.setHeight(200);
+
+
+            databaseAccess.open();
+            String nombre = nombresComidas.get(i);
+            ArrayList<Integer> codigo_comida = databaseAccess.getCodigoComidaPorNombre(nombre);
+            databaseAccess.close();
+
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Irse a la actividad de buscar comida pasandole parametros de busqueda
+                    Intent i = new Intent(InicioActivity.this, DetalleComida.class);
+                    i.putExtra("codigo_comida", codigo_comida.get(0)); //Pasarle a la nueva actividad por parametro el nombre de la comida a filtrar
+                    startActivity(i);
+                }
+            });
+
+            //Añadimos el botón a la barra de Scroll Horizontal
+            layoutHorizontalRecomendaciones.addView(button);
+        }
+
+    }
+
+    private void funcionalidadesBarraBusqueda(){
+        EditText barraBusqueda = findViewById(R.id.barraBusqueda);
+
+        ImageButton botonBusqueda = findViewById(R.id.botonBusqueda);
+        botonBusqueda.setOnClickListener(new View.OnClickListener()  {
+            @Override
+            public void onClick(View view) {
+                //Irse a la actividad de buscar comida pasandole parametros de busqueda
+                Intent i = new Intent(InicioActivity.this, BuscarComida.class);
+                i.putExtra("nombre_comida", barraBusqueda.getText().toString()); //Pasarle a la nueva actividad por parametro el nombre de la comida a filtrar
+                startActivity(i);
+            }
+        });
+
 
 
     }

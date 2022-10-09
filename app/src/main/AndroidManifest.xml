@@ -33,6 +33,8 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+            android:name=".DetalleComida"
+            android:exported="false" />
         <activity
             android:name=".BuscarComida"
             android:exported="false" />

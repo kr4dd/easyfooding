@@ -34,16 +34,6 @@ public class TicketActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         int num_pedido = datos.getInt("numero_pedido");
 
-        ConstraintLayout back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(TicketActivity.this, PedidosActivity.class));
-            }
-        });
-
-
         ArrayList<LineaPedidos> lineasPedido =  getListaPedidos(num_pedido);
         if(lineasPedido.size() > 0){
             ListView list = findViewById(R.id.ticket);

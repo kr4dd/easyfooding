@@ -75,7 +75,6 @@ public class CarritoActivity extends AppCompatActivity {
             public void onClick(View view) {
               actualizaPago();
               if(listaComida.size()>0){
-                finish();
                 Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
                 TextView total = findViewById(R.id.suma);
                 String suma = total.getText().toString();

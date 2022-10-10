@@ -36,6 +36,6 @@
     <string name="codigoPostal">Codigo Postal</string>
     <string name="obs">Observaciones</string>
     <string name="procesoPago">Procesando el pago</string>
-    <string name="efectivo">Paga al repartidor</string>
-    <string name="targeta">Paga con targeta</string>
+    <string name="efectivo">Pagar al repartidor</string>
+    <string name="tarjeta">Pagar con tarjeta</string>
 </resources>

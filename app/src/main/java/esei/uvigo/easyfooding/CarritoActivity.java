@@ -92,6 +92,9 @@ public class CarritoActivity extends AppCompatActivity {
   private void rellenarArrays() {
 
     listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
+    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
+    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
+    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
     listaComida.add(new Comida("Patacon",4.0,2,3));
     TextView precio = findViewById(R.id.suma);
     TextView precioComida = findViewById(R.id.precioTotal);
@@ -117,7 +120,10 @@ public class CarritoActivity extends AppCompatActivity {
     ap = new AdaptadorPedido();
     listaProductos.setAdapter(ap);
   }
-  private void eliminar(String nombre) {
+
+
+  private void eliminar(String nombre , int cantidad) {
+
     TextView precioTotal = findViewById(R.id.suma);
     TextView precioComida = findViewById(R.id.precioTotal);
 
@@ -126,8 +132,8 @@ public class CarritoActivity extends AppCompatActivity {
 
     for(int i = 0; i< listaComida.size();i++){
       if(listaComida.get(i).getNombre().equals(nombre)){
-        vprecioComida  = vprecioComida  - listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
-        vprecioTotal = vprecioTotal - listaComida.get(i).getPrecio()*listaComida.get(i).getCantidad();
+        vprecioComida  = vprecioComida  - listaComida.get(i).getPrecio() * cantidad;
+        vprecioTotal = vprecioTotal - listaComida.get(i).getPrecio()* cantidad;
         DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
         precioTotal.setText(df.format(vprecioTotal));
         precioComida.setText(df.format(vprecioComida));
@@ -136,6 +142,29 @@ public class CarritoActivity extends AppCompatActivity {
       }
     }
   }
+
+  // calcula el precio total y lo asigna
+  public void calculoComida() {
+    Double total = 0.0;
+    TextView suma = findViewById(R.id.suma);
+    if(listaComida.size()<1){
+      suma.setText("0");
+    }else{
+      for(int i = 0; i<listaComida.size();i++){
+        total = total + listaComida.get(i).getCantidad()*listaComida.get(i).getPrecio();
+      }
+
+      TextView precio_comida = findViewById(R.id.precioTotal);
+      precio_comida.setText(String.valueOf(total));
+
+      double impuestos = total * precioImpuestos;
+      double sumaImpuestos = total + impuestos;
+      double sumaEnvio = sumaImpuestos + precioEnvio;
+      DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
+      suma.setText(df.format(sumaEnvio));
+    }
+  }
+
 
   // metodos para la lista de productos
 
@@ -166,7 +195,7 @@ public class CarritoActivity extends AppCompatActivity {
       ImageView resta;
       ImageView add;
       TextView cantidadTotal;
-      ConstraintLayout borrar;
+      ImageView borrar;
 
       public AdaptadorPedidoHolder(@NonNull View itemView) {
         super(itemView);
@@ -177,7 +206,9 @@ public class CarritoActivity extends AppCompatActivity {
         resta = itemView.findViewById(R.id.resta);
         add = itemView.findViewById(R.id.add);
         cantidadTotal = itemView.findViewById(R.id.total);
-        borrar = itemView.findViewById(R.id.borrar);
+        borrar = itemView.findViewById(R.id.eliminar);
+
+
         // para añadir uno mas
         add.setOnClickListener(
             new View.OnClickListener() {
@@ -202,7 +233,10 @@ public class CarritoActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             String eliminar = nombre.getText().toString();
-            eliminar(eliminar);
+            int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
+            eliminar(eliminar, cantidad);
+            ap.notifyItemRemoved(getAdapterPosition());
+            calculoComida();
           }
         });
       }
@@ -213,6 +247,7 @@ public class CarritoActivity extends AppCompatActivity {
           cantidadTotal.setText(String.valueOf(add));
           double precio = add * unidad;
           precio_total.setText(String.valueOf(precio));
+          listaComida.get(getAdapterPosition()).setCantidad(add);
           calculoComida(); // llamamos a la funcion que actualiza el precio total
         }
       }
@@ -225,7 +260,8 @@ public class CarritoActivity extends AppCompatActivity {
           double precio = subs * unidad;
           cantidadTotal.setText(String.valueOf(subs));
           precio_total.setText(String.valueOf(precio));
-          calculoComida();
+          listaComida.get(getAdapterPosition()).setCantidad(subs);
+          calculoComida(); // llamamos a la funcion que actualiza el precio total
         }
       }
 
@@ -240,27 +276,6 @@ public class CarritoActivity extends AppCompatActivity {
         // en funcion del numero de productos calculamos el total de precio actual
         double precio = totalActual * listaComida.get(position).getPrecio();
         precio_total.setText(String.valueOf(precio));
-      }
-
-      // calcula el precio total y lo asigna
-      public void calculoComida() {
-        double precioTotal = 0;
-        for (int x = listaProductos.getChildCount(), i = 0; i < x; ++i) {
-          RecyclerView.ViewHolder holder =
-              listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
-          TextView t = holder.itemView.findViewById(R.id.precio_total); // precio del producto
-          // asigna el nuevo precio
-          double actual = Double.parseDouble(t.getText().toString());
-          precioTotal += actual;
-        }
-
-        TextView precioComida = findViewById(R.id.precioTotal);
-        precioComida.setText(String.valueOf(precioTotal));
-        double iva = precioTotal * precioImpuestos;
-        precioTotal = precioTotal + iva + precioEnvio;
-        TextView total = findViewById(R.id.suma);
-        DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
-        total.setText(df.format(precioTotal));
       }
     }
   }

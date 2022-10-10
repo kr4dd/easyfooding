@@ -107,7 +107,6 @@ public class PedidosActivity extends AppCompatActivity {
             ticket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    finish();
                     Intent intent = new Intent(PedidosActivity.this,TicketActivity.class);
                     intent.putExtra("numero_pedido",objActual.getNum_pedido());
                     startActivity(intent);

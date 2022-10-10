@@ -20,8 +20,8 @@
 
     <string name="elementosCarrito">Precio comida:</string>
     <string name="impuestos"> Impuestos:</string>
-    <string name="envio"> Envio</string>
-    <string name="total">Total</string>
+    <string name="envio"> Envío:</string>
+    <string name="total">Total:</string>
     <string name="pagar">Pagar</string>
     <string name="contacto">Pedidos</string>
     <string name="conf">Ajustes</string>

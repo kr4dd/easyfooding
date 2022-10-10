@@ -61,7 +61,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/listaComida"
                 android:layout_width="match_parent"
-                android:layout_height="178dp" />
+                android:layout_height="287dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

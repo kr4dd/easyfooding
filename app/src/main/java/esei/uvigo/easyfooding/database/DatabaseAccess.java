@@ -258,4 +258,12 @@ public class DatabaseAccess {
 
         db.insert("pedido", null, contentValues);
     }
+    public int getIdComida(String nombre){
+        Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre = ?", new String[]{nombre});
+        int toret = 0;
+        if (cursor.moveToNext()) {
+            toret = cursor.getInt(0);
+        }
+        return toret;
+    }
 }

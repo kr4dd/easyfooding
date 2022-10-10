@@ -10,14 +10,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import esei.uvigo.easyfooding.database.DatabaseAccess;
 import esei.uvigo.easyfooding.objetosCarrito.Comida;
 
 public class CarritoActivity extends AppCompatActivity {
@@ -25,6 +29,10 @@ public class CarritoActivity extends AppCompatActivity {
   private ArrayList<Comida> listaComida = new ArrayList<>();
   double precioImpuestos;
   double precioEnvio;
+  AdaptadorPedido ap;
+  ArrayList<Comida> pago =
+      new ArrayList<>(); // se manda a la pestaña de pago para informar de la comida y las
+  // cantidades
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +54,10 @@ public class CarritoActivity extends AppCompatActivity {
     cambiarActividad();
     // Recuperamos los datos de compra
     rellenarArrays();
-    if(listaComida.size()<1){
+    if (listaComida.size() < 1) {
       ConstraintLayout vacio = findViewById(R.id.vacio);
       vacio.setVisibility(View.VISIBLE);
-    }else{
+    } else {
       ConstraintLayout vacio = findViewById(R.id.vacio);
       vacio.setVisibility(View.INVISIBLE);
       // insertamos los datos en la lista
@@ -57,36 +65,44 @@ public class CarritoActivity extends AppCompatActivity {
     }
 
     // Accion para mandar al usuario a la actividad de pago
+
     ConstraintLayout pagar = findViewById(R.id.pagar);
-    if(listaComida.size()>0){
+    if (listaComida.size() > 0) {
+      Toast.makeText(CarritoActivity.this,listaComida.get(0).getNombre(),Toast.LENGTH_LONG).show();
       pagar.setOnClickListener(
-              new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                  finish();
-                  Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
-                  TextView total = findViewById(R.id.suma);
-                  String suma = total.getText().toString();
-                  intent.putExtra("importe", suma);
-                  startActivity(intent);
-                }
-              });
+          new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              actualizaPago();
+              if(listaComida.size()>0){
+                finish();
+                Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
+                TextView total = findViewById(R.id.suma);
+                String suma = total.getText().toString();
+                intent.putExtra("importe", suma);
+                intent.putExtra("datosProductos",pago);
+                startActivity(intent);
+              }
+            }
+          });
     }
   }
 
   // metodo que nos permite rellenar el array de objetos comida para mostrarlo luego en la lista
   private void rellenarArrays() {
 
-    listaComida.add(new Comida("Banana", R.drawable.banana, 5.50, 2, 8));
+    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
+    listaComida.add(new Comida("Patacon",4.0,2,3));
     TextView precio = findViewById(R.id.suma);
+    TextView precioComida = findViewById(R.id.precioTotal);
 
     // una vez rellenada seteamos los valores iniciales si no esta vacia
     if (listaComida.size() > 0) {
       double total = 0;
       for (int i = 0; i < listaComida.size(); i++) {
         total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
-        Toast.makeText(CarritoActivity.this, String.valueOf(total), Toast.LENGTH_LONG).show();
       }
+      precioComida.setText(String.valueOf(total));
       double iva = total * precioImpuestos;
       total = total + iva + precioEnvio;
       DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
@@ -98,7 +114,27 @@ public class CarritoActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager =
         new LinearLayoutManager(CarritoActivity.this, LinearLayoutManager.VERTICAL, false);
     listaProductos.setLayoutManager(linearLayoutManager);
-    listaProductos.setAdapter(new AdaptadorPedido());
+    ap = new AdaptadorPedido();
+    listaProductos.setAdapter(ap);
+  }
+  private void eliminar(String nombre) {
+    TextView precioTotal = findViewById(R.id.suma);
+    TextView precioComida = findViewById(R.id.precioTotal);
+
+    Double vprecioTotal = Double.parseDouble(precioTotal.getText().toString());
+    Double vprecioComida = Double.parseDouble(precioComida.getText().toString());
+
+    for(int i = 0; i< listaComida.size();i++){
+      if(listaComida.get(i).getNombre().equals(nombre)){
+        vprecioComida  = vprecioComida  - listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
+        vprecioTotal = vprecioTotal - listaComida.get(i).getPrecio()*listaComida.get(i).getCantidad();
+        DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
+        precioTotal.setText(df.format(vprecioTotal));
+        precioComida.setText(df.format(vprecioComida));
+        listaComida.remove(i);
+        ap.notifyDataSetChanged();
+      }
+    }
   }
 
   // metodos para la lista de productos
@@ -122,7 +158,7 @@ public class CarritoActivity extends AppCompatActivity {
       return listaComida.size();
     }
 
-    public class AdaptadorPedidoHolder extends RecyclerView.ViewHolder {
+    public class AdaptadorPedidoHolder extends RecyclerView.ViewHolder{
       ImageView comida;
       TextView nombre;
       TextView precioUnitario;
@@ -130,6 +166,7 @@ public class CarritoActivity extends AppCompatActivity {
       ImageView resta;
       ImageView add;
       TextView cantidadTotal;
+      ConstraintLayout borrar;
 
       public AdaptadorPedidoHolder(@NonNull View itemView) {
         super(itemView);
@@ -140,7 +177,7 @@ public class CarritoActivity extends AppCompatActivity {
         resta = itemView.findViewById(R.id.resta);
         add = itemView.findViewById(R.id.add);
         cantidadTotal = itemView.findViewById(R.id.total);
-
+        borrar = itemView.findViewById(R.id.borrar);
         // para añadir uno mas
         add.setOnClickListener(
             new View.OnClickListener() {
@@ -160,19 +197,28 @@ public class CarritoActivity extends AppCompatActivity {
                 menosProducto(actual);
               }
             });
-      }
 
+        borrar.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            String eliminar = nombre.getText().toString();
+            eliminar(eliminar);
+          }
+        });
+      }
       public void masProducto(int actual) {
-        int add = actual + 1;
-        double unidad = Double.parseDouble(precioUnitario.getText().toString());
-        cantidadTotal.setText(String.valueOf(add));
-        double precio = add * unidad;
-        precio_total.setText(String.valueOf(precio));
-        calculoComida(); // llamamos a la funcion que actualiza el precio total
+        if (actual < 10) {
+          int add = actual + 1;
+          double unidad = Double.parseDouble(precioUnitario.getText().toString());
+          cantidadTotal.setText(String.valueOf(add));
+          double precio = add * unidad;
+          precio_total.setText(String.valueOf(precio));
+          calculoComida(); // llamamos a la funcion que actualiza el precio total
+        }
       }
 
       public void menosProducto(int actual) {
-        if (actual > 0) {
+        if (actual > 1) {
           int subs = actual - 1;
           double unidad = Double.parseDouble(precioUnitario.getText().toString());
           cantidadTotal.setText(String.valueOf(add));
@@ -202,10 +248,12 @@ public class CarritoActivity extends AppCompatActivity {
         for (int x = listaProductos.getChildCount(), i = 0; i < x; ++i) {
           RecyclerView.ViewHolder holder =
               listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
-          TextView t = holder.itemView.findViewById(R.id.precio_total);
+          TextView t = holder.itemView.findViewById(R.id.precio_total); // precio del producto
+          // asigna el nuevo precio
           double actual = Double.parseDouble(t.getText().toString());
           precioTotal += actual;
         }
+
         TextView precioComida = findViewById(R.id.precioTotal);
         precioComida.setText(String.valueOf(precioTotal));
         double iva = precioTotal * precioImpuestos;
@@ -217,6 +265,7 @@ public class CarritoActivity extends AppCompatActivity {
     }
   }
 
+  // barra navegacion
   private void cambiarActividad() {
 
     // Cambiar a la actividad de Inicio
@@ -273,5 +322,31 @@ public class CarritoActivity extends AppCompatActivity {
             // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
           }
         });
+  }
+
+  public void actualizaPago() {
+    pago.clear();
+    for (int x = listaProductos.getChildCount(), i = 0; i < x; ++i) {
+      RecyclerView.ViewHolder holder =
+          listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
+
+      // actualizacion del array
+      TextView t = holder.itemView.findViewById(R.id.precio_total); // precio del producto
+      TextView nombreComida = holder.itemView.findViewById((R.id.nombre_comida));
+      TextView precioUno = holder.itemView.findViewById(R.id.precioUnitario);
+      TextView cantidad = holder.itemView.findViewById(R.id.total);
+      DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+      dataBaseAccess.open();
+      int codigo = dataBaseAccess.getIdComida(nombreComida.getText().toString());
+      dataBaseAccess.close();
+      Comida add =
+          new Comida(
+              nombreComida.getText().toString(),
+              Double.parseDouble(precioUno.getText().toString()),
+              Integer.parseInt(cantidad.getText().toString()),
+              codigo,
+              Double.parseDouble(t.getText().toString()));
+      pago.add(add);
+    }
   }
 }

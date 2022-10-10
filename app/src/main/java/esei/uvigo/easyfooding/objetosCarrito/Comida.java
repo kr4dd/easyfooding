@@ -1,20 +1,32 @@
 package esei.uvigo.easyfooding.objetosCarrito;
 
-public class Comida {
+import java.io.Serializable;
+
+import esei.uvigo.easyfooding.R;
+
+public class Comida implements Serializable {
     private String nombre;
     private int imagen;
     private double precio;
     private int cantidad;
     private int codigo;
+    private double precioTotal;
 
-    public Comida(String nombre, int imagen, double precio, int cantidad,int codigo) {
+    public Comida(String nombre, double precio, int cantidad,int codigo) {
         this.nombre = nombre;
-        this.imagen = imagen;
+        this.imagen = R.mipmap.logo;
         this.precio = precio;
         this.cantidad = cantidad;
         this.codigo = codigo;
     }
-
+    public Comida(String nombre, double precio, int cantidad,int codigo, Double precioTotal) {
+        this.nombre = nombre;
+        this.imagen = R.mipmap.logo;
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.codigo = codigo;
+        this.precioTotal = precioTotal;
+    }
     public String getNombre() {
         return nombre;
     }
@@ -45,5 +57,17 @@ public class Comida {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    @Override
+    public String toString() {
+        return "Comida{" +
+                "nombre='" + nombre + '\'' +
+                ", imagen=" + imagen +
+                ", precio=" + precio +
+                ", cantidad=" + cantidad +
+                ", codigo=" + codigo +
+                ", precioTotal=" + precioTotal +
+                '}';
     }
 }

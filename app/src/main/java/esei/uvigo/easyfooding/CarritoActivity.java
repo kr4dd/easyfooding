@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -86,7 +88,24 @@ public class CarritoActivity extends AppCompatActivity {
             }
           });
     }
+    setColoresAndroidModoOscuro();
   }
+
+  private void setColoresAndroidModoOscuro(){
+    //Colores de los textos de la navbar inferior
+    TextView textoInicio = findViewById(R.id.textoInicio);
+    textoInicio.setTextColor(Color.GRAY);
+    TextView textoPerfil = findViewById(R.id.textoPerfil);
+    textoPerfil.setTextColor(Color.GRAY);
+    TextView textoCarrito = findViewById(R.id.textoCarrito);
+    textoCarrito.setTextColor(Color.GRAY);
+    TextView textoPedidos = findViewById(R.id.textoPedidos);
+    textoPedidos.setTextColor(Color.GRAY);
+    TextView textoAjustes = findViewById(R.id.textoAjustes);
+    textoAjustes.setTextColor(Color.GRAY);
+  }
+
+
 
   // metodo que nos permite rellenar el array de objetos comida para mostrarlo luego en la lista
   private void rellenarArrays() {
@@ -266,6 +285,7 @@ public class CarritoActivity extends AppCompatActivity {
           double precio = add * unidad;
           precio_total.setText(String.valueOf(precio));
           listaComida.get(getAdapterPosition()).setCantidad(add);
+          cantidadTotal.setTextColor(Color.GRAY);
           calculoComida(); // llamamos a la funcion que actualiza el precio total
         }
       }
@@ -279,6 +299,7 @@ public class CarritoActivity extends AppCompatActivity {
           cantidadTotal.setText(String.valueOf(subs));
           precio_total.setText(String.valueOf(precio));
           listaComida.get(getAdapterPosition()).setCantidad(subs);
+          cantidadTotal.setTextColor(Color.GRAY);
           calculoComida(); // llamamos a la funcion que actualiza el precio total
         }
       }
@@ -294,6 +315,7 @@ public class CarritoActivity extends AppCompatActivity {
         // en funcion del numero de productos calculamos el total de precio actual
         double precio = totalActual * listaComida.get(position).getPrecio();
         precio_total.setText(String.valueOf(precio));
+        cantidadTotal.setTextColor(Color.GRAY);
       }
     }
   }

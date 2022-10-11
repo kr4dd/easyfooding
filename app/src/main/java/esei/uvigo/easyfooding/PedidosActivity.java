@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,7 +40,7 @@ public class PedidosActivity extends AppCompatActivity {
         dataBaseAccess.open();
 
         //ejecutamos query
-        res = dataBaseAccess.historial("pepe");
+        res = dataBaseAccess.historial("pepe");//aqui hay que meter el usuario logeado
 
         if(res.size() > 0){
             ListView list = findViewById(R.id.ticket);
@@ -50,6 +51,15 @@ public class PedidosActivity extends AppCompatActivity {
             ArrayAdapter<ListaPedidos> adapter = new listaAdapter(PedidosActivity.this,0,res);
             ListView historial = findViewById(R.id.ticket);
             historial.setAdapter(adapter);
+            ArrayList<ListaPedidos> finalRes = res;
+            historial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                    Intent intent = new Intent(PedidosActivity.this,TicketActivity.class);
+                    intent.putExtra("numero_pedido", finalRes.get(pos).getNum_pedido());
+                    startActivity(intent);
+                }
+            });
         }else{
             //anunciamos que no hay nada
             ListView list = findViewById(R.id.ticket);
@@ -87,7 +97,7 @@ public class PedidosActivity extends AppCompatActivity {
             TextView codigo_postal = view.findViewById(R.id.codigo_postal);
             TextView localidad = view.findViewById(R.id.localidad);
             TextView pTotal = view.findViewById(R.id.pTotal);
-            ImageView ticket = view.findViewById(R.id.detalles);
+
 
             //añadimos los datos a la vista
 
@@ -101,18 +111,6 @@ public class PedidosActivity extends AppCompatActivity {
             DecimalFormat df = new DecimalFormat("###,###,###,##0.0");
             String mostar = df.format(total) + "€";
             pTotal.setText(mostar);
-
-            //añadimos funcionalidad al detalle
-
-            ticket.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(PedidosActivity.this,TicketActivity.class);
-                    intent.putExtra("numero_pedido",objActual.getNum_pedido());
-                    startActivity(intent);
-                }
-            });
-
 
             return view;
         }

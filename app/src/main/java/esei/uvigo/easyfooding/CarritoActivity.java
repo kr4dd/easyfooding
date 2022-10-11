@@ -68,18 +68,17 @@ public class CarritoActivity extends AppCompatActivity {
 
     ConstraintLayout pagar = findViewById(R.id.pagar);
     if (listaComida.size() > 0) {
-      Toast.makeText(CarritoActivity.this,listaComida.get(0).getNombre(),Toast.LENGTH_LONG).show();
       pagar.setOnClickListener(
           new View.OnClickListener() {
             @Override
             public void onClick(View view) {
               actualizaPago();
-              if(listaComida.size()>0){
+              if (listaComida.size() > 0) {
                 Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
                 TextView total = findViewById(R.id.suma);
                 String suma = total.getText().toString();
                 intent.putExtra("importe", suma);
-                intent.putExtra("datosProductos",pago);
+                intent.putExtra("datosProductos", pago);
                 startActivity(intent);
               }
             }
@@ -94,7 +93,7 @@ public class CarritoActivity extends AppCompatActivity {
     listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
     listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
     listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
-    listaComida.add(new Comida("Patacon",4.0,2,3));
+    listaComida.add(new Comida("Patacon", 4.0, 2, 3));
     TextView precio = findViewById(R.id.suma);
     TextView precioComida = findViewById(R.id.precioTotal);
 
@@ -120,8 +119,7 @@ public class CarritoActivity extends AppCompatActivity {
     listaProductos.setAdapter(ap);
   }
 
-
-  private void eliminar(String nombre , int cantidad) {
+  private void eliminar(String nombre, int cantidad) {
 
     TextView precioTotal = findViewById(R.id.suma);
     TextView precioComida = findViewById(R.id.precioTotal);
@@ -129,10 +127,10 @@ public class CarritoActivity extends AppCompatActivity {
     Double vprecioTotal = Double.parseDouble(precioTotal.getText().toString());
     Double vprecioComida = Double.parseDouble(precioComida.getText().toString());
 
-    for(int i = 0; i< listaComida.size();i++){
-      if(listaComida.get(i).getNombre().equals(nombre)){
-        vprecioComida  = vprecioComida  - listaComida.get(i).getPrecio() * cantidad;
-        vprecioTotal = vprecioTotal - listaComida.get(i).getPrecio()* cantidad;
+    for (int i = 0; i < listaComida.size(); i++) {
+      if (listaComida.get(i).getNombre().equals(nombre)) {
+        vprecioComida = vprecioComida - listaComida.get(i).getPrecio() * cantidad;
+        vprecioTotal = vprecioTotal - listaComida.get(i).getPrecio() * cantidad;
         DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
         precioTotal.setText(df.format(vprecioTotal));
         precioComida.setText(df.format(vprecioComida));
@@ -146,11 +144,11 @@ public class CarritoActivity extends AppCompatActivity {
   public void calculoComida() {
     Double total = 0.0;
     TextView suma = findViewById(R.id.suma);
-    if(listaComida.size()<1){
+    if (listaComida.size() < 1) {
       suma.setText("0");
-    }else{
-      for(int i = 0; i<listaComida.size();i++){
-        total = total + listaComida.get(i).getCantidad()*listaComida.get(i).getPrecio();
+    } else {
+      for (int i = 0; i < listaComida.size(); i++) {
+        total = total + listaComida.get(i).getCantidad() * listaComida.get(i).getPrecio();
       }
 
       TextView precio_comida = findViewById(R.id.precioTotal);
@@ -163,7 +161,6 @@ public class CarritoActivity extends AppCompatActivity {
       suma.setText(df.format(sumaEnvio));
     }
   }
-
 
   // metodos para la lista de productos
 
@@ -186,7 +183,7 @@ public class CarritoActivity extends AppCompatActivity {
       return listaComida.size();
     }
 
-    public class AdaptadorPedidoHolder extends RecyclerView.ViewHolder{
+    public class AdaptadorPedidoHolder extends RecyclerView.ViewHolder {
       ImageView comida;
       TextView nombre;
       TextView precioUnitario;
@@ -205,8 +202,6 @@ public class CarritoActivity extends AppCompatActivity {
         resta = itemView.findViewById(R.id.resta);
         add = itemView.findViewById(R.id.add);
         cantidadTotal = itemView.findViewById(R.id.total);
-        borrar = itemView.findViewById(R.id.eliminar);
-
 
         // para añadir uno mas
         add.setOnClickListener(
@@ -227,18 +222,24 @@ public class CarritoActivity extends AppCompatActivity {
                 menosProducto(actual);
               }
             });
-
-        borrar.setOnClickListener(new View.OnClickListener() {
+        /*            String eliminar = nombre.getText().toString();
+            int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
+            eliminar(eliminar, cantidad);
+            ap.notifyItemRemoved(getAdapterPosition());
+            calculoComida();*/
+        itemView.setOnLongClickListener(new View.OnLongClickListener() {
           @Override
-          public void onClick(View view) {
+          public boolean onLongClick(View view) {
             String eliminar = nombre.getText().toString();
             int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
             eliminar(eliminar, cantidad);
             ap.notifyItemRemoved(getAdapterPosition());
             calculoComida();
+            return true;
           }
         });
       }
+
       public void masProducto(int actual) {
         if (actual < 10) {
           int add = actual + 1;

@@ -1,11 +1,13 @@
 package esei.uvigo.easyfooding;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -230,11 +232,27 @@ public class CarritoActivity extends AppCompatActivity {
         itemView.setOnLongClickListener(new View.OnLongClickListener() {
           @Override
           public boolean onLongClick(View view) {
-            String eliminar = nombre.getText().toString();
-            int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
-            eliminar(eliminar, cantidad);
-            ap.notifyItemRemoved(getAdapterPosition());
-            calculoComida();
+            AlertDialog.Builder builder = new AlertDialog.Builder(CarritoActivity.this);
+            builder.setTitle(R.string.borrar);
+            builder.setMessage(R.string.confirma);
+            builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialogInterface, int i) {
+                String eliminar = nombre.getText().toString();
+                int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
+                eliminar(eliminar, cantidad);
+                ap.notifyItemRemoved(getAdapterPosition());
+                calculoComida();
+              }
+            });
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+              @Override
+              public void onClick(DialogInterface dialogInterface, int i) {
+                return;
+              }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
             return true;
           }
         });

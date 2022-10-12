@@ -40,4 +40,21 @@
     <string name="tarjeta">Pagar con tarjeta</string>
     <string name="borrar">¿Seguro?</string>
     <string name="confirma">¿Quieres borrar este producto del carrito?</string>
+
+    <!-- Welcome panel -->
+    <string name="btnGoToRegistro">Registrarse</string>
+    <string name="btnGoToLogin">Iniciar sesión</string>
+
+    <!-- Register panel -->
+    <string name="username">Usuario</string>
+    <string name="pass">Contraseña</string>
+    <string name="nombre_real">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="mail">Correo electrónico</string>
+    <string name="telefono">Teléfono</string>
+    <string name="btnRegistrarse">Registrarse</string>
+
+    <!-- Login panel -->
+    <string name="btnLogearse">Iniciar sesión</string>
+
 </resources>

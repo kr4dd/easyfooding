@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeUserActivity">
+
+    <ImageView
+        android:id="@+id/imgViewBackgroundColorMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_intro" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="106dp"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtViewTitleMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:text="@string/app_name"
+                android:textColor="#3d33a8"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextLocalidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/localidad"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextCodigoPostal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/codigoPostal"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextDireccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/direccion"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextTelefono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/telefono"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextCorreo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/mail"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextApellidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/apellidos"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextNombreReal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/nombre_real"
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextPass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/pass"
+                android:inputType="textPassword"
+                app:layout_constraintStart_toStartOf="@+id/editTextUsuario"
+                app:layout_constraintTop_toBottomOf="@+id/editTextUsuario" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="24dp"
+                android:ems="10"
+                android:gravity="center|center_horizontal|center_vertical"
+                android:hint="@string/username"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/editTextPass"
+                app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnLogearse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/btnRegistrarse"
+                android:text="@string/btnRegistrarse" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

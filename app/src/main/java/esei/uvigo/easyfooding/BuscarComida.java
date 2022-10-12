@@ -25,6 +25,7 @@ public class BuscarComida extends AppCompatActivity {
     private ArrayList<Integer> arrayItemsId; //Guarda los codigos de las comidas del listView
     private ArrayList<String> arrayItems; //Guarda los nombres de las comidas del listView
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +39,17 @@ public class BuscarComida extends AppCompatActivity {
 
         //Conectar ListView con el Adaptador y con el Array de resultados
         this.listViewItems = findViewById(R.id.listViewItems);
-        this.arrayItemsId = new ArrayList<Integer>();
-        this.arrayItems = new ArrayList<String>();
+        this.arrayItemsId = new ArrayList<>();
+        this.arrayItems = new ArrayList<>();
         //El adaptador une el ListView con el ArrayList
-        this.listaItemsAdapter = new ArrayAdapter<String>(
+        this.listaItemsAdapter = new ArrayAdapter<>(
                 this.getApplicationContext(),
                 android.R.layout.simple_selectable_list_item,
                 this.arrayItems
         );
         listViewItems.setAdapter(this.listaItemsAdapter);
 
-        String nombreCategoria;
-        String nombreComida;
+        String nombreCategoria, nombreComida;
         Bundle parametros = getIntent().getExtras();
         TextView titulo_busqueda = findViewById(R.id.textView_titulo_busqueda);
         try {
@@ -67,6 +67,7 @@ public class BuscarComida extends AppCompatActivity {
                 this.mensajeBusquedaFallida.setText(R.string.busquedafallida);
             }
         } catch (Exception ex) {
+            throw new RuntimeException();
         }
 
         listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -3,8 +3,8 @@ package esei.uvigo.easyfooding;
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,17 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Objects;
 
 public class InicioActivity extends AppCompatActivity {
-
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inicio_activity);
 
         //Ocultar la barra con el titulo
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Cambiar colores en el modo noche del dispositivo físico
         setColoresAndroidModoOscuro();
@@ -71,60 +71,6 @@ public class InicioActivity extends AppCompatActivity {
         TextView textoAjustes = findViewById(R.id.textoAjustes);
         textoAjustes.setTextColor(Color.GRAY);
     }
-
-    private void cambiarActividad(){
-
-        //Cambiar a la actividad de Inicio
-        LinearLayout inicio = findViewById(R.id.inicio);
-        inicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(InicioActivity.this, InicioActivity.class));
-            }
-        });
-
-        //Cambiar a la actividad Perfil
-        LinearLayout perfil = findViewById(R.id.perfil);
-        perfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(InicioActivity.this, PerfilActivity.class));
-            }
-        });
-
-        //Cambiar a la actividad Carrito
-        LinearLayout carrito = findViewById(R.id.carrito);
-        carrito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(InicioActivity.this, CarritoActivity.class));
-            }
-        });
-
-        //Cambiar a la actividad Pedidos
-        LinearLayout pedidos = findViewById(R.id.pedidos);
-        pedidos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(InicioActivity.this, PedidosActivity.class));
-            }
-        });
-
-        //Cambiar a la actividad Ajustes
-        LinearLayout ajustes = findViewById(R.id.ajustes);
-        ajustes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                //startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
-            }
-        });
-    }
-
 
     private void construirListaCategorias(DatabaseAccess databaseAccess){
         //Sacar info de la BD
@@ -223,8 +169,48 @@ public class InicioActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    private void cambiarActividad() {
+        // Cambiar a la actividad de Inicio
+        LinearLayout inicio = findViewById(R.id.inicio);
+        inicio.setOnClickListener(
+                view -> {
+                    finish();
+                    startActivity(new Intent(InicioActivity.this, InicioActivity.class));
+                });
 
+        // Cambiar a la actividad Perfil
+        LinearLayout perfil = findViewById(R.id.perfil);;
+        perfil.setOnClickListener(
+                view -> {
+                    finish();
+                    startActivity(new Intent(InicioActivity.this, PerfilActivity.class));
+                });
+
+        // Cambiar a la actividad Carrito
+        LinearLayout carrito = findViewById(R.id.carrito);
+        carrito.setOnClickListener(
+                view -> {
+                    finish();
+                    startActivity(new Intent(InicioActivity.this, CarritoActivity.class));
+                });
+
+        // Cambiar a la actividad Pedidos
+        LinearLayout pedidos = findViewById(R.id.pedidos);
+        pedidos.setOnClickListener(
+                view -> {
+                    finish();
+                    startActivity(new Intent(InicioActivity.this, PedidosActivity.class));
+                });
+
+        // Cambiar a la actividad Ajustes
+        LinearLayout ajustes = findViewById(R.id.ajustes);
+        ajustes.setOnClickListener(
+                view -> {
+                    finish();
+                    // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
+                });
     }
 
 }

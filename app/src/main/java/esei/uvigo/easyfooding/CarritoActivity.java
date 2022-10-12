@@ -243,11 +243,6 @@ public class CarritoActivity extends AppCompatActivity {
                 menosProducto(actual);
               }
             });
-        /*            String eliminar = nombre.getText().toString();
-            int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
-            eliminar(eliminar, cantidad);
-            ap.notifyItemRemoved(getAdapterPosition());
-            calculoComida();*/
         itemView.setOnLongClickListener(new View.OnLongClickListener() {
           @Override
           public boolean onLongClick(View view) {

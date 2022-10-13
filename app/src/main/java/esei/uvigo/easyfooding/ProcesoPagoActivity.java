@@ -36,12 +36,12 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         pago.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getValues(datosComidas,importe);
+                getValues(datosComidas, importe);
             }
         });
-
     }
-    private void setColoresAndroidModoOscuro(){
+
+    private void setColoresAndroidModoOscuro() {
         //Colores de los textos de la navbar inferior
         EditText direccion = findViewById(R.id.direc);
         direccion.setTextColor(Color.GRAY);
@@ -52,7 +52,8 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         EditText obs = findViewById(R.id.obs);
         obs.setTextColor(Color.GRAY);
     }
-    public void getValues(ArrayList<Comida> comidas, String importe){
+
+    public void getValues(ArrayList<Comida> comidas, String importe) {
         EditText direccion = findViewById(R.id.direc);
         EditText ciudad = findViewById(R.id.ciudad);
         EditText codigoPost = findViewById(R.id.codigoPost);
@@ -66,8 +67,8 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         String varObs = obs.getText().toString();
         boolean varTarjeta = tarjeta.isChecked();
         boolean varEfectivo = efectivo.isChecked();
-        if(TextUtils.isEmpty(varDireccion) || TextUtils.isEmpty(varCiudad) || TextUtils.isEmpty(varCodigo) || TextUtils.isEmpty(varObs)){
-            AlertDialog.Builder builder  = new AlertDialog.Builder(ProcesoPagoActivity.this);
+        if (TextUtils.isEmpty(varDireccion) || TextUtils.isEmpty(varCiudad) || TextUtils.isEmpty(varCodigo) || TextUtils.isEmpty(varObs)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProcesoPagoActivity.this);
             builder.setMessage("Debes introducir todos los campos");
             builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
                 @Override
@@ -76,15 +77,24 @@ public class ProcesoPagoActivity extends AppCompatActivity {
                 }
             });
             builder.create().show();
-        }else{
-            insertarPedido(comidas, importe);
+        } else {
+            insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, varObs);
         }
     }
 
-    private void insertarPedido(ArrayList<Comida> comidas, String importe) {
+    private void insertarPedido(ArrayList<Comida> comidas, String importe,
+                                String varDireccion, String varCiudad, String varCodigo, String varObs) {
+
+        String nombreUsuario = "pepe";//aqui iria el user que se autentico
+        String fecha = "";//llamamos a la funcion que nos devuelve la fecha actual
+        String direccion = varDireccion;
+        String localidad = varCiudad;
+        int cp = Integer.parseInt(varCodigo);
+        double precio = Double.parseDouble(importe);
+        String observaciones = varObs;
         DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         dataBaseAccess.open();
-        //todo implementar la insercion del pedido y de la linea
+        //todo implementar la insercion del pedido (en el pedido hay que cojer la fecha actual con la funcion de diego) y de la linea
     }
 
 }

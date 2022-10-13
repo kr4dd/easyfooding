@@ -213,7 +213,7 @@ public class DatabaseAccess {
         return toret;
     }
 
-    public void setPedido (String nombreUsr, String fecha,String dir, String localidad, int cp, double importe, String obs){
+    public void insertarPedido (String nombreUsr, String fecha,String dir, String localidad, int cp, double importe, String obs){
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("nombre_usuario",nombreUsr);
@@ -226,7 +226,9 @@ public class DatabaseAccess {
 
         db.insert("pedido", null, contentValues);
     }
-
+    public int getMaxIdLineaPedido(){
+        String query = "SELECT MAX(num_linea) AS max_id FROM linea_pedidos";
+    }
     public int getIdComida(String nombre){
         Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre = ?",
                 new String[]{nombre});

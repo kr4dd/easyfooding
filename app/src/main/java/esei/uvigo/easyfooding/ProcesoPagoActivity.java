@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
@@ -86,7 +89,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
                                 String varDireccion, String varCiudad, String varCodigo, String varObs) {
 
         String nombreUsuario = "pepe";//aqui iria el user que se autentico
-        String fecha = "";//llamamos a la funcion que nos devuelve la fecha actual
+        String fecha = getDateIntoSpanishStringFormat();//llamamos a la funcion que nos devuelve la fecha actual
         String direccion = varDireccion;
         String localidad = varCiudad;
         int cp = Integer.parseInt(varCodigo);
@@ -94,7 +97,15 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         String observaciones = varObs;
         DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         dataBaseAccess.open();
+        int maxId = dataBaseAccess.getMaxIdPedido();
+        int idNuevoPedido = maxId +1;
+        boolean insert = dataBaseAccess.insertarPedido(idNuevoPedido,nombreUsuario,fecha,direccion,localidad,cp,precio,observaciones);
+        Toast.makeText(ProcesoPagoActivity.this,String.valueOf(insert),Toast.LENGTH_LONG).show();
         //todo implementar la insercion del pedido (en el pedido hay que cojer la fecha actual con la funcion de diego) y de la linea
     }
-
+    public String getDateIntoSpanishStringFormat() {
+        Calendar cal = Calendar.getInstance();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(cal.getTime());
+    }
 }

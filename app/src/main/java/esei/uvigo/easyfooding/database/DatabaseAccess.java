@@ -165,9 +165,9 @@ public class DatabaseAccess {
      * //Obtener el nombre de 5 comidas aleatorias
      * public Map<String,String> getNombreComidasRandom(){
      * Map<String,String> toret = new HashMap<String, String>();
-     * 
+     *
      * String [] selectionArgs = new String[] { "%bebida%" };
-     * 
+     *
      * Cursor cursor = db.rawQuery("select codigo_comida, nombre\n" +
      * "from comidas \n" +
      * "where categoria not like(?)", selectionArgs);
@@ -180,6 +180,9 @@ public class DatabaseAccess {
      * return toret;
      * }
      */
+
+
+
 
     // querys de Carrito y de historial pedidos
     public ArrayList<ListaPedidos> historial(String usuario) {
@@ -222,10 +225,11 @@ public class DatabaseAccess {
         return toret;
     }
 
-    public void insertarPedido(String nombreUsr, String fecha, String dir, String localidad, int cp, double importe,
-            String obs) {
+    public boolean insertarPedido(int id,String nombreUsr, String fecha,
+                                  String dir, String localidad, int cp, double importe,
+                                  String obs) {
         ContentValues contentValues = new ContentValues();
-
+        contentValues.put("num_pedido", id);
         contentValues.put("nombre_usuario", nombreUsr);
         contentValues.put("fecha_pedido", fecha);
         contentValues.put("direccion_envio", dir);
@@ -234,13 +238,27 @@ public class DatabaseAccess {
         contentValues.put("importe_total", importe);
         contentValues.put("observaciones", obs);
 
-        long res = db.insert("pedido", null, contentValues);
+        long res = db.insertOrThrow("pedidos", null, contentValues);
 
         return res != 1;
     }
 
+    public int getMaxIdPedido(){
+        Cursor c = db.rawQuery("SELECT MAX(num_pedido)  AS max_id FROM pedidos", null);
+        String toret = "";
+        if (c.moveToNext()) {
+            toret = c.getString(0);
+        }
+        return Integer.parseInt(toret);
+    }
+
     public int getMaxIdLineaPedido() {
-        String query = "SELECT MAX(num_linea) AS max_id FROM linea_pedidos";
+        Cursor c = db.rawQuery("SELECT MAX(num_linea)  AS max_id FROM linea_pedidos", null);
+        String toret = "";
+        if (c.moveToNext()) {
+            toret = c.getString(0);
+        }
+        return Integer.parseInt(toret);
     }
 
     public int getIdComida(String nombre) {

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 import esei.uvigo.easyfooding.objetosCarrito.Comida;
@@ -36,7 +37,7 @@ public class CarritoActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
-    getSupportActionBar().hide();
+    Objects.requireNonNull(getSupportActionBar()).hide();
     setContentView(R.layout.activity_carrito);
 
     listaProductos = findViewById(R.id.listaComida);

@@ -25,7 +25,8 @@ public class DatabaseAccess {
 
     // to return the single instance of database
     public static DatabaseAccess getInstance(Context context) {
-        if (instance == null) instance = new DatabaseAccess(context);
+        if (instance == null)
+            instance = new DatabaseAccess(context);
 
         return instance;
     }
@@ -37,7 +38,8 @@ public class DatabaseAccess {
 
     // close the database connection
     public void close() {
-        if (db != null) this.db.close();
+        if (db != null)
+            this.db.close();
     }
 
     // metodo para hacer una consulta del nombre de una categoria teniendo su
@@ -73,7 +75,8 @@ public class DatabaseAccess {
     // Obtener el nombre de todas las categorias
     public ArrayList<String> getNombresCategorias() {
         ArrayList<String> toret = new ArrayList<>();
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("SELECT DISTINCT(nombre_categoria) FROM categorias ORDER BY codigo_categoria",
+        @SuppressLint("Recycle")
+        Cursor cursor = db.rawQuery("SELECT DISTINCT(nombre_categoria) FROM categorias ORDER BY codigo_categoria",
                 null);
         while (cursor.moveToNext()) {
             String elemento = cursor.getString(0);
@@ -85,7 +88,8 @@ public class DatabaseAccess {
     // Obtener el codigo de las comidas que pertenecen a una categoria
     public ArrayList<Integer> getCodigoComidaPorCategoria(String nombreCategoria) {
         ArrayList<Integer> toret = new ArrayList<>();
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(
+        @SuppressLint("Recycle")
+        Cursor cursor = db.rawQuery(
                 "select com.codigo_comida from comidas com, categorias cat where com.categoria = cat.nombre_categoria and cat.nombre_categoria = ?",
                 new String[] { nombreCategoria });
         while (cursor.moveToNext()) {
@@ -107,13 +111,14 @@ public class DatabaseAccess {
     }
 
     // Obtener los ids de las comidas dado un nombre
-    public ArrayList<String> getDatosComidaPorId(String codigo_comida){
+    public ArrayList<String> getDatosComidaPorId(String codigo_comida) {
         ArrayList<String> toret = new ArrayList<>();
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select nombre, descripcion, precio, valoracion, calorias, tiempo_preparacion\n" +
-                                        "from comidas \n" +
-                                        "where codigo_comida = ?", new String[]{codigo_comida});
+        @SuppressLint("Recycle")
+        Cursor cursor = db.rawQuery("select nombre, descripcion, precio, valoracion, calorias, tiempo_preparacion\n" +
+                "from comidas \n" +
+                "where codigo_comida = ?", new String[] { codigo_comida });
 
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             for (int i = 0; i < cursor.getColumnCount(); i++) {
                 String elemento = cursor.getString(i);
                 toret.add(elemento);
@@ -129,7 +134,8 @@ public class DatabaseAccess {
         // Añadir lso porcentajes antes de ejecutar la sentencia SQL con Like
         String[] selectionArgs = new String[] { "%" + nombreComida + "%" };
 
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre like(?)", selectionArgs);
+        @SuppressLint("Recycle")
+        Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre like(?)", selectionArgs);
         while (cursor.moveToNext()) {
             int elemento = Integer.parseInt(cursor.getString(0));
             toret.add(elemento);
@@ -143,7 +149,8 @@ public class DatabaseAccess {
 
         String[] selectionArgs = new String[] { "%bebida%" };
 
-        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select nombre\n" +
+        @SuppressLint("Recycle")
+        Cursor cursor = db.rawQuery("select nombre\n" +
                 "from comidas \n" +
                 "where categoria not like(?)", selectionArgs);
         while (cursor.moveToNext()) {
@@ -174,64 +181,71 @@ public class DatabaseAccess {
      * }
      */
 
-    //querys de Carrito y de historial pedidos
+    // querys de Carrito y de historial pedidos
     public ArrayList<ListaPedidos> historial(String usuario) {
-        @SuppressLint("Recycle") Cursor c = db.rawQuery("SELECT * FROM pedidos WHERE nombre_usuario = ?", new String[]{usuario});
+        @SuppressLint("Recycle")
+        Cursor c = db.rawQuery("SELECT * FROM pedidos WHERE nombre_usuario = ?", new String[] { usuario });
         ArrayList<ListaPedidos> courseModalArrayList = new ArrayList<>();
 
-        while(c.moveToNext()){
+        while (c.moveToNext()) {
             int num_ped = Integer.parseInt(c.getString(0));
             String user = c.getString(1);
-            String fecha =  c.getString(2);
+            String fecha = c.getString(2);
             String direccion = c.getString(3);
             String loc = c.getString(4);
             float codigo = Integer.parseInt(c.getString(5));
             double tot = Double.parseDouble(c.getString(6));
             String obs = c.getString(7);
 
-            ListaPedidos l = new ListaPedidos(num_ped,user,fecha,direccion,loc,codigo,tot,obs);
+            ListaPedidos l = new ListaPedidos(num_ped, user, fecha, direccion, loc, codigo, tot, obs);
             courseModalArrayList.add(l);
         }
 
         return courseModalArrayList;
     }
 
-    public ArrayList<LineaPedidos> getLineaPedidos(int numPedido){
+    public ArrayList<LineaPedidos> getLineaPedidos(int numPedido) {
         String toQuery = String.valueOf(numPedido);
-        Cursor c = db.rawQuery("SELECT * FROM linea_pedidos WHERE num_pedido = ?", new String[]{toQuery});
+        Cursor c = db.rawQuery("SELECT * FROM linea_pedidos WHERE num_pedido = ?", new String[] { toQuery });
         ArrayList<LineaPedidos> toret = new ArrayList<>();
-        while(c.moveToNext()){
+        while (c.moveToNext()) {
             int num_linea = Integer.parseInt(c.getString(0));
             int num_pedidio = Integer.parseInt(c.getString(1));
             int codigo_comida = Integer.parseInt(c.getString(2));
             int cantidad = Integer.parseInt(c.getString(3));
             double precio_linea = Double.parseDouble(c.getString(4));
 
-            LineaPedidos l = new LineaPedidos(num_linea,num_pedidio,codigo_comida,cantidad,precio_linea);
+            LineaPedidos l = new LineaPedidos(num_linea, num_pedidio, codigo_comida, cantidad,
+                    precio_linea);
             toret.add(l);
         }
         return toret;
     }
 
-    public void insertarPedido (String nombreUsr, String fecha,String dir, String localidad, int cp, double importe, String obs){
+    public void insertarPedido(String nombreUsr, String fecha, String dir, String localidad, int cp, double importe,
+            String obs) {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("nombre_usuario",nombreUsr);
-        contentValues.put("fecha_pedido",fecha);
-        contentValues.put("direccion_envio",dir);
-        contentValues.put("localidad_envio",localidad);
-        contentValues.put("codigo_postal_envio",cp);
-        contentValues.put("importe_total",importe);
-        contentValues.put("observaciones",obs);
+        contentValues.put("nombre_usuario", nombreUsr);
+        contentValues.put("fecha_pedido", fecha);
+        contentValues.put("direccion_envio", dir);
+        contentValues.put("localidad_envio", localidad);
+        contentValues.put("codigo_postal_envio", cp);
+        contentValues.put("importe_total", importe);
+        contentValues.put("observaciones", obs);
 
-        db.insert("pedido", null, contentValues);
+        long res = db.insert("pedido", null, contentValues);
+
+        return res != 1;
     }
-    public int getMaxIdLineaPedido(){
+
+    public int getMaxIdLineaPedido() {
         String query = "SELECT MAX(num_linea) AS max_id FROM linea_pedidos";
     }
-    public int getIdComida(String nombre){
+
+    public int getIdComida(String nombre) {
         Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre = ?",
-                new String[]{nombre});
+                new String[] { nombre });
         int toret = 0;
         if (cursor.moveToNext()) {
             toret = cursor.getInt(0);
@@ -239,10 +253,9 @@ public class DatabaseAccess {
         return toret;
     }
 
-    public boolean insertarUsuario (String usuario, String pass, String nombre_real,
-                                    String apellidos, String correo, String tlfno,
-                                    String direccion, String localidad, int cp, String fechaAlta)
-    {
+    public boolean insertarUsuario(String usuario, String pass, String nombre_real,
+            String apellidos, String correo, String tlfno,
+            String direccion, String localidad, int cp, String fechaAlta) {
 
         ContentValues cv = new ContentValues();
 
@@ -263,10 +276,10 @@ public class DatabaseAccess {
     }
 
     public boolean checkLogin(String usuario, String pass) {
-        //TODO prevenir SQL injection
-        //Comprobar existencia de usuario con contrasena
-        Cursor cursor = db.rawQuery("select count(nombre_usuario) from usuarios where nombre_usuario = ? and pass = ?",
-                new String[]{usuario, pass});
+        // Comprobar existencia de usuario con contrasena
+        Cursor cursor = db.rawQuery("select count(nombre_usuario) from usuarios " +
+                "where nombre_usuario = ? and pass = ?",
+                new String[] { usuario, pass });
 
         int result = 0;
         while (cursor.moveToNext()) {

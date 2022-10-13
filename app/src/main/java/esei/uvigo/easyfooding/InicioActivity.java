@@ -5,7 +5,9 @@ import esei.uvigo.easyfooding.database.DatabaseAccess;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +29,12 @@ public class InicioActivity extends AppCompatActivity {
 
         //Ocultar la barra con el titulo
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        //Cargar saludo a usuario
+        SharedPreferences sp = getSharedPreferences("data", Context.MODE_PRIVATE);
+        String usernameSession = sp.getString("nombre_usuario", "");
+        TextView msgBienvenida = findViewById(R.id.saludoUsuario);
+        msgBienvenida.setText("Hola, " + usernameSession);
 
         //Cambiar colores en el modo noche del dispositivo físico
         setColoresAndroidModoOscuro();

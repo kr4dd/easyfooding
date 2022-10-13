@@ -207,13 +207,15 @@ public class DatabaseAccess {
             int cantidad = Integer.parseInt(c.getString(3));
             double precio_linea = Double.parseDouble(c.getString(4));
 
-            LineaPedidos l = new LineaPedidos(num_linea,num_pedidio,codigo_comida,cantidad,precio_linea);
+            LineaPedidos l = new LineaPedidos(num_linea, num_pedidio, codigo_comida, cantidad,
+                    precio_linea);
             toret.add(l);
         }
         return toret;
     }
 
-    public void setPedido (String nombreUsr, String fecha,String dir, String localidad, int cp, double importe, String obs){
+    public boolean setPedido (String nombreUsr, String fecha,String dir, String localidad, int cp,
+                              double importe, String obs){
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("nombre_usuario",nombreUsr);
@@ -224,7 +226,9 @@ public class DatabaseAccess {
         contentValues.put("importe_total",importe);
         contentValues.put("observaciones",obs);
 
-        db.insert("pedido", null, contentValues);
+        long res = db.insert("pedido", null, contentValues);
+
+        return res !=1;
     }
 
     public int getIdComida(String nombre){
@@ -261,9 +265,9 @@ public class DatabaseAccess {
     }
 
     public boolean checkLogin(String usuario, String pass) {
-        //TODO prevenir SQL injection
         //Comprobar existencia de usuario con contrasena
-        Cursor cursor = db.rawQuery("select count(nombre_usuario) from usuarios where nombre_usuario = ? and pass = ?",
+        Cursor cursor = db.rawQuery("select count(nombre_usuario) from usuarios " +
+                        "where nombre_usuario = ? and pass = ?",
                 new String[]{usuario, pass});
 
         int result = 0;

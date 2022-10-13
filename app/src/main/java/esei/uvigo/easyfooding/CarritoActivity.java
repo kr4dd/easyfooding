@@ -1,26 +1,21 @@
 package esei.uvigo.easyfooding;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -34,8 +29,7 @@ public class CarritoActivity extends AppCompatActivity {
   double precioImpuestos;
   double precioEnvio;
   AdaptadorPedido ap;
-  ArrayList<Comida> pago =
-      new ArrayList<>(); // se manda a la pestaña de pago para informar de la comida y las
+  ArrayList<Comida> pago = new ArrayList<>(); // se manda a la pestaña de pago para informar de la comida y las
   // cantidades
 
   @Override
@@ -91,8 +85,8 @@ public class CarritoActivity extends AppCompatActivity {
     setColoresAndroidModoOscuro();
   }
 
-  private void setColoresAndroidModoOscuro(){
-    //Colores de los textos de la navbar inferior
+  private void setColoresAndroidModoOscuro() {
+    // Colores de los textos de la navbar inferior
     TextView textoInicio = findViewById(R.id.textoInicio);
     textoInicio.setTextColor(Color.GRAY);
     TextView textoPerfil = findViewById(R.id.textoPerfil);
@@ -105,9 +99,8 @@ public class CarritoActivity extends AppCompatActivity {
     textoAjustes.setTextColor(Color.GRAY);
   }
 
-
-
-  // metodo que nos permite rellenar el array de objetos comida para mostrarlo luego en la lista
+  // metodo que nos permite rellenar el array de objetos comida para mostrarlo
+  // luego en la lista
   private void rellenarArrays() {
 
     listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
@@ -133,8 +126,8 @@ public class CarritoActivity extends AppCompatActivity {
   }
 
   private void crearLista() {
-    LinearLayoutManager linearLayoutManager =
-        new LinearLayoutManager(CarritoActivity.this, LinearLayoutManager.VERTICAL, false);
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CarritoActivity.this,
+        LinearLayoutManager.VERTICAL, false);
     listaProductos.setLayoutManager(linearLayoutManager);
     ap = new AdaptadorPedido();
     listaProductos.setAdapter(ap);
@@ -377,8 +370,7 @@ public class CarritoActivity extends AppCompatActivity {
   public void actualizaPago() {
     pago.clear();
     for (int x = listaProductos.getChildCount(), i = 0; i < x; ++i) {
-      RecyclerView.ViewHolder holder =
-          listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
+      RecyclerView.ViewHolder holder = listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
 
       // actualizacion del array
       TextView t = holder.itemView.findViewById(R.id.precio_total); // precio del producto
@@ -389,13 +381,12 @@ public class CarritoActivity extends AppCompatActivity {
       dataBaseAccess.open();
       int codigo = dataBaseAccess.getIdComida(nombreComida.getText().toString());
       dataBaseAccess.close();
-      Comida add =
-          new Comida(
-              nombreComida.getText().toString(),
-              Double.parseDouble(precioUno.getText().toString()),
-              Integer.parseInt(cantidad.getText().toString()),
-              codigo,
-              Double.parseDouble(t.getText().toString()));
+      Comida add = new Comida(
+          nombreComida.getText().toString(),
+          Double.parseDouble(precioUno.getText().toString()),
+          Integer.parseInt(cantidad.getText().toString()),
+          codigo,
+          Double.parseDouble(t.getText().toString()));
       pago.add(add);
     }
   }

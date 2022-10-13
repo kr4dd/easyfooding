@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -53,7 +54,7 @@ public class PedidosActivity extends AppCompatActivity {
 
 
     private void getHistorial() {
-        ArrayList<ListaPedidos> res =  new ArrayList<>();
+        ArrayList<ListaPedidos> res;
         DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         dataBaseAccess.open();
 
@@ -61,22 +62,18 @@ public class PedidosActivity extends AppCompatActivity {
         res = dataBaseAccess.historial("pepe");//aqui hay que meter el usuario logeado
 
         if(res.size() > 0){
-            ListView list = findViewById(R.id.ticket);
+            @SuppressLint("CutPasteId") ListView list = findViewById(R.id.ticket);
             TextView vacio = findViewById(R.id.sinPedidos);
             list.setVisibility(View.VISIBLE);
             vacio.setVisibility(View.INVISIBLE);
             //rellenamos la lista llamando a la clase adaptadora
-            ArrayAdapter<ListaPedidos> adapter = new listaAdapter(PedidosActivity.this,0,res);
-            ListView historial = findViewById(R.id.ticket);
+            ArrayAdapter<ListaPedidos> adapter = new listaAdapter(PedidosActivity.this, 0, res);
+            @SuppressLint("CutPasteId") ListView historial = findViewById(R.id.ticket);
             historial.setAdapter(adapter);
-            ArrayList<ListaPedidos> finalRes = res;
-            historial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                    Intent intent = new Intent(PedidosActivity.this,TicketActivity.class);
-                    intent.putExtra("numero_pedido", finalRes.get(pos).getNum_pedido());
-                    startActivity(intent);
-                }
+            historial.setOnItemClickListener((adapterView, view, pos, l) -> {
+                Intent intent = new Intent(PedidosActivity.this,TicketActivity.class);
+                intent.putExtra("numero_pedido", res.get(pos).getNum_pedido());
+                startActivity(intent);
             });
         }else{
             //anunciamos que no hay nada
@@ -90,7 +87,7 @@ public class PedidosActivity extends AppCompatActivity {
 
 
     //ArrayAdapder para la lista
-    public class listaAdapter extends ArrayAdapter<ListaPedidos>{
+    public static class listaAdapter extends ArrayAdapter<ListaPedidos>{
         private Context context;
         private List<ListaPedidos> listaHistorial;
 
@@ -134,27 +131,14 @@ public class PedidosActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
     private void cambiarActividad() {
 
         // Cambiar a la actividad de Inicio
         LinearLayout inicio = findViewById(R.id.inicio);
         inicio.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        finish();
-                        startActivity(new Intent(PedidosActivity.this, InicioActivity.class));
-                    }
+                view -> {
+                    finish();
+                    startActivity(new Intent(PedidosActivity.this, InicioActivity.class));
                 });
 
         // Cambiar a la actividad Perfil

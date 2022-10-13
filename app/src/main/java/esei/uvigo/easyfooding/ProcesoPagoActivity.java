@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 import esei.uvigo.easyfooding.objetosCarrito.Comida;
@@ -27,8 +28,8 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proceso_pago);
         Bundle datos = getIntent().getExtras();
-        getSupportActionBar().hide();
         setColoresAndroidModoOscuro();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         ArrayList<Comida> datosComidas = (ArrayList<Comida>) datos.get("datosProductos");
         String importe = (String) datos.get("importe");
         ConstraintLayout pago = findViewById(R.id.pagar);

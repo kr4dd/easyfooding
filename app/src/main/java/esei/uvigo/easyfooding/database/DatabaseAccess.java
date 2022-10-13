@@ -1,14 +1,14 @@
 package esei.uvigo.easyfooding.database;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import esei.uvigo.easyfooding.objetosCarrito.LineaPedidos;
 import esei.uvigo.easyfooding.objetosCarrito.ListaPedidos;
@@ -25,9 +25,8 @@ public class DatabaseAccess {
 
     // to return the single instance of database
     public static DatabaseAccess getInstance(Context context) {
-        if (instance == null) {
-            instance = new DatabaseAccess(context);
-        }
+        if (instance == null) instance = new DatabaseAccess(context);
+
         return instance;
     }
 
@@ -38,9 +37,7 @@ public class DatabaseAccess {
 
     // close the database connection
     public void close() {
-        if (db != null) {
-            this.db.close();
-        }
+        if (db != null) this.db.close();
     }
 
     // metodo para hacer una consulta del nombre de una categoria teniendo su
@@ -76,7 +73,7 @@ public class DatabaseAccess {
     // Obtener el nombre de todas las categorias
     public ArrayList<String> getNombresCategorias() {
         ArrayList<String> toret = new ArrayList<>();
-        Cursor cursor = db.rawQuery("SELECT DISTINCT(nombre_categoria) FROM categorias ORDER BY codigo_categoria",
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("SELECT DISTINCT(nombre_categoria) FROM categorias ORDER BY codigo_categoria",
                 null);
         while (cursor.moveToNext()) {
             String elemento = cursor.getString(0);
@@ -88,7 +85,7 @@ public class DatabaseAccess {
     // Obtener el codigo de las comidas que pertenecen a una categoria
     public ArrayList<Integer> getCodigoComidaPorCategoria(String nombreCategoria) {
         ArrayList<Integer> toret = new ArrayList<>();
-        Cursor cursor = db.rawQuery(
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(
                 "select com.codigo_comida from comidas com, categorias cat where com.categoria = cat.nombre_categoria and cat.nombre_categoria = ?",
                 new String[] { nombreCategoria });
         while (cursor.moveToNext()) {
@@ -112,7 +109,7 @@ public class DatabaseAccess {
     // Obtener los ids de las comidas dado un nombre
     public ArrayList<String> getDatosComidaPorId(String codigo_comida){
         ArrayList<String> toret = new ArrayList<>();
-        Cursor cursor = db.rawQuery("select nombre, descripcion, precio, valoracion, calorias, tiempo_preparacion\n" +
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select nombre, descripcion, precio, valoracion, calorias, tiempo_preparacion\n" +
                                         "from comidas \n" +
                                         "where codigo_comida = ?", new String[]{codigo_comida});
 
@@ -132,7 +129,7 @@ public class DatabaseAccess {
         // Añadir lso porcentajes antes de ejecutar la sentencia SQL con Like
         String[] selectionArgs = new String[] { "%" + nombreComida + "%" };
 
-        Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre like(?)", selectionArgs);
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre like(?)", selectionArgs);
         while (cursor.moveToNext()) {
             int elemento = Integer.parseInt(cursor.getString(0));
             toret.add(elemento);
@@ -146,7 +143,7 @@ public class DatabaseAccess {
 
         String[] selectionArgs = new String[] { "%bebida%" };
 
-        Cursor cursor = db.rawQuery("select nombre\n" +
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery("select nombre\n" +
                 "from comidas \n" +
                 "where categoria not like(?)", selectionArgs);
         while (cursor.moveToNext()) {
@@ -177,39 +174,9 @@ public class DatabaseAccess {
      * }
      */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //querys de Carrito y de historial pedidos
-    public  ArrayList<ListaPedidos> historial(String usuario) {
-        Cursor c = db.rawQuery("SELECT * FROM pedidos WHERE nombre_usuario = ?", new String[]{usuario});
-        StringBuffer buffer = new StringBuffer();
+    public ArrayList<ListaPedidos> historial(String usuario) {
+        @SuppressLint("Recycle") Cursor c = db.rawQuery("SELECT * FROM pedidos WHERE nombre_usuario = ?", new String[]{usuario});
         ArrayList<ListaPedidos> courseModalArrayList = new ArrayList<>();
 
         while(c.moveToNext()){
@@ -229,7 +196,7 @@ public class DatabaseAccess {
         return courseModalArrayList;
     }
 
-    public  ArrayList<LineaPedidos> getLineaPedidos(int numPedido){
+    public ArrayList<LineaPedidos> getLineaPedidos(int numPedido){
         String toQuery = String.valueOf(numPedido);
         Cursor c = db.rawQuery("SELECT * FROM linea_pedidos WHERE num_pedido = ?", new String[]{toQuery});
         ArrayList<LineaPedidos> toret = new ArrayList<>();
@@ -245,6 +212,7 @@ public class DatabaseAccess {
         }
         return toret;
     }
+
     public void setPedido (String nombreUsr, String fecha,String dir, String localidad, int cp, double importe, String obs){
         ContentValues contentValues = new ContentValues();
 
@@ -258,12 +226,53 @@ public class DatabaseAccess {
 
         db.insert("pedido", null, contentValues);
     }
+
     public int getIdComida(String nombre){
-        Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre = ?", new String[]{nombre});
+        Cursor cursor = db.rawQuery("select codigo_comida from comidas where nombre = ?",
+                new String[]{nombre});
         int toret = 0;
         if (cursor.moveToNext()) {
             toret = cursor.getInt(0);
         }
         return toret;
     }
+
+    public boolean insertarUsuario (String usuario, String pass, String nombre_real,
+                                    String apellidos, String correo, String tlfno,
+                                    String direccion, String localidad, int cp, String fechaAlta)
+    {
+
+        ContentValues cv = new ContentValues();
+
+        cv.put("nombre_usuario", usuario);
+        cv.put("pass", pass);
+        cv.put("nombre_real", nombre_real);
+        cv.put("apellidos", apellidos);
+        cv.put("mail", correo);
+        cv.put("telefono", tlfno);
+        cv.put("direccion", direccion);
+        cv.put("localidad", localidad);
+        cv.put("codigo_postal", cp);
+        cv.put("fecha_alta", fechaAlta);
+
+        long res = db.insertOrThrow("usuarios", null, cv);
+
+        return res != -1;
+    }
+
+    public boolean checkLogin(String usuario, String pass) {
+        //TODO prevenir SQL injection
+        //Comprobar existencia de usuario con contrasena
+        Cursor cursor = db.rawQuery("select count(nombre_usuario) from usuarios where nombre_usuario = ? and pass = ?",
+                new String[]{usuario, pass});
+
+        int result = 0;
+        while (cursor.moveToNext()) {
+            result = cursor.getInt(0);
+        }
+
+        return result == 1;
+
+    }
+
 }

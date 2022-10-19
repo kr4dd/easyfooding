@@ -13,7 +13,8 @@
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background_intro" />
+        app:srcCompat="@drawable/background_intro"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +25,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="106dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -31,7 +34,6 @@
                 android:id="@+id/txtViewTitleMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:text="@string/app_name"
                 android:textColor="#3d33a8"
@@ -46,6 +48,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -53,13 +57,12 @@
                 android:id="@+id/editTextLocalidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/localidad"
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
@@ -67,6 +70,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -74,11 +79,12 @@
                 android:id="@+id/editTextCodigoPostal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/codigoPostal"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,6 +93,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -94,7 +102,8 @@
                 android:id="@+id/editTextDireccion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/direccion"
@@ -106,6 +115,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -113,11 +124,12 @@
                 android:id="@+id/editTextTelefono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/telefono"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
@@ -125,6 +137,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -132,11 +146,12 @@
                 android:id="@+id/editTextCorreo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/mail"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textEmailAddress"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
@@ -144,6 +159,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -151,7 +168,8 @@
                 android:id="@+id/editTextApellidos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/apellidos"
@@ -163,6 +181,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -170,7 +190,8 @@
                 android:id="@+id/editTextNombreReal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/nombre_real"
@@ -182,6 +203,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -189,7 +212,8 @@
                 android:id="@+id/editTextPass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/pass"
@@ -201,6 +225,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -208,8 +234,8 @@
                 android:id="@+id/editTextUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="24dp"
+                android:autofillHints=""
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/username"
@@ -220,7 +246,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="217dp"
             android:layout_height="84dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
@@ -229,12 +255,21 @@
 
             <Button
                 android:id="@+id/btnLogearse"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="#3d33a8"
                 android:hint="@string/btnRegistrarse"
                 android:text="@string/btnRegistrarse" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/logoRegistro"
+            android:layout_width="178dp"
+            android:layout_height="172dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/logo" />
     </LinearLayout>
 
 </RelativeLayout>

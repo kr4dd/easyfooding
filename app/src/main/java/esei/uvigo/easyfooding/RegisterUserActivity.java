@@ -48,7 +48,6 @@ public class RegisterUserActivity extends AppCompatActivity {
                     }
 
                     //TODO anadir mensajes de error en campos de validacion
-                    //TODO dejar registro esteticamente chulo
                     //TODO reducir funciones compartidas con Login
                 });
 

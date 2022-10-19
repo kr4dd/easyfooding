@@ -23,7 +23,6 @@ public class WelcomeUserActivity extends AppCompatActivity {
         Button btnGoToRegistro = findViewById(R.id.btnGoRegistro);
         btnGoToRegistro.setOnClickListener(
                 view -> {
-                    finish();
                     startActivity(new Intent(this, RegisterUserActivity.class));
                 });
 
@@ -32,7 +31,6 @@ public class WelcomeUserActivity extends AppCompatActivity {
         Button btnGoToLogin = findViewById(R.id.btnGoLogin);;
         btnGoToLogin.setOnClickListener(
                 view -> {
-                    finish();
                     startActivity(new Intent(this, LoginUserActivity.class));
                 });
 

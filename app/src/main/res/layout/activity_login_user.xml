@@ -23,7 +23,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="231dp"
+            android:layout_height="138dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -45,6 +45,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -52,9 +54,9 @@
                 android:id="@+id/editTextUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="24dp"
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/username"
@@ -67,6 +69,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -74,7 +78,7 @@
                 android:id="@+id/editTextPass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:background="@drawable/rounded_edittext"
                 android:ems="10"
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/pass"
@@ -84,21 +88,30 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="217dp"
             android:layout_height="84dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:gravity="center"
+            android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnLogearse"
-                android:layout_width="wrap_content"
+                android:layout_width="207dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:hint="@string/btnRegistrarse"
+                android:backgroundTint="#3d33a8"
                 android:text="@string/btnLogearse" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/logoLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/logo" />
     </LinearLayout>
 
 </RelativeLayout>

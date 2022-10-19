@@ -43,7 +43,6 @@ public class LoginUserActivity extends AppCompatActivity {
                     }
 
                     //TODO anadir mensajes de error en campos de validacion
-                    //TODO dejar login esteticamente chulo
                 });
 
     }

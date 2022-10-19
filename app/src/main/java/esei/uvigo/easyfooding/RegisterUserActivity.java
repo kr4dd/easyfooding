@@ -151,12 +151,12 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     public boolean validarUsuario(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z]{4,40}$");
+        Pattern p = Pattern.compile("^[a-zA-Z]{3,40}$");
         return p.matcher(input).matches();
     }
 
     public boolean validarPass(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z0-9]{4,40}$");
+        Pattern p = Pattern.compile("^[a-zA-Z0-9]{3,40}$");
         return p.matcher(input).matches();
     }
 
@@ -186,7 +186,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     public boolean validarLocalidad(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z]{4,30}$");
+        Pattern p = Pattern.compile("^[a-zA-Z\\s]{4,35}$");
         return p.matcher(input).matches();
     }
 

@@ -294,7 +294,6 @@ public class DatabaseAccess {
     }
 
     public boolean checkLogin(String usuario, String pass) {
-        // Comprobar existencia de usuario con contrasena
         Cursor cursor = db.rawQuery("select count(nombre_usuario) from usuarios " +
                 "where nombre_usuario = ? and pass = ?",
                 new String[] { usuario, pass });

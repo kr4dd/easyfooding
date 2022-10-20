@@ -1,13 +1,7 @@
 package esei.uvigo.easyfooding;
 
-import esei.uvigo.easyfooding.database.DatabaseAccess;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -17,8 +11,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Objects;
+
+import esei.uvigo.easyfooding.database.DatabaseAccess;
 
 public class InicioActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
@@ -31,10 +29,8 @@ public class InicioActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Cargar saludo a usuario
-        SharedPreferences sp = getSharedPreferences("data", Context.MODE_PRIVATE);
-        String usernameSession = sp.getString("nombre_usuario", "");
         TextView msgBienvenida = findViewById(R.id.saludoUsuario);
-        msgBienvenida.setText("Hola, " + usernameSession);
+        msgBienvenida.setText("Hola, " + OperationsUserActivity.getUserFromSession(this));
 
         //Cambiar colores en el modo noche del dispositivo físico
         setColoresAndroidModoOscuro();
@@ -189,7 +185,7 @@ public class InicioActivity extends AppCompatActivity {
                 });
 
         // Cambiar a la actividad Perfil
-        LinearLayout perfil = findViewById(R.id.perfil);;
+        LinearLayout perfil = findViewById(R.id.perfil);
         perfil.setOnClickListener(
                 view -> {
                     finish();

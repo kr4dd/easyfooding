@@ -214,7 +214,27 @@ public class DatabaseAccess {
         return toret;
     }
 
-    public boolean setPedido (String nombreUsr, String fecha,String dir, String localidad, int cp,
+    public int getMaxidPedido(){
+        Cursor cursor = db.rawQuery("select max(num_pedido) from pedidos",
+                null);
+        int toret = 0;
+        if (cursor.moveToNext()) {
+            toret = cursor.getInt(0);
+        }
+        return toret;
+    }
+
+    public int getMaxidLineaPedidos(){
+        Cursor cursor = db.rawQuery("select max(num_linea) from linea_pedidos ",
+                null);
+        int toret = 0;
+        if (cursor.moveToNext()) {
+            toret = cursor.getInt(0);
+        }
+        return toret;
+    }
+
+    public boolean insertPedido (int numPedido,String nombreUsr, String fecha,String dir, String localidad, int cp,
                               double importe, String obs){
         ContentValues contentValues = new ContentValues();
 
@@ -226,9 +246,23 @@ public class DatabaseAccess {
         contentValues.put("importe_total",importe);
         contentValues.put("observaciones",obs);
 
-        long res = db.insert("pedido", null, contentValues);
+        long res = db.insert("pedidos", null, contentValues);
 
         return res !=1;
+    }
+
+    public boolean insertLinea(int numLinea,int numPedido,int codigoComida,int cantidad,double precioLinea){
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("num_linea",numLinea);
+        contentValues.put("num_pedido",numPedido);
+        contentValues.put("codigo_comida",codigoComida);
+        contentValues.put("cantidad",cantidad);
+        contentValues.put("precioLinea",precioLinea);
+        long res = db.insert("linea_pedidos", null, contentValues);
+
+        return res !=1;
+
     }
 
     public int getIdComida(String nombre){

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -40,15 +39,15 @@ public class CarritoActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     getSupportActionBar().hide();
     setContentView(R.layout.activity_carrito);
-    Toast.makeText(CarritoActivity.this, OperationsUserActivity.getUserFromSession(this),Toast.LENGTH_LONG).show();
+
     listaProductos = findViewById(R.id.listaComida);
     precioImpuestos = 0.21;
     precioEnvio = 3.50;
 
     TextView gobierno = findViewById(R.id.impuesto);
-    TextView envio = findViewById(R.id.envio);
+    TextView gasofa = findViewById(R.id.envio);
     gobierno.setText(String.valueOf(precioImpuestos));
-    envio.setText(String.valueOf(precioEnvio));
+    gasofa.setText(String.valueOf(precioEnvio));
 
     // para la barra de movimientos
     cambiarActividad();

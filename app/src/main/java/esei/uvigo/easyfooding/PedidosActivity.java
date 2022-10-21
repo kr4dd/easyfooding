@@ -59,7 +59,7 @@ public class PedidosActivity extends AppCompatActivity {
         dataBaseAccess.open();
 
         //ejecutamos query
-        res = dataBaseAccess.historial("pepe");//aqui hay que meter el usuario logeado
+        res = dataBaseAccess.historial(OperationsUserActivity.getUserFromSession(this));//aqui hay que meter el usuario logeado
 
         if(res.size() > 0){
             @SuppressLint("CutPasteId") ListView list = findViewById(R.id.ticket);

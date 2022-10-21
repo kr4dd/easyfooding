@@ -88,7 +88,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     private void insertarPedido(ArrayList<Comida> comidas, String importe,
                                 String varDireccion, String varCiudad, String varCodigo, String varObs) {
 
-        String nombreUsuario = "pepe";//aqui iria el user que se autentico
+        String nombreUsuario = OperationsUserActivity.getUserFromSession(this);//aqui iria el user que se autentico
         String fecha = getDateIntoSpanishStringFormat();//llamamos a la funcion que nos devuelve la fecha actual
         String direccion = varDireccion;
         String localidad = varCiudad;
@@ -101,7 +101,13 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         int idNuevoPedido = maxId +1;
         boolean insert = dataBaseAccess.insertarPedido(idNuevoPedido,nombreUsuario,fecha,direccion,localidad,cp,precio,observaciones);
         Toast.makeText(ProcesoPagoActivity.this,String.valueOf(insert),Toast.LENGTH_LONG).show();
-        //todo implementar la insercion del pedido (en el pedido hay que cojer la fecha actual con la funcion de diego) y de la linea
+        /*todo implementar la insercion de linea pedido (en el pedido hay que cojer la fecha actual con la funcion de diego) y de la linea
+        *   -para la linea -> Cojer el Maxid
+        *   -->recorrer el array de comidas y añadir cada una a una linea distinta
+        *   --> por cada linea buscar el precio de esa comida en la base de datos y multiplicar por la cantidad
+        *   -->Para el numPedido tenemos que cojer el de esta funcion, idNuevoPedido
+        *   -->Implementar una redireccion a la actividad inicio despues del pago*/
+
     }
     public String getDateIntoSpanishStringFormat() {
         Calendar cal = Calendar.getInstance();

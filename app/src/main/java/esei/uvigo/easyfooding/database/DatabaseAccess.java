@@ -242,6 +242,17 @@ public class DatabaseAccess {
 
         return res != 1;
     }
+    public boolean insertarLineaPedido(int idLinea,int numPedido, int codigoComida, int cantidad, double precio){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("num_linea",idLinea);
+        contentValues.put("num_pedido",numPedido);
+        contentValues.put("codigo_comida",codigoComida);
+        contentValues.put("cantidad",cantidad);
+        contentValues.put("precio_linea",precio);
+        long res = db.insertOrThrow("linea_pedidos", null, contentValues);
+
+        return res != 1;
+    }
 
     public int getMaxIdPedido(){
         Cursor c = db.rawQuery("SELECT MAX(num_pedido)  AS max_id FROM pedidos", null);

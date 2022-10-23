@@ -77,7 +77,7 @@ public class CarritoActivity extends AppCompatActivity {
                 TextView total = findViewById(R.id.suma);
                 String suma = total.getText().toString();
                 intent.putExtra("importe", suma);
-                intent.putExtra("datosProductos", pago);
+                intent.putExtra("datosProductos", listaComida);
                 startActivity(intent);
               }
             }
@@ -104,9 +104,6 @@ public class CarritoActivity extends AppCompatActivity {
   // luego en la lista
   private void rellenarArrays() {
 
-    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
-    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
-    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
     listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
     listaComida.add(new Comida("Patacon", 4.0, 2, 3));
     TextView precio = findViewById(R.id.suma);

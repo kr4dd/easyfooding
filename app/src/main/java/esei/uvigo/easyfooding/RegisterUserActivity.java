@@ -1,26 +1,22 @@
 package esei.uvigo.easyfooding;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 
 public class RegisterUserActivity extends AppCompatActivity {
-    String usuario;
+    private UsuarioRegistro ur;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +33,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 view -> {
                     if(registrarUsuario(databaseAccess)) {
                         //Crear sesion de usuario
-                        OperationsUserActivity.setSession(this, usuario);
+                        OperationsUserActivity.setSession(this, ur.getUsuario());
 
                         //Mandar a inicio
                         goToInicio();
@@ -49,53 +45,38 @@ public class RegisterUserActivity extends AppCompatActivity {
     public boolean registrarUsuario(DatabaseAccess db) {
         //Recoger datos
         EditText editTextUsuario = findViewById(R.id.editTextUsuario);
-        usuario = editTextUsuario.getText().toString();
-
         EditText editTextPass = findViewById(R.id.editTextPass);
-        String pass = editTextPass.getText().toString();
-
         EditText editTextNombre_real = findViewById(R.id.editTextNombreReal);
-        String nombre_real = editTextNombre_real.getText().toString();
-
         EditText editTextApellidos = findViewById(R.id.editTextApellidos);
-        String apellidos = editTextApellidos.getText().toString();
-
         EditText editTextCorreo = findViewById(R.id.editTextCorreo);
-        String correo = editTextCorreo.getText().toString();
-
         EditText editTextTlfno = findViewById(R.id.editTextTelefono);
-        String tlfno = editTextTlfno.getText().toString();
-
         EditText editTextDireccion = findViewById(R.id.editTextDireccion);
-        String direccion = editTextDireccion.getText().toString();
-
         EditText editTextLocalidad = findViewById(R.id.editTextLocalidad);
-        String localidad = editTextLocalidad.getText().toString();
-
         EditText editTextCp = findViewById(R.id.editTextCodigoPostal);
-        int cp;
-        try {
-            cp = Integer.parseInt(editTextCp.getText().toString());
 
-        } catch (NumberFormatException e) {
-            cp = 00000;
-        }
+        ur = new UsuarioRegistro(editTextUsuario, editTextPass, editTextNombre_real,
+                editTextApellidos, editTextCorreo, editTextTlfno, editTextDireccion,
+                editTextLocalidad, editTextCp, OperationsUserActivity.getActualDateSpanishStrFormat());
 
-        // Sample "02/08/22";
-        String fechaAlta = OperationsUserActivity.getActualDateSpanishStrFormat();
-
-
-        //Validarlos
-        if(!validateInputFields(usuario, pass, nombre_real, apellidos, correo, tlfno,
-                direccion, localidad, cp))
+        //Validar datos
+        if(!validateInputFields(ur.getUsuario(),
+                OperationsUserActivity.hashearMD5(ur.getPass()),
+                ur.getNombreReal(), ur.getApellidos(),
+                ur.getCorreo(), ur.getTlfno(),
+                ur.getDireccion(), ur.getLocalidad(),
+                ur.getCp()))
         {
              return false;
         }
 
-        //Insertar en DB
+        //Insertar datos en DB
         db.open();
-        boolean res = db.insertarUsuario(usuario, OperationsUserActivity.hashearMD5(pass), nombre_real, apellidos, correo, tlfno,
-                direccion, localidad, cp, fechaAlta);
+        boolean res = db.insertarUsuario(ur.getUsuario(),
+                                    OperationsUserActivity.hashearMD5(ur.getPass()),
+                                    ur.getNombreReal(), ur.getApellidos(),
+                                    ur.getCorreo(), ur.getTlfno(),
+                                    ur.getDireccion(), ur.getLocalidad(),
+                                    ur.getCp(), ur.getFechaAlta());
         db.close();
 
         return res;

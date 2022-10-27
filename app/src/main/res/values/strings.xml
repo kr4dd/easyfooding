@@ -55,7 +55,21 @@
     <string name="telefono">Teléfono</string>
     <string name="btnRegistrarse">Registrarse</string>
 
+    <!-- Register panel errores -->
+    <string name="usernameErr">Usuario de 3 a 40 letras o números y sin espacios</string>
+    <string name="passErr">Contraseña de 3 a 40 letras o números y sin espacios</string>
+    <string name="nombreRealErr">Nombre de 3 a 40 letras y sin espacios</string>
+    <string name="apellidosErr">Apellidos de 2 a 40 letras</string>
+    <string name="mailErr">Formato de email como ejemplo@mail.es</string>
+    <string name="telefonoErr">Nueve números y sin prefijo</string>
+    <string name="direccionErr">Dirección de 4 a 60 letras, números, con espacios</string>
+    <string name="localidadErr">Localidad de 4 a 35 letras o con espacios</string>
+    <string name="codigoPostalErr">Formato 12345</string>
+
     <!-- Login panel -->
     <string name="btnLogearse">Iniciar sesión</string>
+
+    <!-- Login panel errores -->
+    <string name="loginErr">Usuario o contraseña no válidos</string>
 
 </resources>

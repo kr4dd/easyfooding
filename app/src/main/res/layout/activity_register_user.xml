@@ -24,9 +24,9 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="106dp"
+            android:layout_height="63dp"
             android:layout_marginStart="4dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
@@ -48,7 +48,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -65,12 +65,29 @@
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errLocalidad"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/localidadErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -93,7 +110,23 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/errCodigoPostal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/codigoPostalErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -110,12 +143,29 @@
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errDireccion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/direccionErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -132,12 +182,29 @@
                 android:inputType="number"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/telefonoErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -154,12 +221,29 @@
                 android:inputType="textPersonName|textEmailAddress"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/mailErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -176,12 +260,29 @@
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/apellidosErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -198,12 +299,29 @@
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errNombreReal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/nombreRealErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -220,12 +338,29 @@
                 android:inputType="textPassword"
                 app:layout_constraintStart_toStartOf="@+id/editTextUsuario"
                 app:layout_constraintTop_toBottomOf="@+id/editTextUsuario" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errContrasena"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/passErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
@@ -243,6 +378,23 @@
                 app:layout_constraintBottom_toTopOf="@+id/editTextPass"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/usernameErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
@@ -263,13 +415,6 @@
                 android:text="@string/btnRegistrarse" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/logoRegistro"
-            android:layout_width="178dp"
-            android:layout_height="172dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/logo" />
     </LinearLayout>
 
 </RelativeLayout>

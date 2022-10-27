@@ -2,10 +2,14 @@ package esei.uvigo.easyfooding;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 
@@ -16,6 +20,9 @@ public class LoginUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_user);
+
+        //Ocultar la barra con el titulo
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
 
@@ -28,11 +35,8 @@ public class LoginUserActivity extends AppCompatActivity {
 
                         //Mandar a inicio
                         goToInicio();
-                    } else {
-                        goToWelcomeScreen();
                     }
 
-                    //TODO anadir mensajes de error en campos de validacion
                 });
 
     }
@@ -44,28 +48,28 @@ public class LoginUserActivity extends AppCompatActivity {
         EditText editTextPass = findViewById(R.id.editTextPass);
         String pass = editTextPass.getText().toString();
 
+        //Validar contra la base de datos
         boolean isAllow;
         db.open();
         isAllow = db.checkLogin(usuario, OperationsUserActivity.hashearMD5(pass));
         db.close();
 
+        //Mensaje en caso de login no autorizado
+        TextView errMsg = findViewById(R.id.errLogin);
+        if(!isAllow) {
+            errMsg.setVisibility(View.VISIBLE); //Muestra el error
+        } else {
+            errMsg.setVisibility(View.GONE); //Hace que el error desaparezca
+        }
+
         return isAllow;
     }
 
     public void goToInicio() {
-        OperationsUserActivity.showToastMsg(this, "Login correcto");
-
         finish();
 
         startActivity(new Intent(this, InicioActivity.class));
     }
 
-    public void goToWelcomeScreen() {
-        OperationsUserActivity.showToastMsg(this, "Login incorrecto");
-
-        finish();
-
-        startActivity(new Intent(this, WelcomeUserActivity.class));
-    }
 
 }

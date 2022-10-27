@@ -28,7 +28,7 @@
         android:layout_height="67dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/boton_carrito_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,8 +144,8 @@
 
     <EditText
         android:id="@+id/obs"
-        android:layout_width="249dp"
-        android:layout_height="68dp"
+        android:layout_width="247dp"
+        android:layout_height="113dp"
         android:layout_marginTop="60dp"
         android:background="@drawable/fondo_carrito"
         android:ems="10"
@@ -155,32 +155,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/codigoPost"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <RadioGroup
-        android:id="@+id/metodoPago"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/pagar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/obs">
-
-        <RadioButton
-            android:id="@+id/efectivo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/efectivo" />
-
-        <RadioButton
-            android:id="@+id/tarjeta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tarjeta" />
-    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

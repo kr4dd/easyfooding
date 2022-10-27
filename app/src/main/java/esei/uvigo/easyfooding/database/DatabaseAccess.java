@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import esei.uvigo.easyfooding.objetosCarrito.Comida;
 import esei.uvigo.easyfooding.objetosCarrito.LineaPedidos;
 import esei.uvigo.easyfooding.objetosCarrito.ListaPedidos;
 
@@ -241,6 +242,22 @@ public class DatabaseAccess {
         long res = db.insertOrThrow("pedidos", null, contentValues);
 
         return res != 1;
+    }
+    public ArrayList<Comida> getDatosComida(int numComida,int cantidad){
+        String toQuery = String.valueOf(numComida);
+        Cursor c = db.rawQuery("SELECT * FROM linea_pedidos WHERE num_pedido = ?", new String[] { toQuery });
+        ArrayList<Comida> toret = new ArrayList<>();
+        while (c.moveToNext()) {
+            int codigo = Integer.parseInt(c.getString(0));
+            String nombre = c.getString(1);
+            String descripcion = c.getString(2);
+            Double precio = Double.parseDouble(c.getString(3));
+            int numero = cantidad;
+            Double pTotal = numero*precio;
+            Comida datosComida = new Comida(nombre,precio,cantidad,codigo);
+            toret.add(datosComida);
+        }
+        return toret;
     }
     public boolean insertarLineaPedido(int idLinea,int numPedido, int codigoComida, int cantidad, double precio){
         ContentValues contentValues = new ContentValues();

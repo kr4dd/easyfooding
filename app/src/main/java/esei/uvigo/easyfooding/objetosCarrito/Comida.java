@@ -59,10 +59,6 @@ public class Comida implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
-
     @Override
     public String toString() {
         return "Comida{" +

@@ -118,13 +118,6 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     }
     Intent intent = new Intent(ProcesoPagoActivity.this, InicioActivity.class);
     startActivity(intent);
-    /*todo implementar la insercion de linea pedido (en el pedido hay que cojer la fecha actual con la funcion de diego) y de la linea
-     *   -para la linea -> Cojer el Maxid
-     *   -->recorrer el array de comidas y añadir cada una a una linea distinta
-     *   --> por cada linea buscar el precio de esa comida en la base de datos y multiplicar por la cantidad
-     *   -->Para el numPedido tenemos que cojer el de esta funcion, idNuevoPedido
-     *   -->Implementar una redireccion a la actividad inicio despues del pago*/
-
   }
 
   private void insertarLineasPedido(int idPedido,Comida comida) {
@@ -135,11 +128,12 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     dataBaseAccess.close();
     int idActual = maxIDLinea + 1;
     int codigoComida = comida.getCodigo();
-    int cantidad = comida.getCantidad();
+    int cantidad = comida.getCantidad();//todo - calculo del total
     double precio = comida.getPrecio();
+    double precioTotal = precio * cantidad;
     dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
-    boolean res = dataBaseAccess.insertarLineaPedido(idActual, idPedido, codigoComida, cantidad, precio);
+    boolean res = dataBaseAccess.insertarLineaPedido(idActual, idPedido, codigoComida, cantidad, precioTotal);
     Toast.makeText(ProcesoPagoActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
     dataBaseAccess.close();
   }

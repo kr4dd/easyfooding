@@ -243,19 +243,18 @@ public class DatabaseAccess {
 
         return res != 1;
     }
-    public ArrayList<Comida> getDatosComida(int numComida,int cantidad){
+    public Comida getDatosComida(int numComida,int cantidad){
         String toQuery = String.valueOf(numComida);
         Cursor c = db.rawQuery("SELECT * FROM linea_pedidos WHERE num_pedido = ?", new String[] { toQuery });
-        ArrayList<Comida> toret = new ArrayList<>();
+        Comida toret = new Comida();
         while (c.moveToNext()) {
             int codigo = Integer.parseInt(c.getString(0));
             String nombre = c.getString(1);
-            String descripcion = c.getString(2);
             Double precio = Double.parseDouble(c.getString(3));
-            int numero = cantidad;
-            Double pTotal = numero*precio;
-            Comida datosComida = new Comida(nombre,precio,cantidad,codigo);
-            toret.add(datosComida);
+            toret.setCantidad(cantidad);
+            toret.setPrecio(precio);
+            toret.setNombre(nombre);
+            toret.setCodigo(codigo);
         }
         return toret;
     }

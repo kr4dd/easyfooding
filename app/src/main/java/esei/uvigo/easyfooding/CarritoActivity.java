@@ -1,7 +1,9 @@
 package esei.uvigo.easyfooding;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -79,6 +85,8 @@ public class CarritoActivity extends AppCompatActivity {
                 intent.putExtra("importe", suma);
                 intent.putExtra("datosProductos", listaComida);
                 startActivity(intent);
+                listaComida.clear();
+                listaProductos.notify();
               }
             }
           });
@@ -122,6 +130,45 @@ public class CarritoActivity extends AppCompatActivity {
       precio.setText(df.format(total));
     }
   }
+
+  /*private void recuperarComidasEnCarro(){
+
+    //recuperamos el arraylist de objetos "ObjtosCarrito" que tienen el id y la cantidad de cada producto
+    SharedPreferences sharedPreferences = getSharedPreferences("ComidaEnCarro", Context.MODE_PRIVATE);
+    Gson gson = new Gson();
+    String comidas = sharedPreferences.getString("lista",null);
+    Type type = new TypeToken<ArrayList<ObjtosCarrito>>(){}.getType();
+    ArrayList<ObjtosCarrito> comidasRecuperadas  = new ArrayList<>();
+    comidasRecuperadas = gson.fromJson(comidas,type);
+    if(comidasRecuperadas == null){
+      comidasRecuperadas = new ArrayList<>();
+    }
+
+    //Recuperamos cada objeto añadido al carrito y metemos sus datos en el array de lista comidas
+    for(int i = 0; i<comidasRecuperadas.size();i++){
+      int id = comidasRecuperadas.get(i).getId();
+      int cantidad = comidasRecuperadas.get(i).getCantidad();
+      DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+      dataBaseAccess.open();
+      Comida c = dataBaseAccess.getDatosComida(id,cantidad);
+      listaComida.add(c);
+    }
+    TextView precio = findViewById(R.id.suma);
+    TextView precioComida = findViewById(R.id.precioTotal);
+
+    // una vez rellenada seteamos los valores iniciales si no esta vacia
+    if (listaComida.size() > 0) {
+      double total = 0;
+      for (int i = 0; i < listaComida.size(); i++) {
+        total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
+      }
+      precioComida.setText(String.valueOf(total));
+      double iva = total * precioImpuestos;
+      total = total + iva + precioEnvio;
+      DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
+      precio.setText(df.format(total));
+    }
+  }*/
 
   private void crearLista() {
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CarritoActivity.this,

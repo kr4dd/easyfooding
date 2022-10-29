@@ -8,68 +8,54 @@
 
 
     <TextView
-        android:id="@+id/nombre_usuario"
-        android:layout_width="62dp"
-        android:layout_height="17dp"
-        android:layout_marginBottom="37dp"
-        android:text="Nombre"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/fecha_pedido"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
         android:id="@+id/fecha_pedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="80dp"
         android:text="Fecha"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/localidad"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/direccion"
         android:layout_width="59dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginEnd="248dp"
         android:text="Direccion"
         android:textColor="#000000"
-        app:layout_constraintStart_toEndOf="@+id/localidad"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/dir"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/codigo_postal"
         android:layout_width="59dp"
         android:layout_height="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="30dp"
         android:text="Codigo postal"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fecha_pedido" />
+        app:layout_constraintEnd_toEndOf="@+id/localidad"
+        app:layout_constraintStart_toEndOf="@+id/codigo"
+        app:layout_constraintTop_toTopOf="@+id/codigo" />
 
     <TextView
         android:id="@+id/localidad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="35dp"
+        android:layout_width="64dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="68dp"
         android:text="Localidad"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="@+id/direccion"
-        app:layout_constraintStart_toEndOf="@+id/fecha_pedido"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/fecha_pedido" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="102dp"
-        android:layout_height="49dp"
+        android:layout_width="95dp"
+        android:layout_height="45dp"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/pill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,6 +76,63 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/fecha"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/fecha_pedido"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/barrio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/localidad"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/localidad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fecha" />
+
+    <TextView
+        android:id="@+id/dir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/direccion"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/direccion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barrio" />
+
+    <TextView
+        android:id="@+id/codigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/codigoPostal"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dir"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,14 +79,13 @@ public class PedidosActivity extends AppCompatActivity {
     super.onResume();
     Toast.makeText(PedidosActivity.this,"Hola",Toast.LENGTH_LONG).show();
     ListView ticket = (ListView) this.findViewById(R.id.ticket);
-    ticket.setAdapter(null);
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
     ArrayList<ListaPedidos> nuevaLista = dataBaseAccess.historial(OperationsUserActivity.getUserFromSession(this));
+    adapter.clear();
+    adapter.addAll(nuevaLista);
+    adapter.notifyDataSetChanged();
     dataBaseAccess.close();
-    ArrayAdapter<ListaPedidos>   newAdapter;
-    newAdapter = new listaAdapter(PedidosActivity.this, 0, nuevaLista);
-    ticket.setAdapter(newAdapter);
   }
 
   // ArrayAdapder para la lista

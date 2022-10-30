@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -70,27 +71,7 @@ public class CarritoActivity extends AppCompatActivity {
     }
 
     // Accion para mandar al usuario a la actividad de pago
-
-    ConstraintLayout pagar = findViewById(R.id.pagar);
-    if (listaComida.size() > 0) {
-      pagar.setOnClickListener(
-          new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              actualizaPago();
-              if (listaComida.size() > 0) {
-                Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
-                TextView total = findViewById(R.id.suma);
-                String suma = total.getText().toString();
-                intent.putExtra("importe", suma);
-                intent.putExtra("datosProductos", listaComida);
-                startActivity(intent);
-                listaComida.clear();
-                listaProductos.notify();
-              }
-            }
-          });
-    }
+    activarPago();
     setColoresAndroidModoOscuro();
   }
 
@@ -112,8 +93,8 @@ public class CarritoActivity extends AppCompatActivity {
   // luego en la lista
   private void rellenarArrays() {
 
-    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
-    listaComida.add(new Comida("Patacon", 4.0, 2, 3));
+    //listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
+    //listaComida.add(new Comida("Patacon", 4.0, 2, 3));
     TextView precio = findViewById(R.id.suma);
     TextView precioComida = findViewById(R.id.precioTotal);
 
@@ -131,6 +112,53 @@ public class CarritoActivity extends AppCompatActivity {
     }
   }
 
+  protected void onResume() {
+    super.onResume();
+    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
+    listaComida.add(new Comida("Patacon", 4.0, 2, 3));
+
+    TextView precio = findViewById(R.id.suma);
+    TextView precioComida = findViewById(R.id.precioTotal);
+
+    // una vez rellenada seteamos los valores iniciales si no esta vacia
+    if (listaComida.size() > 0) {
+      double total = 0;
+      for (int i = 0; i < listaComida.size(); i++) {
+        total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
+      }
+      precioComida.setText(String.valueOf(total));
+      double iva = total * precioImpuestos;
+      total = total + iva + precioEnvio;
+      DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
+      precio.setText(df.format(total));
+    }
+    crearLista();
+    activarPago();
+  }
+  public void activarPago(){
+    ConstraintLayout pagar = findViewById(R.id.pagar);
+    if (listaComida.size() > 0) {
+      pagar.setOnClickListener(
+              new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                  actualizaPago();
+                  if (listaComida.size() > 0) {
+                    Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
+                    TextView total = findViewById(R.id.suma);
+                    String suma = total.getText().toString();
+                    intent.putExtra("importe", suma);
+                    intent.putExtra("datosProductos", listaComida);
+                    startActivity(intent);
+                    //limpiamos el carrito
+                    int size = listaComida.size();
+                    listaComida.clear();
+                    ap.notifyDataSetChanged();
+                  }
+                }
+              });
+    }
+  }
   /*private void recuperarComidasEnCarro(){
 
     //recuperamos el arraylist de objetos "ObjtosCarrito" que tienen el id y la cantidad de cada producto

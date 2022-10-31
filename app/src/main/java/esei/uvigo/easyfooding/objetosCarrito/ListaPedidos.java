@@ -6,11 +6,11 @@ public class ListaPedidos {
     private String fecha;
     private String direccion;
     private String localidad;
-    private float codigoPostal;
+    private int codigoPostal;
     private double importe;
     private String observaciones;
 
-    public ListaPedidos(int num_pedido, String nombreUsuario, String fecha, String direccion, String localidad, float codigoPostal, double importe, String observaciones) {
+    public ListaPedidos(int num_pedido, String nombreUsuario, String fecha, String direccion, String localidad, int codigoPostal, double importe, String observaciones) {
         this.num_pedido = num_pedido;
         this.nombreUsuario = nombreUsuario;
         this.fecha = fecha;
@@ -63,7 +63,7 @@ public class ListaPedidos {
         return localidad;
     }
 
-    public float getCodioPostal() {
+    public int getCodioPostal() {
         return codigoPostal;
     }
 
@@ -91,7 +91,7 @@ public class ListaPedidos {
         this.localidad = localidad;
     }
 
-    public void setCodioPostal(float codioPostal) {
+    public void setCodioPostal(int codioPostal) {
         this.codigoPostal = codioPostal;
     }
 

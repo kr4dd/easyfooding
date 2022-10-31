@@ -116,6 +116,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     for(int i = 0; i<comidas.size();i++){
       insertarLineasPedido(idNuevoPedido,comidas.get(i));
     }
+    //todo aqui llamamos a la funcion de eliminacion de la BD
     Intent intent = new Intent(ProcesoPagoActivity.this, InicioActivity.class);
     startActivity(intent);
   }
@@ -128,7 +129,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     dataBaseAccess.close();
     int idActual = maxIDLinea + 1;
     int codigoComida = comida.getCodigo();
-    int cantidad = comida.getCantidad();//todo - calculo del total
+    int cantidad = comida.getCantidad();
     double precio = comida.getPrecio();
     double precioTotal = precio * cantidad;
     dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());

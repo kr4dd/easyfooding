@@ -15,39 +15,46 @@
         android:layout_marginEnd="80dp"
         android:text="Fecha"
         android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/localidad"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="@+id/localidad"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/direccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="248dp"
         android:text="Direccion"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/dir"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/codigo_postal"
+        app:layout_constraintStart_toStartOf="@+id/codigo_postal" />
 
     <TextView
         android:id="@+id/codigo_postal"
-        android:layout_width="59dp"
-        android:layout_height="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
+        android:layout_marginEnd="207dp"
+        android:inputType="number"
+        android:minHeight="48dp"
         android:text="Codigo postal"
         android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="@+id/localidad"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/codigo"
         app:layout_constraintTop_toTopOf="@+id/codigo" />
 
     <TextView
         android:id="@+id/localidad"
-        android:layout_width="64dp"
+        android:layout_width="wrap_content"
         android:layout_height="16dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="68dp"
         android:text="Localidad"
         android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/direccion"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
+        app:layout_constraintStart_toStartOf="@+id/direccion"
         app:layout_constraintTop_toBottomOf="@+id/fecha_pedido" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,6 +66,7 @@
         android:background="@drawable/pill"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.748"
         app:layout_constraintStart_toEndOf="@+id/direccion"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -81,58 +89,57 @@
         android:id="@+id/fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:text="@string/fecha"
         android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/fecha_pedido"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/barrio"
+        app:layout_constraintEnd_toEndOf="@+id/barrio"
+        app:layout_constraintStart_toStartOf="@+id/barrio"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <TextView
         android:id="@+id/barrio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="1dp"
         android:text="@string/localidad"
         android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/localidad"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/dir"
+        app:layout_constraintEnd_toEndOf="@+id/dir"
+        app:layout_constraintStart_toStartOf="@+id/dir"
         app:layout_constraintTop_toBottomOf="@+id/fecha" />
 
     <TextView
         android:id="@+id/dir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:text="@string/direccion"
         android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/direccion"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/codigo"
+        app:layout_constraintEnd_toEndOf="@+id/codigo"
+        app:layout_constraintStart_toStartOf="@+id/codigo"
         app:layout_constraintTop_toBottomOf="@+id/barrio" />
 
     <TextView
         android:id="@+id/codigo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="19dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="37dp"
         android:text="@string/codigoPostal"
         android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/codigo_postal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dir"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/dir" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -119,7 +119,7 @@ public class PedidosActivity extends AppCompatActivity {
 
       fecha_pedido.setText(objActual.getFecha());
       direccion.setText(objActual.getDireccion());
-      codigo_postal.setText(Float.toString(objActual.getCodioPostal()));
+      codigo_postal.setText(Integer.toString(objActual.getCodioPostal()));
       localidad.setText(objActual.getLocalidad());
 
       double total = objActual.getImporte();

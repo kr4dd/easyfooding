@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.objetosCarrito.Carrito;
 import esei.uvigo.easyfooding.objetosCarrito.Comida;
 
 public class CarritoActivity extends AppCompatActivity {
@@ -37,7 +38,8 @@ public class CarritoActivity extends AppCompatActivity {
   double precioImpuestos;
   double precioEnvio;
   AdaptadorPedido ap;
-  ArrayList<Comida> pago = new ArrayList<>(); // se manda a la pestaña de pago para informar de la comida y las
+  ArrayList<Comida> pago =
+      new ArrayList<>(); // se manda a la pestaña de pago para informar de la comida y las
   // cantidades
 
   @Override
@@ -59,7 +61,7 @@ public class CarritoActivity extends AppCompatActivity {
     // para la barra de movimientos
     cambiarActividad();
     // Recuperamos los datos de compra
-    rellenarArrays();
+    recuperarComidasEnCarro();
     if (listaComida.size() < 1) {
       ConstraintLayout vacio = findViewById(R.id.vacio);
       vacio.setVisibility(View.VISIBLE);
@@ -75,52 +77,63 @@ public class CarritoActivity extends AppCompatActivity {
     setColoresAndroidModoOscuro();
   }
 
-  private void setColoresAndroidModoOscuro() {
-    // Colores de los textos de la navbar inferior
-    TextView textoInicio = findViewById(R.id.textoInicio);
-    textoInicio.setTextColor(Color.GRAY);
-    TextView textoPerfil = findViewById(R.id.textoPerfil);
-    textoPerfil.setTextColor(Color.GRAY);
-    TextView textoCarrito = findViewById(R.id.textoCarrito);
-    textoCarrito.setTextColor(Color.GRAY);
-    TextView textoPedidos = findViewById(R.id.textoPedidos);
-    textoPedidos.setTextColor(Color.GRAY);
-    TextView textoAjustes = findViewById(R.id.textoAjustes);
-    textoAjustes.setTextColor(Color.GRAY);
-  }
-
-  // metodo que nos permite rellenar el array de objetos comida para mostrarlo
-  // luego en la lista
-  private void rellenarArrays() {
-
-    //listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
-    //listaComida.add(new Comida("Patacon", 4.0, 2, 3));
-    TextView precio = findViewById(R.id.suma);
-    TextView precioComida = findViewById(R.id.precioTotal);
-
-    // una vez rellenada seteamos los valores iniciales si no esta vacia
-    if (listaComida.size() > 0) {
-      double total = 0;
-      for (int i = 0; i < listaComida.size(); i++) {
-        total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
-      }
-      precioComida.setText(String.valueOf(total));
-      double iva = total * precioImpuestos;
-      total = total + iva + precioEnvio;
-      DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
-      precio.setText(df.format(total));
-    }
-  }
-
   protected void onResume() {
     super.onResume();
-    listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
-    listaComida.add(new Comida("Patacon", 4.0, 2, 3));
+    recuperarComidasEnCarro();
+    if (listaComida.size() < 1) {
+      ConstraintLayout vacio = findViewById(R.id.vacio);
+      vacio.setVisibility(View.VISIBLE);
+    } else {
+      ConstraintLayout vacio = findViewById(R.id.vacio);
+      vacio.setVisibility(View.INVISIBLE);
+      // insertamos los datos en la lista
+      crearLista();
+    }
+    activarPago();
+  }
+
+
+  /*---------------------funciones de inicializacion de la lista------------------------------------*/
+
+  private void crearLista() {
+    LinearLayoutManager linearLayoutManager =
+            new LinearLayoutManager(CarritoActivity.this, LinearLayoutManager.VERTICAL, false);
+    listaProductos.setLayoutManager(linearLayoutManager);
+    ap = new AdaptadorPedido();
+    listaProductos.setAdapter(ap);
+  }
+
+
+  private void recuperarComidasEnCarro() {
+    // primero obtenemos todos los elementos del carrito de este usuario:
+
+    DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+    dataBaseAccess.open();
+    ArrayList<Carrito> carro;
+
+    // ejecutamos query
+    carro =
+            dataBaseAccess.getObjetosEnCarro(
+                    OperationsUserActivity.getUserFromSession(
+                            this)); // aqui hay que meter el usuario logeado
+    dataBaseAccess.close();
+
+    // recogemos los datos de cada comida en el carrito
+
+    for (int i = 0; i < carro.size(); i++) {
+      int idComida = carro.get(i).getCodigoComida();
+      int cantidad = carro.get(i).getCantidad();
+      dataBaseAccess.open();
+      Comida c = dataBaseAccess.getDatosComida(idComida, cantidad);
+      dataBaseAccess.close();
+      listaComida.add(c);
+    }
 
     TextView precio = findViewById(R.id.suma);
     TextView precioComida = findViewById(R.id.precioTotal);
 
     // una vez rellenada seteamos los valores iniciales si no esta vacia
+
     if (listaComida.size() > 0) {
       double total = 0;
       for (int i = 0; i < listaComida.size(); i++) {
@@ -132,10 +145,9 @@ public class CarritoActivity extends AppCompatActivity {
       DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
       precio.setText(df.format(total));
     }
-    crearLista();
-    activarPago();
   }
-  public void activarPago(){
+
+  public void activarPago() {
     ConstraintLayout pagar = findViewById(R.id.pagar);
     if (listaComida.size() > 0) {
       pagar.setOnClickListener(
@@ -150,7 +162,7 @@ public class CarritoActivity extends AppCompatActivity {
                     intent.putExtra("importe", suma);
                     intent.putExtra("datosProductos", listaComida);
                     startActivity(intent);
-                    //limpiamos el carrito
+                    // limpiamos el carrito
                     int size = listaComida.size();
                     listaComida.clear();
                     ap.notifyDataSetChanged();
@@ -159,52 +171,9 @@ public class CarritoActivity extends AppCompatActivity {
               });
     }
   }
-  /*private void recuperarComidasEnCarro(){
 
-    //recuperamos el arraylist de objetos "ObjtosCarrito" que tienen el id y la cantidad de cada producto
-    SharedPreferences sharedPreferences = getSharedPreferences("ComidaEnCarro", Context.MODE_PRIVATE);
-    Gson gson = new Gson();
-    String comidas = sharedPreferences.getString("lista",null);
-    Type type = new TypeToken<ArrayList<ObjtosCarrito>>(){}.getType();
-    ArrayList<ObjtosCarrito> comidasRecuperadas  = new ArrayList<>();
-    comidasRecuperadas = gson.fromJson(comidas,type);
-    if(comidasRecuperadas == null){
-      comidasRecuperadas = new ArrayList<>();
-    }
+  /*---------------------funciones de edicion de la lista------------------------------------*/
 
-    //Recuperamos cada objeto añadido al carrito y metemos sus datos en el array de lista comidas
-    for(int i = 0; i<comidasRecuperadas.size();i++){
-      int id = comidasRecuperadas.get(i).getId();
-      int cantidad = comidasRecuperadas.get(i).getCantidad();
-      DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-      dataBaseAccess.open();
-      Comida c = dataBaseAccess.getDatosComida(id,cantidad);
-      listaComida.add(c);
-    }
-    TextView precio = findViewById(R.id.suma);
-    TextView precioComida = findViewById(R.id.precioTotal);
-
-    // una vez rellenada seteamos los valores iniciales si no esta vacia
-    if (listaComida.size() > 0) {
-      double total = 0;
-      for (int i = 0; i < listaComida.size(); i++) {
-        total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
-      }
-      precioComida.setText(String.valueOf(total));
-      double iva = total * precioImpuestos;
-      total = total + iva + precioEnvio;
-      DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
-      precio.setText(df.format(total));
-    }
-  }*/
-
-  private void crearLista() {
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CarritoActivity.this,
-        LinearLayoutManager.VERTICAL, false);
-    listaProductos.setLayoutManager(linearLayoutManager);
-    ap = new AdaptadorPedido();
-    listaProductos.setAdapter(ap);
-  }
 
   private void eliminar(String nombre, int cantidad) {
 
@@ -249,7 +218,33 @@ public class CarritoActivity extends AppCompatActivity {
     }
   }
 
-  // metodos para la lista de productos
+  public void actualizaPago() {
+    pago.clear();
+    for (int x = listaProductos.getChildCount(), i = 0; i < x; ++i) {
+      RecyclerView.ViewHolder holder =
+              listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
+
+      // actualizacion del array
+      TextView t = holder.itemView.findViewById(R.id.precio_total); // precio del producto
+      TextView nombreComida = holder.itemView.findViewById((R.id.nombre_comida));
+      TextView precioUno = holder.itemView.findViewById(R.id.precioUnitario);
+      TextView cantidad = holder.itemView.findViewById(R.id.total);
+      DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+      dataBaseAccess.open();
+      int codigo = dataBaseAccess.getIdComida(nombreComida.getText().toString());
+      dataBaseAccess.close();
+      Comida add =
+              new Comida(
+                      nombreComida.getText().toString(),
+                      Double.parseDouble(precioUno.getText().toString()),
+                      Integer.parseInt(cantidad.getText().toString()),
+                      codigo,
+                      Double.parseDouble(t.getText().toString()));
+      pago.add(add);
+    }
+  }
+
+  /*--------------------Adaptador del recycleview-------------------------*/
 
   private class AdaptadorPedido
       extends RecyclerView.Adapter<AdaptadorPedido.AdaptadorPedidoHolder> {
@@ -309,33 +304,38 @@ public class CarritoActivity extends AppCompatActivity {
                 menosProducto(actual);
               }
             });
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-          @Override
-          public boolean onLongClick(View view) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(CarritoActivity.this);
-            builder.setTitle(R.string.borrar);
-            builder.setMessage(R.string.confirma);
-            builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        itemView.setOnLongClickListener(
+            new View.OnLongClickListener() {
               @Override
-              public void onClick(DialogInterface dialogInterface, int i) {
-                String eliminar = nombre.getText().toString();
-                int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
-                eliminar(eliminar, cantidad);
-                ap.notifyItemRemoved(getAdapterPosition());
-                calculoComida();
+              public boolean onLongClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CarritoActivity.this);
+                builder.setTitle(R.string.borrar);
+                builder.setMessage(R.string.confirma);
+                builder.setPositiveButton(
+                    "Confirmar",
+                    new DialogInterface.OnClickListener() {
+                      @Override
+                      public void onClick(DialogInterface dialogInterface, int i) {
+                        String eliminar = nombre.getText().toString();
+                        int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
+                        eliminar(eliminar, cantidad);
+                        ap.notifyItemRemoved(getAdapterPosition());
+                        calculoComida();
+                      }
+                    });
+                builder.setNegativeButton(
+                    "Cancelar",
+                    new DialogInterface.OnClickListener() {
+                      @Override
+                      public void onClick(DialogInterface dialogInterface, int i) {
+                        return;
+                      }
+                    });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
               }
             });
-            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-              @Override
-              public void onClick(DialogInterface dialogInterface, int i) {
-                return;
-              }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            return true;
-          }
-        });
       }
 
       public void masProducto(int actual) {
@@ -380,6 +380,8 @@ public class CarritoActivity extends AppCompatActivity {
       }
     }
   }
+
+  /*Funciones auxiliares*/
 
   // barra navegacion
   private void cambiarActividad() {
@@ -440,27 +442,38 @@ public class CarritoActivity extends AppCompatActivity {
         });
   }
 
-  public void actualizaPago() {
-    pago.clear();
-    for (int x = listaProductos.getChildCount(), i = 0; i < x; ++i) {
-      RecyclerView.ViewHolder holder = listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
-
-      // actualizacion del array
-      TextView t = holder.itemView.findViewById(R.id.precio_total); // precio del producto
-      TextView nombreComida = holder.itemView.findViewById((R.id.nombre_comida));
-      TextView precioUno = holder.itemView.findViewById(R.id.precioUnitario);
-      TextView cantidad = holder.itemView.findViewById(R.id.total);
-      DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-      dataBaseAccess.open();
-      int codigo = dataBaseAccess.getIdComida(nombreComida.getText().toString());
-      dataBaseAccess.close();
-      Comida add = new Comida(
-          nombreComida.getText().toString(),
-          Double.parseDouble(precioUno.getText().toString()),
-          Integer.parseInt(cantidad.getText().toString()),
-          codigo,
-          Double.parseDouble(t.getText().toString()));
-      pago.add(add);
-    }
+  private void setColoresAndroidModoOscuro() {
+    // Colores de los textos de la navbar inferior
+    TextView textoInicio = findViewById(R.id.textoInicio);
+    textoInicio.setTextColor(Color.GRAY);
+    TextView textoPerfil = findViewById(R.id.textoPerfil);
+    textoPerfil.setTextColor(Color.GRAY);
+    TextView textoCarrito = findViewById(R.id.textoCarrito);
+    textoCarrito.setTextColor(Color.GRAY);
+    TextView textoPedidos = findViewById(R.id.textoPedidos);
+    textoPedidos.setTextColor(Color.GRAY);
+    TextView textoAjustes = findViewById(R.id.textoAjustes);
+    textoAjustes.setTextColor(Color.GRAY);
   }
+
+    /*private void rellenarArrays() {
+
+    // listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
+    // listaComida.add(new Comida("Patacon", 4.0, 2, 3));
+    TextView precio = findViewById(R.id.suma);
+    TextView precioComida = findViewById(R.id.precioTotal);
+
+    // una vez rellenada seteamos los valores iniciales si no esta vacia
+    if (listaComida.size() > 0) {
+      double total = 0;
+      for (int i = 0; i < listaComida.size(); i++) {
+        total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
+      }
+      precioComida.setText(String.valueOf(total));
+      double iva = total * precioImpuestos;
+      total = total + iva + precioEnvio;
+      DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
+      precio.setText(df.format(total));
+    }
+  }*/
 }

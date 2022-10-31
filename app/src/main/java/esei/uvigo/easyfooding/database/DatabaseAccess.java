@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import esei.uvigo.easyfooding.objetosCarrito.Carrito;
 import esei.uvigo.easyfooding.objetosCarrito.Comida;
 import esei.uvigo.easyfooding.objetosCarrito.LineaPedidos;
 import esei.uvigo.easyfooding.objetosCarrito.ListaPedidos;
@@ -197,7 +198,7 @@ public class DatabaseAccess {
             String fecha = c.getString(2);
             String direccion = c.getString(3);
             String loc = c.getString(4);
-            float codigo = Integer.parseInt(c.getString(5));
+            int codigo = Integer.parseInt(c.getString(5));
             double tot = Double.parseDouble(c.getString(6));
             String obs = c.getString(7);
 
@@ -243,6 +244,10 @@ public class DatabaseAccess {
 
         return res != 1;
     }
+
+
+
+    //con el id buscamos las caracteristicas del producto
     public Comida getDatosComida(int numComida,int cantidad){
         String toQuery = String.valueOf(numComida);
         Cursor c = db.rawQuery("SELECT * FROM linea_pedidos WHERE num_pedido = ?", new String[] { toQuery });
@@ -258,6 +263,26 @@ public class DatabaseAccess {
         }
         return toret;
     }
+    //Cogemos los objetos del carrito
+    public ArrayList<Carrito> getObjetosEnCarro (String usuario){
+        Cursor c = db.rawQuery("SELECT * FROM carrito_temp WHERE nombre_usuario = ?", new String[] { usuario });
+        ArrayList<Carrito> toret = new ArrayList<Carrito>();
+        while(c.moveToNext()){
+            int codigo_comida = c.getInt(1);
+            int cantidad = c.getInt(2);
+            String usr = c.getString(0);
+            toret.add(new Carrito(codigo_comida,cantidad,usr));
+        }
+        return toret;
+    }
+
+    //eliminamos la comida del carrito cuando ya la hemos comprado
+    public boolean eliminarProductorComprados(String usuario){
+        return db.delete("carrito_temp","nombre_usuario=?",new String[]{usuario})>0;
+    }
+
+
+
     public boolean insertarLineaPedido(int idLinea,int numPedido, int codigoComida, int cantidad, double precio){
         ContentValues contentValues = new ContentValues();
         contentValues.put("num_linea",idLinea);

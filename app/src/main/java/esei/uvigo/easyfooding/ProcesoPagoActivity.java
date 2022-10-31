@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -62,15 +63,12 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     EditText ciudad = findViewById(R.id.ciudad);
     EditText codigoPost = findViewById(R.id.codigoPost);
     EditText obs = findViewById(R.id.obs);
-    RadioButton tarjeta = findViewById(R.id.tarjeta);
-    RadioButton efectivo = findViewById(R.id.efectivo);
+
 
     String varDireccion = direccion.getText().toString();
     String varCiudad = ciudad.getText().toString();
     String varCodigo = codigoPost.getText().toString();
     String varObs = obs.getText().toString();
-    boolean varTarjeta = tarjeta.isChecked();
-    boolean varEfectivo = efectivo.isChecked();
     if (TextUtils.isEmpty(varDireccion)
         || TextUtils.isEmpty(varCiudad)
         || TextUtils.isEmpty(varCodigo)
@@ -115,38 +113,29 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     boolean insert =
         dataBaseAccess.insertarPedido(
             idNuevoPedido, nombreUsuario, fecha, direccion, localidad, cp, precio, observaciones);
-    Toast.makeText(ProcesoPagoActivity.this, String.valueOf(insert), Toast.LENGTH_LONG).show();
-    insertarLineasPedido(idNuevoPedido, comidas);
-    /*todo implementar la insercion de linea pedido (en el pedido hay que cojer la fecha actual con la funcion de diego) y de la linea
-     *   -para la linea -> Cojer el Maxid
-     *   -->recorrer el array de comidas y añadir cada una a una linea distinta
-     *   --> por cada linea buscar el precio de esa comida en la base de datos y multiplicar por la cantidad
-     *   -->Para el numPedido tenemos que cojer el de esta funcion, idNuevoPedido
-     *   -->Implementar una redireccion a la actividad inicio despues del pago*/
-
+    for(int i = 0; i<comidas.size();i++){
+      insertarLineasPedido(idNuevoPedido,comidas.get(i));
+    }
+    Intent intent = new Intent(ProcesoPagoActivity.this, InicioActivity.class);
+    startActivity(intent);
   }
 
-  private void insertarLineasPedido(int idPedido, ArrayList<Comida> comidas) {
+  private void insertarLineasPedido(int idPedido,Comida comida) {
+    Toast.makeText(ProcesoPagoActivity.this,"Estoy aqui",Toast.LENGTH_LONG).show();
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
     int maxIDLinea = dataBaseAccess.getMaxIdLineaPedido();
     dataBaseAccess.close();
-      for (int i = 0; i < comidas.size(); i++) {
-          Toast.makeText(ProcesoPagoActivity.this, comidas.get(i).toString(), Toast.LENGTH_LONG)
-                  .show();
-      }
-    for (int i = 0; i < comidas.size(); i++) {
-      int idActual = maxIDLinea + 1;
-      int codigoComida = comidas.get(i).getCodigo();
-      int cantidad = comidas.get(i).getCantidad();
-      double precio = comidas.get(i).getPrecio();
-      dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
-      dataBaseAccess.open();
-      boolean res =
-          dataBaseAccess.insertarLineaPedido(idActual, idPedido, codigoComida, cantidad, precio);
-      Toast.makeText(ProcesoPagoActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
-    }
-      dataBaseAccess.close();
+    int idActual = maxIDLinea + 1;
+    int codigoComida = comida.getCodigo();
+    int cantidad = comida.getCantidad();//todo - calculo del total
+    double precio = comida.getPrecio();
+    double precioTotal = precio * cantidad;
+    dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+    dataBaseAccess.open();
+    boolean res = dataBaseAccess.insertarLineaPedido(idActual, idPedido, codigoComida, cantidad, precioTotal);
+    Toast.makeText(ProcesoPagoActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
+    dataBaseAccess.close();
   }
 
   public String getDateIntoSpanishStringFormat() {

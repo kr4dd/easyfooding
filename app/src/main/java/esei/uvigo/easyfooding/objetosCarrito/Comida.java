@@ -12,7 +12,11 @@ public class Comida implements Serializable {
     private int codigo;
     private double precioTotal;
 
-    public Comida(String nombre, double precio, int cantidad,int codigo) {
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public Comida(String nombre, double precio, int cantidad, int codigo) {
         this.nombre = nombre;
         this.imagen = R.mipmap.logo;
         this.precio = precio;
@@ -26,6 +30,8 @@ public class Comida implements Serializable {
         this.cantidad = cantidad;
         this.codigo = codigo;
         this.precioTotal = precioTotal;
+    }
+    public Comida(){
     }
     public String getNombre() {
         return nombre;

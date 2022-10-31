@@ -2,11 +2,18 @@ package esei.uvigo.easyfooding;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
@@ -31,13 +38,13 @@ public class DetalleComida extends AppCompatActivity {
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
 
         Bundle parametros = getIntent().getExtras();
-        String codigo_comida = parametros.get("codigo_comida").toString();
+        String codigoComida = parametros.get("codigo_comida").toString();
 
         simboloPostivo = findViewById(R.id.simboloPositivo);
         simboloNegativo = findViewById(R.id.simboloNegativo);
         precioTotal = findViewById(R.id.textView_precio_total);
 
-        rellenarDatosActividad(codigo_comida, databaseAccess);
+        rellenarDatosActividad(codigoComida, databaseAccess);
 
         //Por defecto, la cantidad de esa comida a añadir al carrito es 1
         cantidadComida = findViewById(R.id.cantidad_comida);
@@ -46,8 +53,8 @@ public class DetalleComida extends AppCompatActivity {
         //Añadir Listeners a los botones de mas o menos comida
         botonesCantidadComida();
 
-        //TODO añadir el listener de añadir la comida al carrito
-        botonCarrito();
+        //Añadir funcionalidad al botón de añadir al carrito
+        botonCarrito(codigoComida, databaseAccess);
 
         //Cerrar conexion a BD
         databaseAccess.close();
@@ -58,9 +65,9 @@ public class DetalleComida extends AppCompatActivity {
 
 
     //Función para  extraer datos de la BD y mostrarlos en la actividad
-    private void rellenarDatosActividad(String codigo_comida, DatabaseAccess databaseAccess) {
+    private void rellenarDatosActividad(String codigoComida, DatabaseAccess databaseAccess) {
         databaseAccess.open();
-        ArrayList<String> datosComida = databaseAccess.getDatosComidaPorId(codigo_comida);
+        ArrayList<String> datosComida = databaseAccess.getDatosComidaPorId(codigoComida);
 
         //nombre
         TextView titulo = findViewById(R.id.textView_nombre_comida);
@@ -125,12 +132,19 @@ public class DetalleComida extends AppCompatActivity {
         precioTotal.setText(importe +"€");
     }
 
-    private void botonCarrito(){
+    private void botonCarrito(String codigoComida, DatabaseAccess databaseAccess){
         TextView carrito = findViewById(R.id.textView_add_carrito);
         carrito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Mostrar un snackbar con notificacion de comida añadida al carrito??
+
+                //TODO insertar en la tabla carrito_temp el codigo del usuario, el codigo de la  comida y la cantidad.
+                databaseAccess.open();
+                databaseAccess.insertarLineaCarrito(OperationsUserActivity.getUserFromSession(getApplicationContext()), codigoComida, Integer.parseInt(cantidadComida.getText().toString()));
+                databaseAccess.close();
+
+                //Redirigir al usuario a la actividad anterior
+                finish();
             }
         });
     }

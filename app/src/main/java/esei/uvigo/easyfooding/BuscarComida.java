@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,9 +18,6 @@ import esei.uvigo.easyfooding.database.DatabaseAccess;
 
 public class BuscarComida extends AppCompatActivity {
 
-    private ListView listViewItems;
-    private TextView mensajeBusquedaFallida;
-    private ArrayAdapter<String> listaItemsAdapter;
     private ArrayList<Integer> arrayItemsId; //Guarda los codigos de las comidas del listView
     private ArrayList<String> arrayItems; //Guarda los nombres de las comidas del listView
 
@@ -38,20 +34,21 @@ public class BuscarComida extends AppCompatActivity {
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
 
         //Conectar ListView con el Adaptador y con el Array de resultados
-        this.listViewItems = findViewById(R.id.listViewItems);
+        ListView listViewItems = findViewById(R.id.listViewItems);
         this.arrayItemsId = new ArrayList<>();
         this.arrayItems = new ArrayList<>();
         //El adaptador une el ListView con el ArrayList
-        this.listaItemsAdapter = new ArrayAdapter<>(
+        ArrayAdapter<String> listaItemsAdapter = new ArrayAdapter<>(
                 this.getApplicationContext(),
                 android.R.layout.simple_selectable_list_item,
                 this.arrayItems
         );
-        listViewItems.setAdapter(this.listaItemsAdapter);
+        listViewItems.setAdapter(listaItemsAdapter);
 
         String nombreCategoria, nombreComida;
         Bundle parametros = getIntent().getExtras();
         TextView titulo_busqueda = findViewById(R.id.textView_titulo_busqueda);
+        TextView mensajeBusquedaFallida;
         try {
             if (parametros.get("nombre_categoria") != null) { //Si hemos buscado por categoria
                 nombreCategoria = parametros.getString("nombre_categoria");
@@ -63,8 +60,8 @@ public class BuscarComida extends AppCompatActivity {
                 obtenerComidasPorNombre(nombreComida, databaseAccess);
             } else { //No hay parametros
                 titulo_busqueda.setText("");
-                this.mensajeBusquedaFallida = findViewById(R.id.mensajeBusquedaFallida);
-                this.mensajeBusquedaFallida.setText(R.string.busquedafallida);
+                mensajeBusquedaFallida = findViewById(R.id.mensajeBusquedaFallida);
+                mensajeBusquedaFallida.setText(R.string.busquedafallida);
             }
         } catch (Exception ex) {
             throw new RuntimeException();
@@ -81,8 +78,8 @@ public class BuscarComida extends AppCompatActivity {
         });
 
         if (arrayItemsId.isEmpty()) {
-            this.mensajeBusquedaFallida = findViewById(R.id.mensajeBusquedaFallida);
-            this.mensajeBusquedaFallida.setText(R.string.busquedafallida);
+            mensajeBusquedaFallida = findViewById(R.id.mensajeBusquedaFallida);
+            mensajeBusquedaFallida.setText(R.string.busquedafallida);
         }
 
         //Cambiar colores en el modo noche del dispositivo físico

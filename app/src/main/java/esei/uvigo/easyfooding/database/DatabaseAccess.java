@@ -157,7 +157,6 @@ public class DatabaseAccess {
         while (cursor.moveToNext()) {
             String elemento = cursor.getString(0);
             toret.add(elemento);
-            System.out.println(elemento);
         }
         return toret;
     }
@@ -332,6 +331,16 @@ public class DatabaseAccess {
 
         return result == 1;
 
+    }
+
+    public boolean insertarLineaCarrito(String username, String codigoComida, int cantidad){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("nombre_usuario",username);
+        contentValues.put("codigo_comida",codigoComida);
+        contentValues.put("cantidad",cantidad);
+        long res = db.insertOrThrow("carrito_temp", null, contentValues);
+
+        return res != 1;
     }
 
 }

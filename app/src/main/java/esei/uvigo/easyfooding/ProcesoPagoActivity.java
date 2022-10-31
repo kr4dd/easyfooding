@@ -79,15 +79,11 @@ public class ProcesoPagoActivity extends AppCompatActivity {
           R.string.aceptar,
           new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-              return;
+            public void onClick(View view) {
+                getValues(datosComidas, importe);
             }
-          });
-      builder.create().show();
-    } else {
-      insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, varObs);
+        });
     }
-  }
 
   private void insertarPedido(
       ArrayList<Comida> comidas,
@@ -139,10 +135,56 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     dataBaseAccess.close();
   }
 
-  public String getDateIntoSpanishStringFormat() {
-    Calendar cal = Calendar.getInstance();
-    @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    return sdf.format(cal.getTime());
-  }
+    public void getValues(ArrayList<Comida> comidas, String importe) {
+        EditText direccion = findViewById(R.id.direc);
+        EditText ciudad = findViewById(R.id.ciudad);
+        EditText codigoPost = findViewById(R.id.codigoPost);
+        EditText obs = findViewById(R.id.obs);
+        RadioButton tarjeta = findViewById(R.id.tarjeta);
+        RadioButton efectivo = findViewById(R.id.efectivo);
+
+        String varDireccion = direccion.getText().toString();
+        String varCiudad = ciudad.getText().toString();
+        String varCodigo = codigoPost.getText().toString();
+        String varObs = obs.getText().toString();
+        boolean varTarjeta = tarjeta.isChecked();
+        boolean varEfectivo = efectivo.isChecked();
+        if (TextUtils.isEmpty(varDireccion) || TextUtils.isEmpty(varCiudad) || TextUtils.isEmpty(varCodigo) || TextUtils.isEmpty(varObs)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProcesoPagoActivity.this);
+            builder.setMessage("Debes introducir todos los campos");
+            builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    return;
+                }
+            });
+            builder.create().show();
+        } else {
+            insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, varObs);
+        }
+    }
+
+    private void insertarPedido(ArrayList<Comida> comidas, String importe,
+                                String varDireccion, String varCiudad, String varCodigo, String varObs) {
+
+        String nombreUsuario = "pepe";//aqui iria el user que se autentico
+        String fecha = getDateIntoSpanishStringFormat();//llamamos a la funcion que nos devuelve la fecha actual
+        String direccion = varDireccion;
+        String localidad = varCiudad;
+        int cp = Integer.parseInt(varCodigo);
+        double precio = Double.parseDouble(importe);
+        String observaciones = varObs;
+        DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        dataBaseAccess.open();
+        int maxId = dataBaseAccess.getMaxIdPedido();
+        int idNuevoPedido = maxId +1;
+        boolean insert = dataBaseAccess.insertarPedido(idNuevoPedido,nombreUsuario,fecha,direccion,localidad,cp,precio,observaciones);
+        Toast.makeText(ProcesoPagoActivity.this,String.valueOf(insert),Toast.LENGTH_LONG).show();
+        //todo implementar la insercion del pedido (en el pedido hay que cojer la fecha actual con la funcion de diego) y de la linea
+    }
+    public String getDateIntoSpanishStringFormat() {
+        Calendar cal = Calendar.getInstance();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(cal.getTime());
+    }
 }

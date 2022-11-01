@@ -116,8 +116,12 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     for(int i = 0; i<comidas.size();i++){
       insertarLineasPedido(idNuevoPedido,comidas.get(i));
     }
+    //vaciamos la tabla del carrito
     limpiarTablaCarrito();
+    //limpiamos la lista y el adaptador del recycleview
+    CarritoActivity.listaComida.clear();
     Intent intent = new Intent(ProcesoPagoActivity.this, InicioActivity.class);
+    finish();
     startActivity(intent);
   }
   private void limpiarTablaCarrito(){

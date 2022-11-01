@@ -34,10 +34,10 @@ import esei.uvigo.easyfooding.objetosCarrito.Comida;
 
 public class CarritoActivity extends AppCompatActivity {
   private RecyclerView listaProductos;
-  private ArrayList<Comida> listaComida = new ArrayList<>();
+  static ArrayList<Comida> listaComida = new ArrayList<>();
   double precioImpuestos;
   double precioEnvio;
-  AdaptadorPedido ap;
+  static AdaptadorPedido ap;
   ArrayList<Comida> pago =
       new ArrayList<>(); // se manda a la pestaña de pago para informar de la comida y las
   // cantidades
@@ -61,6 +61,10 @@ public class CarritoActivity extends AppCompatActivity {
     // para la barra de movimientos
     cambiarActividad();
     // Recuperamos los datos de compra
+    if(listaComida.size()>0){
+      listaComida.clear();
+      ap.notifyDataSetChanged();
+    }
     recuperarComidasEnCarro();
     if (listaComida.size() < 1) {
       ConstraintLayout vacio = findViewById(R.id.vacio);
@@ -77,20 +81,12 @@ public class CarritoActivity extends AppCompatActivity {
     setColoresAndroidModoOscuro();
   }
 
-  /*protected void onResume() {
+  protected void onResume() {
     super.onResume();
-    recuperarComidasEnCarro();
-    if (listaComida.size() < 1) {
-      ConstraintLayout vacio = findViewById(R.id.vacio);
-      vacio.setVisibility(View.VISIBLE);
-    } else {
-      ConstraintLayout vacio = findViewById(R.id.vacio);
-      vacio.setVisibility(View.INVISIBLE);
-      // insertamos los datos en la lista
-      crearLista();
+    if(ap!=null){
+      ap.notifyDataSetChanged();
     }
-    activarPago();
-  }*/
+  }
 
 
   /*---------------------funciones de inicializacion de la lista------------------------------------*/
@@ -125,7 +121,6 @@ public class CarritoActivity extends AppCompatActivity {
       int cantidad = carro.get(i).getCantidad();
       dataBaseAccess.open();
       Comida c = dataBaseAccess.getDatosComida(idComida, cantidad);
-      Toast.makeText(CarritoActivity.this,c.toString(),Toast.LENGTH_LONG).show();
       dataBaseAccess.close();
       listaComida.add(c);
     }
@@ -164,9 +159,9 @@ public class CarritoActivity extends AppCompatActivity {
                     intent.putExtra("datosProductos", listaComida);
                     startActivity(intent);
                     // limpiamos el carrito
-                    int size = listaComida.size();
-                    listaComida.clear();
-                    ap.notifyDataSetChanged();
+                    //int size = listaComida.size();
+                    //listaComida.clear();
+                    //ap.notifyDataSetChanged();
                   }
                 }
               });
@@ -183,9 +178,9 @@ public class CarritoActivity extends AppCompatActivity {
 
     Double vprecioTotal = Double.parseDouble(precioTotal.getText().toString());
     Double vprecioComida = Double.parseDouble(precioComida.getText().toString());
-
+    boolean seguir = true;
     for (int i = 0; i < listaComida.size(); i++) {
-      if (listaComida.get(i).getNombre().equals(nombre)) {
+      if (listaComida.get(i).getNombre().equals(nombre) && seguir == true) {
         vprecioComida = vprecioComida - listaComida.get(i).getPrecio() * cantidad;
         vprecioTotal = vprecioTotal - listaComida.get(i).getPrecio() * cantidad;
         int codigoComida = listaComida.get(i).getCodigo();
@@ -197,8 +192,12 @@ public class CarritoActivity extends AppCompatActivity {
         //lo eliminamos de la tabla
         DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         dataBaseAccess.open();
-        dataBaseAccess.eliminarProductorCompradosConCodigo(codigoComida,OperationsUserActivity.getUserFromSession(this));
+        int codigoLineaEliminada = dataBaseAccess.getIdLineaConCodigoComida(codigoComida,OperationsUserActivity.getUserFromSession(this));
+        Toast.makeText(CarritoActivity.this,String.valueOf(codigoComida),Toast.LENGTH_LONG).show();
+        boolean a = dataBaseAccess.eliminarProductorCompradosConCodigo(codigoLineaEliminada,OperationsUserActivity.getUserFromSession(this));
+        Toast.makeText(CarritoActivity.this,String.valueOf(a),Toast.LENGTH_LONG).show();
         dataBaseAccess.close();
+        seguir = false;
       }
     }
   }

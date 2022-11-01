@@ -276,14 +276,23 @@ public class DatabaseAccess {
         }
         return toret;
     }
-
+    public int getIdLineaConCodigoComida(int codigoComida,String usuario){
+        String toQuery = String.valueOf(codigoComida);
+        Cursor c = db.rawQuery("SELECT * FROM carrito_temp WHERE codigo_comida = ? AND nombre_usuario = ?", new String[] { toQuery,usuario });
+        int toret = 0;
+        while (c.moveToNext()){
+            int codigoLinea = c.getInt(3);
+            toret = codigoLinea;
+        }
+        return toret;
+    }
     //eliminamos la comida del carrito cuando ya la hemos comprado
     public boolean eliminarProductorComprados(String usuario){
         return db.delete("carrito_temp","nombre_usuario=?",new String[]{usuario})>0;
     }
-    public boolean eliminarProductorCompradosConCodigo(int codigoComida, String usuario){
-        String toQuery = String.valueOf(codigoComida);
-        return db.delete("carrito_temp","nombre_usuario=? and codigo_comida=?", new String[]{usuario,toQuery})>0;
+    public boolean eliminarProductorCompradosConCodigo(int codigoLinea, String usuario){
+        String toQuery = String.valueOf(codigoLinea);
+        return db.delete("carrito_temp","id_linea_carrito_temp=? and nombre_usuario=?", new String[]{toQuery,usuario})>0;
     }
 
 

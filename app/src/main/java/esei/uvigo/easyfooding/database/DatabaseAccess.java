@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.objetosCarrito.Carrito;
 import esei.uvigo.easyfooding.objetosCarrito.Comida;
 import esei.uvigo.easyfooding.objetosCarrito.LineaPedidos;
@@ -247,9 +248,9 @@ public class DatabaseAccess {
 
 
     //con el id buscamos las caracteristicas del producto
-    public Comida getDatosComida(int numComida,int cantidad){
-        String toQuery = String.valueOf(numComida);
-        Cursor c = db.rawQuery("SELECT * FROM linea_pedidos WHERE num_pedido = ?", new String[] { toQuery });
+    public Comida getDatosComida(int idComida,int cantidad){
+        String toQuery = String.valueOf(idComida);
+        Cursor c = db.rawQuery("SELECT * FROM comidas WHERE codigo_comida = ?", new String[] { toQuery });
         Comida toret = new Comida();
         while (c.moveToNext()) {
             int codigo = Integer.parseInt(c.getString(0));
@@ -259,6 +260,7 @@ public class DatabaseAccess {
             toret.setPrecio(precio);
             toret.setNombre(nombre);
             toret.setCodigo(codigo);
+            toret.setImagen(R.mipmap.logo);
         }
         return toret;
     }
@@ -278,6 +280,10 @@ public class DatabaseAccess {
     //eliminamos la comida del carrito cuando ya la hemos comprado
     public boolean eliminarProductorComprados(String usuario){
         return db.delete("carrito_temp","nombre_usuario=?",new String[]{usuario})>0;
+    }
+    public boolean eliminarProductorCompradosConCodigo(int codigoComida, String usuario){
+        String toQuery = String.valueOf(codigoComida);
+        return db.delete("carrito_temp","nombre_usuario=? and codigo_comida=?", new String[]{usuario,toQuery})>0;
     }
 
 

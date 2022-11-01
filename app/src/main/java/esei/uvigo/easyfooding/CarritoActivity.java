@@ -77,7 +77,7 @@ public class CarritoActivity extends AppCompatActivity {
     setColoresAndroidModoOscuro();
   }
 
-  protected void onResume() {
+  /*protected void onResume() {
     super.onResume();
     recuperarComidasEnCarro();
     if (listaComida.size() < 1) {
@@ -90,7 +90,7 @@ public class CarritoActivity extends AppCompatActivity {
       crearLista();
     }
     activarPago();
-  }
+  }*/
 
 
   /*---------------------funciones de inicializacion de la lista------------------------------------*/
@@ -125,6 +125,7 @@ public class CarritoActivity extends AppCompatActivity {
       int cantidad = carro.get(i).getCantidad();
       dataBaseAccess.open();
       Comida c = dataBaseAccess.getDatosComida(idComida, cantidad);
+      Toast.makeText(CarritoActivity.this,c.toString(),Toast.LENGTH_LONG).show();
       dataBaseAccess.close();
       listaComida.add(c);
     }
@@ -187,11 +188,17 @@ public class CarritoActivity extends AppCompatActivity {
       if (listaComida.get(i).getNombre().equals(nombre)) {
         vprecioComida = vprecioComida - listaComida.get(i).getPrecio() * cantidad;
         vprecioTotal = vprecioTotal - listaComida.get(i).getPrecio() * cantidad;
+        int codigoComida = listaComida.get(i).getCodigo();
         DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
         precioTotal.setText(df.format(vprecioTotal));
         precioComida.setText(df.format(vprecioComida));
         listaComida.remove(i);
         ap.notifyDataSetChanged();
+        //lo eliminamos de la tabla
+        DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        dataBaseAccess.open();
+        dataBaseAccess.eliminarProductorCompradosConCodigo(codigoComida,OperationsUserActivity.getUserFromSession(this));
+        dataBaseAccess.close();
       }
     }
   }

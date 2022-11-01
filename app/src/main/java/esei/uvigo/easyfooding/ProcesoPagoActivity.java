@@ -116,11 +116,16 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     for(int i = 0; i<comidas.size();i++){
       insertarLineasPedido(idNuevoPedido,comidas.get(i));
     }
-    //todo aqui llamamos a la funcion de eliminacion de la BD
+    limpiarTablaCarrito();
     Intent intent = new Intent(ProcesoPagoActivity.this, InicioActivity.class);
     startActivity(intent);
   }
-
+  private void limpiarTablaCarrito(){
+    DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+    dataBaseAccess.open();
+    boolean res = dataBaseAccess.eliminarProductorComprados(OperationsUserActivity.getUserFromSession(this));
+    Toast.makeText(ProcesoPagoActivity.this,String.valueOf(res),Toast.LENGTH_LONG).show();
+  }
   private void insertarLineasPedido(int idPedido,Comida comida) {
     Toast.makeText(ProcesoPagoActivity.this,"Estoy aqui",Toast.LENGTH_LONG).show();
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());

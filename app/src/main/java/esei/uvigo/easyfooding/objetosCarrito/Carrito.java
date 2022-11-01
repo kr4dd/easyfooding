@@ -31,6 +31,15 @@ public class Carrito {
         return nombreUsuario;
     }
 
+    @Override
+    public String toString() {
+        return "Carrito{" +
+                "codigoComida=" + codigoComida +
+                ", cantidad=" + cantidad +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                '}';
+    }
+
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }

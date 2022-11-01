@@ -60,7 +60,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         //Validar datos
         if(!validateInputFields(ur.getUsuario(),
-                OperationsUserActivity.hashearMD5(ur.getPass()),
+                ur.getPass(),
                 ur.getNombreReal(), ur.getApellidos(),
                 ur.getCorreo(), ur.getTlfno(),
                 ur.getDireccion(), ur.getLocalidad(),

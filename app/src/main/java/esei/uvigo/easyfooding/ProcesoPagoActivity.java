@@ -71,8 +71,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     String varObs = obs.getText().toString();
     if (TextUtils.isEmpty(varDireccion)
         || TextUtils.isEmpty(varCiudad)
-        || TextUtils.isEmpty(varCodigo)
-        || TextUtils.isEmpty(varObs)) {
+        || TextUtils.isEmpty(varCodigo)) {
       AlertDialog.Builder builder = new AlertDialog.Builder(ProcesoPagoActivity.this);
       builder.setMessage("Debes introducir todos los campos");
       builder.setPositiveButton(
@@ -85,7 +84,11 @@ public class ProcesoPagoActivity extends AppCompatActivity {
           });
       builder.create().show();
     } else {
-      insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, varObs);
+      if(TextUtils.isEmpty(varObs)){
+        insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, "");
+      }else{
+        insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, varObs);
+      }
     }
   }
 

@@ -354,6 +354,12 @@ public class CarritoActivity extends AppCompatActivity {
           listaComida.get(getAdapterPosition()).setCantidad(add);
           cantidadTotal.setTextColor(Color.GRAY);
           calculoComida(); // llamamos a la funcion que actualiza el precio total
+          DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+          dataBaseAccess.open();
+          //actualizamos cantidad en base de datos
+          int idLineaTemp = dataBaseAccess.getIdLineaConCantidad(listaComida.get(getAdapterPosition()).getCodigo(),OperationsUserActivity.getUserFromSession(CarritoActivity.this),actual);
+          dataBaseAccess.addUnProductoCarrito(idLineaTemp,add);
+          dataBaseAccess.close();
         }
       }
 
@@ -368,6 +374,12 @@ public class CarritoActivity extends AppCompatActivity {
           listaComida.get(getAdapterPosition()).setCantidad(subs);
           cantidadTotal.setTextColor(Color.GRAY);
           calculoComida(); // llamamos a la funcion que actualiza el precio total
+          DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+          dataBaseAccess.open();
+          int idLineaTemp = dataBaseAccess.getIdLineaConCantidad(listaComida.get(getAdapterPosition()).getCodigo(),OperationsUserActivity.getUserFromSession(CarritoActivity.this),actual);
+          //actualizamos cantidad en base de datos
+          dataBaseAccess.deleteUnProductoCarrito(idLineaTemp,subs);
+          dataBaseAccess.close();
         }
       }
 

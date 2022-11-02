@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.service.controls.Control;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -286,6 +287,17 @@ public class DatabaseAccess {
         }
         return toret;
     }
+    public int getIdLineaConCantidad(int codigoComida,String usuario, int cantidad){
+        String toQuery = String.valueOf(codigoComida);
+        String cantidadStr = String.valueOf(cantidad);
+        Cursor c = db.rawQuery("SELECT * FROM carrito_temp WHERE codigo_comida = ? AND nombre_usuario = ? AND cantidad = ?", new String[] { toQuery,usuario,cantidadStr });
+        int toret = 0;
+        while (c.moveToNext()){
+            int codigoLinea = c.getInt(3);
+            toret = codigoLinea;
+        }
+        return toret;
+    }
     //eliminamos la comida del carrito cuando ya la hemos comprado
     public boolean eliminarProductorComprados(String usuario){
         return db.delete("carrito_temp","nombre_usuario=?",new String[]{usuario})>0;
@@ -293,6 +305,22 @@ public class DatabaseAccess {
     public boolean eliminarProductorCompradosConCodigo(int codigoLinea, String usuario){
         String toQuery = String.valueOf(codigoLinea);
         return db.delete("carrito_temp","id_linea_carrito_temp=? and nombre_usuario=?", new String[]{toQuery,usuario})>0;
+    }
+    public boolean addUnProductoCarrito(int idProducto,int numeroActual){
+        ContentValues cv = new ContentValues();
+        String toQuery = String.valueOf(idProducto);
+        String actualizacion = String.valueOf(numeroActual);
+        String cantidadActual = String.valueOf(numeroActual-1);
+        cv.put("cantidad", actualizacion);
+        return db.update("carrito_temp",cv,"id_linea_carrito_temp=? and cantidad=?",new String[]{toQuery,cantidadActual})>0;
+    }
+    public boolean deleteUnProductoCarrito(int idProducto,int numeroActual){
+        ContentValues cv = new ContentValues();
+        String toQuery = String.valueOf(idProducto);
+        String actualizacion = String.valueOf(numeroActual);
+        String cantidadActual = String.valueOf(numeroActual+1);
+        cv.put("cantidad", actualizacion);
+        return db.update("carrito_temp",cv,"id_linea_carrito_temp=? and cantidad=?",new String[]{toQuery,cantidadActual})>0;
     }
 
 

@@ -38,7 +38,7 @@
     <string name="procesoPago">Procesando el pago</string>
     <string name="efectivo">Pagar al repartidor</string>
     <string name="tarjeta">Pagar con tarjeta</string>
-    <string name="borrar">¿Seguro?</string>
+    <string name="borrar">Eliminar del carrito</string>
     <string name="confirma">¿Quieres borrar este producto del carrito?</string>
     <string name="aceptar">Entendido</string>
     <string name="local">Localidad</string>

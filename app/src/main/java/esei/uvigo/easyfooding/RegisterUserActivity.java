@@ -1,5 +1,6 @@
 package esei.uvigo.easyfooding;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -122,25 +123,25 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     public void validarUsuario(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z0-9]{3,40}$");
+        Pattern p = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚ]{3,40}$");
 
         showErrMessagesForRegisterTxtViews(p, input, R.id.errUsuario);
     }
 
     public void validarPass(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z0-9]{3,40}$");
+        Pattern p = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚ]{3,40}$");
 
         showErrMessagesForRegisterTxtViews(p, input, R.id.errContrasena);
     }
 
     public void validarNombreReal(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z]{3,40}$");
+        Pattern p = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚ]{3,40}$");
 
         showErrMessagesForRegisterTxtViews(p, input, R.id.errNombreReal);
     }
 
     public void validarApellidos(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z\\s]{2,60}$");
+        Pattern p = Pattern.compile("^[a-zA-Z\\sáéíóúÁÉÍÓÚ]{2,60}$");
 
         showErrMessagesForRegisterTxtViews(p, input, R.id.errApellidos);
     }

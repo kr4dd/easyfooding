@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -77,7 +76,6 @@ public class PedidosActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    Toast.makeText(PedidosActivity.this,"Hola",Toast.LENGTH_LONG).show();
     ListView ticket = (ListView) this.findViewById(R.id.ticket);
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();

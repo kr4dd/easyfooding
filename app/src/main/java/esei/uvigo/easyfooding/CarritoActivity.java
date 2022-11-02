@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -193,9 +192,7 @@ public class CarritoActivity extends AppCompatActivity {
         DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         dataBaseAccess.open();
         int codigoLineaEliminada = dataBaseAccess.getIdLineaConCodigoComida(codigoComida,OperationsUserActivity.getUserFromSession(this));
-        Toast.makeText(CarritoActivity.this,String.valueOf(codigoComida),Toast.LENGTH_LONG).show();
         boolean a = dataBaseAccess.eliminarProductorCompradosConCodigo(codigoLineaEliminada,OperationsUserActivity.getUserFromSession(this));
-        Toast.makeText(CarritoActivity.this,String.valueOf(a),Toast.LENGTH_LONG).show();
         dataBaseAccess.close();
         seguir = false;
       }

@@ -11,11 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -131,10 +127,8 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
     boolean res = dataBaseAccess.eliminarProductorComprados(OperationsUserActivity.getUserFromSession(this));
-    Toast.makeText(ProcesoPagoActivity.this,String.valueOf(res),Toast.LENGTH_LONG).show();
   }
   private void insertarLineasPedido(int idPedido,Comida comida) {
-    Toast.makeText(ProcesoPagoActivity.this,"Estoy aqui",Toast.LENGTH_LONG).show();
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
     int maxIDLinea = dataBaseAccess.getMaxIdLineaPedido();
@@ -147,7 +141,6 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
     boolean res = dataBaseAccess.insertarLineaPedido(idActual, idPedido, codigoComida, cantidad, precioTotal);
-    Toast.makeText(ProcesoPagoActivity.this, String.valueOf(res), Toast.LENGTH_LONG).show();
     dataBaseAccess.close();
   }
 

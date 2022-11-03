@@ -1,9 +1,7 @@
 package esei.uvigo.easyfooding;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,10 +17,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -193,9 +186,7 @@ public class CarritoActivity extends AppCompatActivity {
         DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         dataBaseAccess.open();
         int codigoLineaEliminada = dataBaseAccess.getIdLineaConCodigoComida(codigoComida,OperationsUserActivity.getUserFromSession(this));
-        Toast.makeText(CarritoActivity.this,String.valueOf(codigoComida),Toast.LENGTH_LONG).show();
         boolean a = dataBaseAccess.eliminarProductorCompradosConCodigo(codigoLineaEliminada,OperationsUserActivity.getUserFromSession(this));
-        Toast.makeText(CarritoActivity.this,String.valueOf(a),Toast.LENGTH_LONG).show();
         dataBaseAccess.close();
         seguir = false;
       }

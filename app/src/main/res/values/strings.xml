@@ -43,6 +43,7 @@
     <string name="aceptar">Entendido</string>
     <string name="local">Localidad</string>
     <string name="fecha">Fecha</string>
+    <string name="obsErr">Solo puedes introducir hasta 80 caracteres y sin caracteres especiales</string>
 
     <!-- Welcome panel -->
     <string name="btnGoToRegistro">Registrarse</string>

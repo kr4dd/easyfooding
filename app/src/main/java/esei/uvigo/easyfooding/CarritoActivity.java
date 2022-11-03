@@ -46,10 +46,10 @@ public class CarritoActivity extends AppCompatActivity {
     precioImpuestos = 0.21;
     precioEnvio = 3.50;
 
-    TextView gobierno = findViewById(R.id.impuesto);
-    TextView gasofa = findViewById(R.id.envio);
-    gobierno.setText(String.valueOf(precioImpuestos));
-    gasofa.setText(String.valueOf(precioEnvio));
+    TextView iva = findViewById(R.id.impuesto);
+    TextView envio = findViewById(R.id.envio);
+    iva.setText(String.valueOf(precioImpuestos));
+    envio.setText(String.valueOf(precioEnvio));
 
     // para la barra de movimientos
     cambiarActividad();
@@ -151,10 +151,6 @@ public class CarritoActivity extends AppCompatActivity {
                     intent.putExtra("importe", suma);
                     intent.putExtra("datosProductos", listaComida);
                     startActivity(intent);
-                    // limpiamos el carrito
-                    //int size = listaComida.size();
-                    //listaComida.clear();
-                    //ap.notifyDataSetChanged();
                   }
                 }
               });
@@ -164,7 +160,7 @@ public class CarritoActivity extends AppCompatActivity {
   /*---------------------funciones de edicion de la lista------------------------------------*/
 
 
-  private void eliminar(String nombre, int cantidad) {
+  private void eliminarComidaCarrito(String nombre, int cantidad) {
 
     TextView precioTotal = findViewById(R.id.suma);
     TextView precioComida = findViewById(R.id.precioTotal);
@@ -186,7 +182,7 @@ public class CarritoActivity extends AppCompatActivity {
         DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
         dataBaseAccess.open();
         int codigoLineaEliminada = dataBaseAccess.getIdLineaConCodigoComida(codigoComida,OperationsUserActivity.getUserFromSession(this));
-        boolean a = dataBaseAccess.eliminarProductorCompradosConCodigo(codigoLineaEliminada,OperationsUserActivity.getUserFromSession(this));
+        dataBaseAccess.eliminarProductorCompradosConCodigo(codigoLineaEliminada,OperationsUserActivity.getUserFromSession(this));
         dataBaseAccess.close();
         seguir = false;
       }
@@ -270,7 +266,6 @@ public class CarritoActivity extends AppCompatActivity {
       ImageView resta;
       ImageView add;
       TextView cantidadTotal;
-      ImageView borrar;
 
       public AdaptadorPedidoHolder(@NonNull View itemView) {
         super(itemView);
@@ -315,7 +310,7 @@ public class CarritoActivity extends AppCompatActivity {
                       public void onClick(DialogInterface dialogInterface, int i) {
                         String eliminar = nombre.getText().toString();
                         int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
-                        eliminar(eliminar, cantidad);
+                        eliminarComidaCarrito(eliminar, cantidad);
                         ap.notifyItemRemoved(getAdapterPosition());
                         calculoComida();
                       }
@@ -464,25 +459,4 @@ public class CarritoActivity extends AppCompatActivity {
     TextView textoAjustes = findViewById(R.id.textoAjustes);
     textoAjustes.setTextColor(Color.GRAY);
   }
-
-    /*private void rellenarArrays() {
-
-    // listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
-    // listaComida.add(new Comida("Patacon", 4.0, 2, 3));
-    TextView precio = findViewById(R.id.suma);
-    TextView precioComida = findViewById(R.id.precioTotal);
-
-    // una vez rellenada seteamos los valores iniciales si no esta vacia
-    if (listaComida.size() > 0) {
-      double total = 0;
-      for (int i = 0; i < listaComida.size(); i++) {
-        total += listaComida.get(i).getPrecio() * listaComida.get(i).getCantidad();
-      }
-      precioComida.setText(String.valueOf(total));
-      double iva = total * precioImpuestos;
-      total = total + iva + precioEnvio;
-      DecimalFormat df = new DecimalFormat("###,###,###,##0.00");
-      precio.setText(df.format(total));
-    }
-  }*/
 }

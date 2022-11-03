@@ -11,7 +11,7 @@
         android:id="@+id/titulo2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:paddingStart="15sp"
         android:text="@string/carrito"
         android:textAlignment="viewStart"
@@ -19,6 +19,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,9 +60,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/direc"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.723" />
+        app:layout_constraintVertical_bias="0.476" />
 
     <TextView
         android:id="@+id/local"
@@ -84,13 +86,16 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/codigoPost"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ciudad" />
+        app:layout_constraintTop_toBottomOf="@+id/ciudad"
+        app:layout_constraintVertical_bias="0.51" />
 
     <TextView
         android:id="@+id/local2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="@string/obs"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -103,14 +108,13 @@
         android:id="@+id/direc"
         android:layout_width="211dp"
         android:layout_height="48dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="68dp"
         android:background="@drawable/circulo_blanco"
         android:ems="10"
         android:gravity="center_horizontal|center_vertical"
         android:hint="@string/direccion"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -123,6 +127,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:hint="@string/localidad"
         android:inputType="textPersonName"
+        android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/codigoPost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,6 +143,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:hint="@string/codigoPostal"
         android:inputType="number"
+        android:maxLength="5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/direc" />
@@ -146,7 +152,7 @@
         android:id="@+id/obs"
         android:layout_width="247dp"
         android:layout_height="113dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/fondo_carrito"
         android:ems="10"
         android:gravity="start|top"
@@ -155,5 +161,50 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/codigoPost"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/errLocal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/localidadErr"
+        android:textColor="#500000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ciudad" />
+
+    <TextView
+        android:id="@+id/errDirec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/direccionErr"
+        android:textColor="#500000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/direc" />
+
+    <TextView
+        android:id="@+id/errObs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/obsErr"
+        android:textColor="#500000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/obs" />
+
+    <TextView
+        android:id="@+id/errPostal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/codigoPostalErr"
+        android:textColor="#500000"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/codigoPost" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,11 +12,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 import esei.uvigo.easyfooding.objetosCarrito.Comida;
@@ -60,7 +62,6 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     EditText codigoPost = findViewById(R.id.codigoPost);
     EditText obs = findViewById(R.id.obs);
 
-
     String varDireccion = direccion.getText().toString();
     String varCiudad = ciudad.getText().toString();
     String varCodigo = codigoPost.getText().toString();
@@ -79,11 +80,27 @@ public class ProcesoPagoActivity extends AppCompatActivity {
             }
           });
       builder.create().show();
+      // validaciones
     } else {
-      if(TextUtils.isEmpty(varObs)){
-        insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, "");
-      }else{
-        insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, varObs);
+      boolean isvalid = true;
+      if (!validarDireccion(varDireccion)) {
+        isvalid = false;
+      }
+      if (!validarLocalidad(varCiudad)) {
+        isvalid = false;
+      }
+      if (!validarCodigoPostal(Integer.parseInt(varCodigo))) {
+        isvalid = false;
+      }
+      if(!TextUtils.isEmpty(varObs) && !validarObs(varObs)){
+        isvalid = false;
+      }
+      if (isvalid) {
+        if (TextUtils.isEmpty(varObs)) {
+          insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, "");
+        } else {
+          insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, varObs);
+        }
       }
     }
   }
@@ -109,26 +126,27 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     dataBaseAccess.open();
     int maxId = dataBaseAccess.getMaxIdPedido();
     int idNuevoPedido = maxId + 1;
-    boolean insert =
-        dataBaseAccess.insertarPedido(
-            idNuevoPedido, nombreUsuario, fecha, direccion, localidad, cp, precio, observaciones);
-    for(int i = 0; i<comidas.size();i++){
-      insertarLineasPedido(idNuevoPedido,comidas.get(i));
+    dataBaseAccess.insertarPedido(
+        idNuevoPedido, nombreUsuario, fecha, direccion, localidad, cp, precio, observaciones);
+    for (int i = 0; i < comidas.size(); i++) {
+      insertarLineasPedido(idNuevoPedido, comidas.get(i));
     }
-    //vaciamos la tabla del carrito
+    // vaciamos la tabla del carrito
     limpiarTablaCarrito();
-    //limpiamos la lista y el adaptador del recycleview
+    // limpiamos la lista y el adaptador del recycleview
     CarritoActivity.listaComida.clear();
     Intent intent = new Intent(ProcesoPagoActivity.this, InicioActivity.class);
     finish();
     startActivity(intent);
   }
-  private void limpiarTablaCarrito(){
+
+  private void limpiarTablaCarrito() {
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
-    boolean res = dataBaseAccess.eliminarProductorComprados(OperationsUserActivity.getUserFromSession(this));
+    dataBaseAccess.eliminarProductorComprados(OperationsUserActivity.getUserFromSession(this));
   }
-  private void insertarLineasPedido(int idPedido,Comida comida) {
+
+  private void insertarLineasPedido(int idPedido, Comida comida) {
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
     int maxIDLinea = dataBaseAccess.getMaxIdLineaPedido();
@@ -140,7 +158,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     double precioTotal = precio * cantidad;
     dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
     dataBaseAccess.open();
-    boolean res = dataBaseAccess.insertarLineaPedido(idActual, idPedido, codigoComida, cantidad, precioTotal);
+    dataBaseAccess.insertarLineaPedido(idActual, idPedido, codigoComida, cantidad, precioTotal);
     dataBaseAccess.close();
   }
 
@@ -149,5 +167,60 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     return sdf.format(cal.getTime());
+  }
+
+  public boolean validarDireccion(String input) {
+    Pattern p = Pattern.compile("^[a-zA-Zº0-9,.\\s-]{4,60}$");
+
+    boolean correcto = showErrMessagesForRegisterTxtViews(p, input, R.id.errDirec);
+    if (correcto) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public boolean validarLocalidad(String input) {
+    Pattern p = Pattern.compile("^[a-zA-Z\\s]{4,35}$");
+
+    boolean correcto = showErrMessagesForRegisterTxtViews(p, input, R.id.errLocal);
+    if (correcto) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public boolean validarObs(String input){
+    Pattern p = Pattern.compile("^[A-Za-z0-9\\s\\(\\)\\,\\.\\¿\\?\\=\\-\\+\\áéíóúñÁÉÍÓÚÑ]{1,80}$");
+    boolean correcto = showErrMessagesForRegisterTxtViews(p, input, R.id.errObs);
+    if (correcto) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public boolean showErrMessagesForRegisterTxtViews(Pattern p, String input, int view) {
+    TextView errMsg = findViewById(view);
+
+    if (!p.matcher(input).matches()) {
+      errMsg.setVisibility(View.VISIBLE); // Muestra el error
+      return false;
+
+    } else {
+      errMsg.setVisibility(View.GONE); // Hace que el error desaparezca
+      return true;
+    }
+  }
+
+  public boolean validarCodigoPostal(int input) {
+    Pattern p = Pattern.compile("^[0-9]{5}$");
+
+    boolean correcto =
+        showErrMessagesForRegisterTxtViews(p, Integer.toString(input), R.id.errPostal);
+    if (correcto) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

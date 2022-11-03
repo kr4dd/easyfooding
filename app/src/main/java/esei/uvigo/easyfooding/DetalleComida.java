@@ -3,6 +3,7 @@ package esei.uvigo.easyfooding;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -143,8 +144,9 @@ public class DetalleComida extends AppCompatActivity {
                 databaseAccess.insertarLineaCarrito(OperationsUserActivity.getUserFromSession(getApplicationContext()), codigoComida, Integer.parseInt(cantidadComida.getText().toString()));
                 databaseAccess.close();
 
-                //Redirigir al usuario a la actividad anterior
+                //Redirigir al usuario al inicio
                 finish();
+                startActivity(new Intent(DetalleComida.this, InicioActivity.class));
             }
         });
     }

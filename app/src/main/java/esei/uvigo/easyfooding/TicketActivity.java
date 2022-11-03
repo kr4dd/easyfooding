@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
-import esei.uvigo.easyfooding.objetosCarrito.LineaPedidos;
+import esei.uvigo.easyfooding.core.LineaPedidos;
 
 public class TicketActivity extends AppCompatActivity {
 

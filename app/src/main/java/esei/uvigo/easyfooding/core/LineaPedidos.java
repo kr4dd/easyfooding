@@ -1,4 +1,4 @@
-package esei.uvigo.easyfooding.objetosCarrito;
+package esei.uvigo.easyfooding.core;
 
 public class LineaPedidos {
     private int num_linea;

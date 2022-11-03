@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
-import esei.uvigo.easyfooding.objetosCarrito.ListaPedidos;
+import esei.uvigo.easyfooding.core.ListaPedidos;
 
 public class PedidosActivity extends AppCompatActivity {
   private ArrayList<ListaPedidos> res;

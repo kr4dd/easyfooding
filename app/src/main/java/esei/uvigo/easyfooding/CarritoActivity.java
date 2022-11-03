@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
-import esei.uvigo.easyfooding.objetosCarrito.Carrito;
-import esei.uvigo.easyfooding.objetosCarrito.Comida;
+import esei.uvigo.easyfooding.core.Carrito;
+import esei.uvigo.easyfooding.core.Comida;
 
 public class CarritoActivity extends AppCompatActivity {
   private RecyclerView listaProductos;

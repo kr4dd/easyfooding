@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
-import esei.uvigo.easyfooding.objetosCarrito.Comida;
+import esei.uvigo.easyfooding.core.Comida;
 
 public class ProcesoPagoActivity extends AppCompatActivity {
 

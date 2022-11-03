@@ -6,16 +6,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.service.controls.Control;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.objetosCarrito.Carrito;
-import esei.uvigo.easyfooding.objetosCarrito.Comida;
-import esei.uvigo.easyfooding.objetosCarrito.LineaPedidos;
-import esei.uvigo.easyfooding.objetosCarrito.ListaPedidos;
+import esei.uvigo.easyfooding.core.Carrito;
+import esei.uvigo.easyfooding.core.Comida;
+import esei.uvigo.easyfooding.core.LineaPedidos;
+import esei.uvigo.easyfooding.core.ListaPedidos;
 
 public class DatabaseAccess {
     private SQLiteOpenHelper openHelper;

@@ -1,4 +1,4 @@
-package esei.uvigo.easyfooding.objetosCarrito;
+package esei.uvigo.easyfooding.core;
 
 import java.io.Serializable;
 

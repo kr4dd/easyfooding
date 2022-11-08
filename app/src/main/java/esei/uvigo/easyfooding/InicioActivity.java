@@ -1,10 +1,13 @@
 package esei.uvigo.easyfooding;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -49,6 +53,10 @@ public class InicioActivity extends AppCompatActivity {
         funcionalidadesBarraBusqueda();
 
         databaseAccess.close();
+
+        //Colores personalizado del saludo al usuario
+        TextView saludoUsuario = findViewById(R.id.saludoUsuario);
+        saludoUsuario.setTextColor(Color.parseColor("#ff3d00"));
     }
 
     private void construirListaCategorias(DatabaseAccess databaseAccess){
@@ -193,22 +201,44 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        Toast.makeText(this.getApplicationContext(), "OnPause", Toast.LENGTH_SHORT).show();
-        SharedPreferences prefs = this.getSharedPreferences("datosInicio", MODE_PRIVATE);
+        /*
+        SharedPreferences prefs = this.getSharedPreferences("datosOnPause", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         EditText barraBusqueda = findViewById(R.id.barraBusqueda);
-        editor.putString("buscarComida", barraBusqueda.getText().toString());
+        editor.putString("barraBusquedaComida", barraBusqueda.getText().toString());
         editor.apply();
+         */
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        Toast.makeText(this.getApplicationContext(), "OnResume", Toast.LENGTH_SHORT).show();
-        SharedPreferences prefs = this.getSharedPreferences("datosInicio", MODE_PRIVATE);
-        String nombreComidaBuscar = prefs.getString("buscarComida", "");
+        /*
+        SharedPreferences prefs = this.getSharedPreferences("datosOnPause", MODE_PRIVATE);
+        String nombreComidaBuscar = prefs.getString("barraBusquedaComida", "");
         EditText barraBusqueda = findViewById(R.id.barraBusqueda);
         barraBusqueda.setText(nombreComidaBuscar);
+         */
+    }
+
+    //Método para controlar que pulsamos la tecla de back en el dispositivo movil
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.cerrarSesionDialog);
+            builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    });
+            builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //nothing
+                        }
+                    });
+            builder.create().show();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
 

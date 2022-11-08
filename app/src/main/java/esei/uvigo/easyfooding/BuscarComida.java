@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -112,5 +113,25 @@ public class BuscarComida extends AppCompatActivity {
             //La comida ya se añade automaticamente a la ListView porque esta conectada con un Adaptador
         }
         databaseAccess.close();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+    }
+
+    //Método para controlar que pulsamos la tecla de back en el dispositivo movil
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

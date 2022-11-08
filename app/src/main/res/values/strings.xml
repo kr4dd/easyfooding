@@ -40,7 +40,8 @@
     <string name="tarjeta">Pagar con tarjeta</string>
     <string name="borrar">Eliminar del carrito</string>
     <string name="confirma">¿Quieres borrar este producto del carrito?</string>
-    <string name="aceptar">Entendido</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
     <string name="local">Localidad</string>
     <string name="fecha">Fecha</string>
     <string name="obsErr">Solo puedes introducir hasta 80 caracteres y sin caracteres especiales</string>
@@ -74,5 +75,7 @@
 
     <!-- Login panel errores -->
     <string name="loginErr">Usuario o contraseña no válidos</string>
+
+    <string name="cerrarSesionDialog">¿Seguro que deseas cerrar sesión?</string>
 
 </resources>

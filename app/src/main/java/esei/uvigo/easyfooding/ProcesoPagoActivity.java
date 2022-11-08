@@ -30,7 +30,6 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_proceso_pago);
     Bundle datos = getIntent().getExtras();
-    setColoresAndroidModoOscuro();
     Objects.requireNonNull(getSupportActionBar()).hide();
     ArrayList<Comida> datosComidas = (ArrayList<Comida>) datos.get("datosProductos");
     String importe = (String) datos.get("importe");
@@ -42,18 +41,6 @@ public class ProcesoPagoActivity extends AppCompatActivity {
             getValues(datosComidas, importe);
           }
         });
-  }
-
-  private void setColoresAndroidModoOscuro() {
-    // Colores de los textos de la navbar inferior
-    EditText direccion = findViewById(R.id.direc);
-    direccion.setTextColor(Color.GRAY);
-    EditText ciudad = findViewById(R.id.ciudad);
-    ciudad.setTextColor(Color.GRAY);
-    EditText codigoPost = findViewById(R.id.codigoPost);
-    codigoPost.setTextColor(Color.GRAY);
-    EditText obs = findViewById(R.id.obs);
-    obs.setTextColor(Color.GRAY);
   }
 
   public void getValues(ArrayList<Comida> comidas, String importe) {

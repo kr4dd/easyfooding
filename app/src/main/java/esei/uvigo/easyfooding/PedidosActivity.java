@@ -1,11 +1,14 @@
 package esei.uvigo.easyfooding;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +36,6 @@ public class PedidosActivity extends AppCompatActivity {
     setContentView(R.layout.activity_pedidos);
     getSupportActionBar().hide();
     cambiarActividad();
-    setColoresAndroidModoOscuro();
     this.res = new ArrayList<ListaPedidos>();
 
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
@@ -180,17 +182,24 @@ public class PedidosActivity extends AppCompatActivity {
         });
   }
 
-  private void setColoresAndroidModoOscuro() {
-    // Colores de los textos de la navbar inferior
-    TextView textoInicio = findViewById(R.id.textoInicio);
-    textoInicio.setTextColor(Color.GRAY);
-    TextView textoPerfil = findViewById(R.id.textoPerfil);
-    textoPerfil.setTextColor(Color.GRAY);
-    TextView textoCarrito = findViewById(R.id.textoCarrito);
-    textoCarrito.setTextColor(Color.GRAY);
-    TextView textoPedidos = findViewById(R.id.textoPedidos);
-    textoPedidos.setTextColor(Color.GRAY);
-    TextView textoAjustes = findViewById(R.id.textoAjustes);
-    textoAjustes.setTextColor(Color.GRAY);
+  //Método para controlar que pulsamos la tecla de back en el dispositivo movil
+  public boolean onKeyDown(int keyCode, KeyEvent event){
+    if(keyCode == event.KEYCODE_BACK){
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      builder.setMessage(R.string.cerrarSesionDialog);
+      builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+          finish();
+        }
+      });
+      builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int id) {
+          //nothing
+        }
+      });
+      builder.create().show();
+    }
+    return super.onKeyDown(keyCode, event);
   }
+
 }

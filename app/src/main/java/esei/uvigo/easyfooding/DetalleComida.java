@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -139,15 +141,46 @@ public class DetalleComida extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //TODO insertar en la tabla carrito_temp el codigo del usuario, el codigo de la  comida y la cantidad.
+                //insertar en la tabla carrito_temp el codigo del usuario, el codigo de la  comida y la cantidad.
                 databaseAccess.open();
                 databaseAccess.insertarLineaCarrito(OperationsUserActivity.getUserFromSession(getApplicationContext()), codigoComida, Integer.parseInt(cantidadComida.getText().toString()));
                 databaseAccess.close();
+
+                //Resetear la cantidad
+                cantidadComida.setText("1");
 
                 //Redirigir al usuario al inicio
                 finish();
                 startActivity(new Intent(DetalleComida.this, InicioActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        SharedPreferences prefs = this.getSharedPreferences("datosOnPause", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("cantidadDetalleComida", this.cantidadComida.getText().toString());
+        editor.apply();
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        SharedPreferences prefs = this.getSharedPreferences("datosOnPause", MODE_PRIVATE);
+        String cantidadDetalleComida = prefs.getString("cantidadDetalleComida", "1");
+        this.cantidadComida.setText(cantidadDetalleComida);
+
+    }
+
+    //Método para controlar que pulsamos la tecla de back en el dispositivo movil
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if(keyCode == event.KEYCODE_BACK){
+            cantidadComida.setText("1");
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

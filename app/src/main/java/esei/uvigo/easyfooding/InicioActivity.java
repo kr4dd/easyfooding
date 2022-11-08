@@ -2,6 +2,7 @@ package esei.uvigo.easyfooding;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -110,7 +112,6 @@ public class InicioActivity extends AppCompatActivity {
             button.setTextColor(Color.BLACK);
             button.setHeight(200);
 
-
             databaseAccess.open();
             String nombre = nombresComidas.get(i);
             ArrayList<Integer> codigo_comida = databaseAccess.getCodigoComidaPorNombre(nombre);
@@ -189,6 +190,26 @@ public class InicioActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Toast.makeText(this.getApplicationContext(), "OnPause", Toast.LENGTH_SHORT).show();
+        SharedPreferences prefs = this.getSharedPreferences("datosInicio", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        EditText barraBusqueda = findViewById(R.id.barraBusqueda);
+        editor.putString("buscarComida", barraBusqueda.getText().toString());
+        editor.apply();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Toast.makeText(this.getApplicationContext(), "OnResume", Toast.LENGTH_SHORT).show();
+        SharedPreferences prefs = this.getSharedPreferences("datosInicio", MODE_PRIVATE);
+        String nombreComidaBuscar = prefs.getString("buscarComida", "");
+        EditText barraBusqueda = findViewById(R.id.barraBusqueda);
+        barraBusqueda.setText(nombreComidaBuscar);
+    }
 }
 
 

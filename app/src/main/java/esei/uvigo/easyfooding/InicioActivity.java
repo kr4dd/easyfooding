@@ -32,9 +32,6 @@ public class InicioActivity extends AppCompatActivity {
         TextView msgBienvenida = findViewById(R.id.saludoUsuario);
         msgBienvenida.setText("Hola, " + OperationsUserActivity.getUserFromSession(this));
 
-        //Cambiar colores en el modo noche del dispositivo físico
-        setColoresAndroidModoOscuro();
-
         //Cambiar de actividades
         cambiarActividad();
 
@@ -50,30 +47,6 @@ public class InicioActivity extends AppCompatActivity {
         funcionalidadesBarraBusqueda();
 
         databaseAccess.close();
-    }
-
-    private void setColoresAndroidModoOscuro(){
-
-        //Colores del saludo al usuario
-        TextView saludoUsuario = findViewById(R.id.saludoUsuario);
-        saludoUsuario.setTextColor(Color.parseColor("#ff3d00"));
-
-        //Colores de la barra de busqueda
-        EditText barraBusqueda = findViewById(R.id.barraBusqueda);
-        barraBusqueda.setHintTextColor(Color.GRAY);
-        barraBusqueda.setTextColor(Color.BLACK);
-
-        //Colores de los textos de la navbar inferior
-        TextView textoInicio = findViewById(R.id.textoInicio);
-        textoInicio.setTextColor(Color.GRAY);
-        TextView textoPerfil = findViewById(R.id.textoPerfil);
-        textoPerfil.setTextColor(Color.GRAY);
-        TextView textoCarrito = findViewById(R.id.textoCarrito);
-        textoCarrito.setTextColor(Color.GRAY);
-        TextView textoPedidos = findViewById(R.id.textoPedidos);
-        textoPedidos.setTextColor(Color.GRAY);
-        TextView textoAjustes = findViewById(R.id.textoAjustes);
-        textoAjustes.setTextColor(Color.GRAY);
     }
 
     private void construirListaCategorias(DatabaseAccess databaseAccess){
@@ -172,7 +145,6 @@ public class InicioActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
     }
 
     private void cambiarActividad() {

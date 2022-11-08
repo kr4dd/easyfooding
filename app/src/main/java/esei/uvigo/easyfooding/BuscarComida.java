@@ -82,20 +82,11 @@ public class BuscarComida extends AppCompatActivity {
             mensajeBusquedaFallida.setText(R.string.busquedafallida);
         }
 
-        //Cambiar colores en el modo noche del dispositivo físico
-        setColoresAndroidModoOscuro();
-
         //Cerrar conexion a BD
         databaseAccess.close();
 
         //Borrar parametros de la actividad
         parametros.clear();
-    }
-
-    private void setColoresAndroidModoOscuro() {
-        //Colores del mensaje de busqueda sin resultados
-        TextView textoAjustes = findViewById(R.id.mensajeBusquedaFallida);
-        textoAjustes.setTextColor(Color.GRAY);
     }
 
     //Rellenar ListView con comida filtrada por categoria

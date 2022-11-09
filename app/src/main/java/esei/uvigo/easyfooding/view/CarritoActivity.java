@@ -32,8 +32,8 @@ import esei.uvigo.easyfooding.model.AccesoModelo;
 public class CarritoActivity extends AppCompatActivity {
     private RecyclerView listaProductos;
     static ArrayList<Comida> listaComida = new ArrayList<>();
-    double precioImpuestos;
-    double precioEnvio;
+    private double precioImpuestos;
+    private double precioEnvio;
     static AdaptadorPedido ap;
     ArrayList<Comida> pago = new ArrayList<>();
 

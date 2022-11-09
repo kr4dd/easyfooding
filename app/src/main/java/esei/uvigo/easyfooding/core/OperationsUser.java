@@ -46,8 +46,7 @@ public class OperationsUser {
     }
 
     public static void showToastMsg(Context context, String msg) {
-        Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     public static void setSession(Context context, String usuario) {

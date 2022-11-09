@@ -85,9 +85,7 @@ public class TicketActivity extends AppCompatActivity {
             double total = objetoActual.getPrecio();
             DecimalFormat df = new DecimalFormat("###,###,###,##0.0");
 
-            String mostar = df.format(total) + "€";
-
-            precio.setText(mostar);
+            precio.setText(df.format(total) + "€");
 
             return  view;
         }

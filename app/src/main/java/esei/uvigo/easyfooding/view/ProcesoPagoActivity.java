@@ -1,24 +1,21 @@
 package esei.uvigo.easyfooding.view;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.Comida;
+import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class ProcesoPagoActivity extends AppCompatActivity {
@@ -27,18 +24,16 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proceso_pago);
+
         Bundle datos = getIntent().getExtras();
+
         Objects.requireNonNull(getSupportActionBar()).hide();
+
         ArrayList<Comida> datosComidas = (ArrayList<Comida>) datos.get("datosProductos");
         String importe = (String) datos.get("importe");
+
         ConstraintLayout pago = findViewById(R.id.pagar);
-        pago.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getValues(datosComidas, importe);
-                    }
-                });
+        pago.setOnClickListener(view -> getValues(datosComidas, importe));
     }
 
     public void getValues(ArrayList<Comida> comidas, String importe) {
@@ -49,51 +44,49 @@ public class ProcesoPagoActivity extends AppCompatActivity {
 
         String varDireccion = direccion.getText().toString();
         String varCiudad = ciudad.getText().toString();
-        String varCodigo = codigoPost.getText().toString();
+        String varCodigoPostal = codigoPost.getText().toString();
         String varObs = obs.getText().toString();
 
-        if (TextUtils.isEmpty(varDireccion)
-                || TextUtils.isEmpty(varCiudad)
-                || TextUtils.isEmpty(varCodigo)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ProcesoPagoActivity.this);
-            builder.setMessage("Debes introducir todos los campos");
-            builder.setPositiveButton(
-                    R.string.aceptar,
-                    (dialogInterface, i) -> {
-                        dialogInterface.dismiss();
-                    });
-            builder.create().show();
-            // validaciones
-        } else {
-            boolean isvalid = true;
-            if (!validarDireccion(varDireccion)) {
-                isvalid = false;
-            }
-            if (!validarLocalidad(varCiudad)) {
-                isvalid = false;
-            }
-            if (!validarCodigoPostal(Integer.parseInt(varCodigo))) {
-                isvalid = false;
-            }
-            if (!TextUtils.isEmpty(varObs) && !validarObs(varObs)) {
-                isvalid = false;
-            }
-            if (isvalid) {
-                if (TextUtils.isEmpty(varObs)) {
-                    insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, "");
-                } else {
-                    insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigo, varObs);
-                }
-            }
+        //Validar datos
+        if(validateInputFields(varDireccion, varCiudad, varCodigoPostal, varObs))
+        {
+            insertarPedido(comidas, importe, varDireccion, varCiudad, varCodigoPostal, varObs);
         }
+
+    }
+
+    public boolean validateInputFields(String varDireccion, String varCiudad, String varCodigoPostal,
+                                       String varObs)
+    {
+        //Validar datos input formulario del proceso de pago
+        validarDireccion(varDireccion);
+        validarLocalidad(varCiudad);
+
+        int cp;
+        try {
+            cp = Integer.parseInt(varCodigoPostal);
+        } catch (NumberFormatException e) {
+            cp = 000000;
+        }
+        validarCodigoPostal(cp);
+
+        validarObs(varObs);
+
+        TextView errLocal = findViewById(R.id.errLocal);
+        TextView errDirec = findViewById(R.id.errDirec);
+        TextView errObs = findViewById(R.id.errObs);
+        TextView errPostal = findViewById(R.id.errPostal);
+
+        return errLocal.getVisibility() == View.GONE && errDirec.getVisibility() == View.GONE
+                && errObs.getVisibility() == View.GONE && errPostal.getVisibility() == View.GONE;
     }
 
     private void insertarPedido(ArrayList<Comida> comidas, String importe, String direccion,
                                 String localidad, String varCodigo, String observaciones)
     {
 
-        String nombreUsuario = OperationsUser.getUserFromSession(this); // aqui iria el user que se autentico
-        String fecha = OperationsUser.getActualDateSpanishStrFormat(); // llamamos a la funcion que nos devuelve la fecha actual
+        String nombreUsuario = OperationsUser.getUserFromSession(this);
+        String fechaActual = OperationsUser.getActualDateSpanishStrFormat();
         int cp = Integer.parseInt(varCodigo);
         double precio = Double.parseDouble(importe);
 
@@ -101,7 +94,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         AccesoModelo db = new AccesoModelo(this);
         int maxId = db.getMaxIdPedido();
         int idNuevoPedido = maxId + 1;
-        db.insertarPedido(idNuevoPedido, nombreUsuario, fecha, direccion, localidad,
+        db.insertarPedido(idNuevoPedido, nombreUsuario, fechaActual, direccion, localidad,
                 cp, precio, observaciones);
 
         for (int i = 0; i < comidas.size(); i++) {
@@ -135,39 +128,39 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         db.insertarLineaPedido(idActual, idPedido, codigoComida, cantidad, precioTotal);
     }
 
-    public boolean validarDireccion(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Zº0-9,.\\s-]{4,60}$");
+    public void validarDireccion(String input) {
+        Pattern p = Pattern.compile("^[a-zA-Zº0-9áéíóúÁÉÍÓÚ,.\\s-]{4,60}$");
 
-        return showErrMessagesForRegisterTxtViews(p, input, R.id.errDirec);
+        showErrMessagesForRegisterTxtViews(p, input, R.id.errDirec);
     }
 
-    public boolean validarLocalidad(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z\\s]{4,35}$");
+    public void validarLocalidad(String input) {
+        Pattern p = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚ\\s]{4,35}$");
 
-        return showErrMessagesForRegisterTxtViews(p, input, R.id.errLocal);
+        showErrMessagesForRegisterTxtViews(p, input, R.id.errLocal);
     }
 
-    public boolean validarObs(String input) {
+    public void validarObs(String input) {
         Pattern p = Pattern.compile("^[A-Za-z0-9\\s(),.¿?=\\-+áéíóúñÁÉÍÓÚÑ]{1,80}$");
-        return showErrMessagesForRegisterTxtViews(p, input, R.id.errObs);
+
+        showErrMessagesForRegisterTxtViews(p, input, R.id.errObs);
     }
 
-    public boolean showErrMessagesForRegisterTxtViews(Pattern p, String input, int view) {
+    public void validarCodigoPostal(int input) {
+        Pattern p = Pattern.compile("^[0-9]{5}$");
+
+        showErrMessagesForRegisterTxtViews(p, Integer.toString(input), R.id.errPostal);
+    }
+
+    public void showErrMessagesForRegisterTxtViews(Pattern p, String input, int view) {
         TextView errMsg = findViewById(view);
 
-        if (!p.matcher(input).matches()) {
-            errMsg.setVisibility(View.VISIBLE); // Muestra el error
-            return false;
+        if(!p.matcher(input).matches()) {
+            errMsg.setVisibility(View.VISIBLE); //Muestra el error
 
         } else {
-            errMsg.setVisibility(View.GONE); // Hace que el error desaparezca
-            return true;
+            errMsg.setVisibility(View.GONE); //Hace que el error desaparezca
         }
     }
 
-    public boolean validarCodigoPostal(int input) {
-        Pattern p = Pattern.compile("^[0-9]{5}$");
-
-        return showErrMessagesForRegisterTxtViews(p, Integer.toString(input), R.id.errPostal);
-    }
 }

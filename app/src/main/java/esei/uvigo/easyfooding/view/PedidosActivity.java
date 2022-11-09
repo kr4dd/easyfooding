@@ -50,7 +50,7 @@ public class PedidosActivity extends AppCompatActivity {
         res = db.historial(OperationsUser.getUserFromSession(this)); // aqui hay que meter el usuario logeado
 
         this.adapter = new listaAdapter(PedidosActivity.this, 0, res);
-        ListView ticket = (ListView) this.findViewById(R.id.ticket);
+        ListView ticket = this.findViewById(R.id.ticket);
         ticket.setAdapter(this.adapter);
         ticket.setOnItemClickListener((adapterView, view, pos, l) -> {
             Intent intent = new Intent(PedidosActivity.this, TicketActivity.class);

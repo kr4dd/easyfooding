@@ -145,13 +145,13 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     public void validarDireccion(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Zº0-9,.\\s-]{4,60}$");
+        Pattern p = Pattern.compile("^[a-zA-Zº0-9áéíóúÁÉÍÓÚ,.\\s-]{4,60}$");
 
         showErrMessagesForRegisterTxtViews(p, input, R.id.errDireccion);
     }
 
     public void validarLocalidad(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z\\s]{4,35}$");
+        Pattern p = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚ\\s]{4,35}$");
 
         showErrMessagesForRegisterTxtViews(p, input, R.id.errLocalidad);
     }

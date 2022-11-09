@@ -88,7 +88,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         String nombreUsuario = OperationsUser.getUserFromSession(this);
         String fechaActual = OperationsUser.getActualDateSpanishStrFormat();
         int cp = Integer.parseInt(varCodigo);
-        double precio = Double.parseDouble(importe.replaceAll(",","."));
+        double precio = Double.parseDouble(importe.replaceFirst(",","."));
 
         //Acceso a la base de datos
         AccesoModelo db = new AccesoModelo(this);

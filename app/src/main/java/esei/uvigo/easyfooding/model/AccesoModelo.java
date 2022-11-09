@@ -7,6 +7,7 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
+import esei.uvigo.easyfooding.OperationsUser;
 import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.UsuarioRegistro;
 import esei.uvigo.easyfooding.core.Carrito;
@@ -415,7 +416,7 @@ public class AccesoModelo {
 
         ContentValues cv = new ContentValues();
         cv.put("nombre_usuario", ur.getUsuario());
-        cv.put("pass", ur.getPass());
+        cv.put("pass", OperationsUser.hashearMD5(ur.getPass()));
         cv.put("nombre_real", ur.getNombreReal());
         cv.put("apellidos", ur.getApellidos());
         cv.put("mail", ur.getCorreo());

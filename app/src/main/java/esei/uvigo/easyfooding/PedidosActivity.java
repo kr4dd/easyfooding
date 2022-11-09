@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,24 @@ public class PedidosActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         cambiarActividad();
         getHistorial();
+        setColoresAndroidModoOscuro();
     }
+
+    private void setColoresAndroidModoOscuro(){
+        //Colores de los textos de la navbar inferior
+        TextView textoInicio = findViewById(R.id.textoInicio);
+        textoInicio.setTextColor(Color.GRAY);
+        TextView textoPerfil = findViewById(R.id.textoPerfil);
+        textoPerfil.setTextColor(Color.GRAY);
+        TextView textoCarrito = findViewById(R.id.textoCarrito);
+        textoCarrito.setTextColor(Color.GRAY);
+        TextView textoPedidos = findViewById(R.id.textoPedidos);
+        textoPedidos.setTextColor(Color.GRAY);
+        TextView textoAjustes = findViewById(R.id.textoAjustes);
+        textoAjustes.setTextColor(Color.GRAY);
+    }
+
+
     private void getHistorial() {
         ArrayList<ListaPedidos> res;
         DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());

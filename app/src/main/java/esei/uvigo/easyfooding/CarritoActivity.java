@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 import esei.uvigo.easyfooding.objetosCarrito.Comida;
@@ -29,15 +30,14 @@ public class CarritoActivity extends AppCompatActivity {
   double precioImpuestos;
   double precioEnvio;
   AdaptadorPedido ap;
-  ArrayList<Comida> pago =
-          new ArrayList<>(); // se manda a la pestaña de pago para informar de la comida y las
+  ArrayList<Comida> pago = new ArrayList<>(); // se manda a la pestaña de pago para informar de la comida y las
   // cantidades
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
-    getSupportActionBar().hide();
+    Objects.requireNonNull(getSupportActionBar()).hide();
     setContentView(R.layout.activity_carrito);
 
     listaProductos = findViewById(R.id.listaComida);
@@ -68,26 +68,26 @@ public class CarritoActivity extends AppCompatActivity {
     ConstraintLayout pagar = findViewById(R.id.pagar);
     if (listaComida.size() > 0) {
       pagar.setOnClickListener(
-              new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                  actualizaPago();
-                  if (listaComida.size() > 0) {
-                    Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
-                    TextView total = findViewById(R.id.suma);
-                    String suma = total.getText().toString();
-                    intent.putExtra("importe", suma);
-                    intent.putExtra("datosProductos", pago);
-                    startActivity(intent);
-                  }
-                }
-              });
+          new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              actualizaPago();
+              if (listaComida.size() > 0) {
+                Intent intent = new Intent(CarritoActivity.this, ProcesoPagoActivity.class);
+                TextView total = findViewById(R.id.suma);
+                String suma = total.getText().toString();
+                intent.putExtra("importe", suma);
+                intent.putExtra("datosProductos", pago);
+                startActivity(intent);
+              }
+            }
+          });
     }
     setColoresAndroidModoOscuro();
   }
 
-  private void setColoresAndroidModoOscuro(){
-    //Colores de los textos de la navbar inferior
+  private void setColoresAndroidModoOscuro() {
+    // Colores de los textos de la navbar inferior
     TextView textoInicio = findViewById(R.id.textoInicio);
     textoInicio.setTextColor(Color.GRAY);
     TextView textoPerfil = findViewById(R.id.textoPerfil);
@@ -100,9 +100,8 @@ public class CarritoActivity extends AppCompatActivity {
     textoAjustes.setTextColor(Color.GRAY);
   }
 
-
-
-  // metodo que nos permite rellenar el array de objetos comida para mostrarlo luego en la lista
+  // metodo que nos permite rellenar el array de objetos comida para mostrarlo
+  // luego en la lista
   private void rellenarArrays() {
 
     listaComida.add(new Comida("Burger simple", 5.25, 2, 1));
@@ -128,8 +127,8 @@ public class CarritoActivity extends AppCompatActivity {
   }
 
   private void crearLista() {
-    LinearLayoutManager linearLayoutManager =
-            new LinearLayoutManager(CarritoActivity.this, LinearLayoutManager.VERTICAL, false);
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(CarritoActivity.this,
+        LinearLayoutManager.VERTICAL, false);
     listaProductos.setLayoutManager(linearLayoutManager);
     ap = new AdaptadorPedido();
     listaProductos.setAdapter(ap);
@@ -181,12 +180,12 @@ public class CarritoActivity extends AppCompatActivity {
   // metodos para la lista de productos
 
   private class AdaptadorPedido
-          extends RecyclerView.Adapter<AdaptadorPedido.AdaptadorPedidoHolder> {
+      extends RecyclerView.Adapter<AdaptadorPedido.AdaptadorPedidoHolder> {
     @NonNull
     @Override
     public AdaptadorPedidoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
       return new AdaptadorPedidoHolder(
-              getLayoutInflater().inflate(R.layout.lista_carrito, parent, false));
+          getLayoutInflater().inflate(R.layout.lista_carrito, parent, false));
     }
 
     @Override
@@ -221,28 +220,23 @@ public class CarritoActivity extends AppCompatActivity {
 
         // para añadir uno mas
         add.setOnClickListener(
-                new View.OnClickListener() {
-                  @Override
-                  public void onClick(View view) {
-                    int actual = Integer.parseInt(cantidadTotal.getText().toString());
-                    masProducto(actual);
-                  }
-                });
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                int actual = Integer.parseInt(cantidadTotal.getText().toString());
+                masProducto(actual);
+              }
+            });
 
         // para retirar un producto
         resta.setOnClickListener(
-                new View.OnClickListener() {
-                  @Override
-                  public void onClick(View view) {
-                    int actual = Integer.parseInt(cantidadTotal.getText().toString());
-                    menosProducto(actual);
-                  }
-                });
-        /*            String eliminar = nombre.getText().toString();
-            int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
-            eliminar(eliminar, cantidad);
-            ap.notifyItemRemoved(getAdapterPosition());
-            calculoComida();*/
+            new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                int actual = Integer.parseInt(cantidadTotal.getText().toString());
+                menosProducto(actual);
+              }
+            });
         itemView.setOnLongClickListener(new View.OnLongClickListener() {
           @Override
           public boolean onLongClick(View view) {
@@ -321,64 +315,63 @@ public class CarritoActivity extends AppCompatActivity {
     // Cambiar a la actividad de Inicio
     LinearLayout inicio = findViewById(R.id.inicio);
     inicio.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                finish();
-                startActivity(new Intent(CarritoActivity.this, InicioActivity.class));
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            finish();
+            startActivity(new Intent(CarritoActivity.this, InicioActivity.class));
+          }
+        });
 
     // Cambiar a la actividad Perfil
     LinearLayout perfil = findViewById(R.id.perfil);
     perfil.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                finish();
-                startActivity(new Intent(CarritoActivity.this, PerfilActivity.class));
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            finish();
+            startActivity(new Intent(CarritoActivity.this, PerfilActivity.class));
+          }
+        });
 
     // Cambiar a la actividad Carrito
     LinearLayout carrito = findViewById(R.id.carrito);
     carrito.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                finish();
-                startActivity(new Intent(CarritoActivity.this, CarritoActivity.class));
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            finish();
+            startActivity(new Intent(CarritoActivity.this, CarritoActivity.class));
+          }
+        });
 
     // Cambiar a la actividad Pedidos
     LinearLayout pedidos = findViewById(R.id.pedidos);
     pedidos.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                finish();
-                startActivity(new Intent(CarritoActivity.this, PedidosActivity.class));
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            finish();
+            startActivity(new Intent(CarritoActivity.this, PedidosActivity.class));
+          }
+        });
 
     // Cambiar a la actividad Ajustes
     LinearLayout ajustes = findViewById(R.id.ajustes);
     ajustes.setOnClickListener(
-            new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                finish();
-                // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
-              }
-            });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            finish();
+            // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
+          }
+        });
   }
 
   public void actualizaPago() {
     pago.clear();
     for (int x = listaProductos.getChildCount(), i = 0; i < x; ++i) {
-      RecyclerView.ViewHolder holder =
-              listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
+      RecyclerView.ViewHolder holder = listaProductos.getChildViewHolder(listaProductos.getChildAt(i));
 
       // actualizacion del array
       TextView t = holder.itemView.findViewById(R.id.precio_total); // precio del producto
@@ -389,13 +382,12 @@ public class CarritoActivity extends AppCompatActivity {
       dataBaseAccess.open();
       int codigo = dataBaseAccess.getIdComida(nombreComida.getText().toString());
       dataBaseAccess.close();
-      Comida add =
-              new Comida(
-                      nombreComida.getText().toString(),
-                      Double.parseDouble(precioUno.getText().toString()),
-                      Integer.parseInt(cantidad.getText().toString()),
-                      codigo,
-                      Double.parseDouble(t.getText().toString()));
+      Comida add = new Comida(
+          nombreComida.getText().toString(),
+          Double.parseDouble(precioUno.getText().toString()),
+          Integer.parseInt(cantidad.getText().toString()),
+          codigo,
+          Double.parseDouble(t.getText().toString()));
       pago.add(add);
     }
   }

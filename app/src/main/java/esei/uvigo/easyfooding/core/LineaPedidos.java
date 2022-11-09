@@ -7,7 +7,9 @@ public class LineaPedidos {
     private int cantidad;
     private double precio;
 
-    public LineaPedidos(int num_linea, int num_pedido, int codigo_comida, int cantidad, double precio) {
+    public LineaPedidos(int num_linea, int num_pedido, int codigo_comida, int cantidad,
+                        double precio)
+    {
         this.num_linea = num_linea;
         this.num_pedido = num_pedido;
         this.codigo_comida = codigo_comida;

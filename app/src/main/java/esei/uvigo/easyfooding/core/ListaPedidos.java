@@ -1,7 +1,7 @@
 package esei.uvigo.easyfooding.core;
 
 public class ListaPedidos {
-    private int num_pedido;
+    private int numPedido;
     private String nombreUsuario;
     private String fecha;
     private String direccion;
@@ -10,8 +10,10 @@ public class ListaPedidos {
     private double importe;
     private String observaciones;
 
-    public ListaPedidos(int num_pedido, String nombreUsuario, String fecha, String direccion, String localidad, int codigoPostal, double importe, String observaciones) {
-        this.num_pedido = num_pedido;
+    public ListaPedidos(int numPedido, String nombreUsuario, String fecha, String direccion,
+                        String localidad, int codigoPostal, double importe, String observaciones)
+    {
+        this.numPedido = numPedido;
         this.nombreUsuario = nombreUsuario;
         this.fecha = fecha;
         this.direccion = direccion;
@@ -19,20 +21,6 @@ public class ListaPedidos {
         this.codigoPostal = codigoPostal;
         this.importe = importe;
         this.observaciones = observaciones;
-    }
-
-    @Override
-    public String toString() {
-        return "ListaPedidos{" +
-                "num_pedido=" + num_pedido +
-                ", nombreUsuario='" + nombreUsuario + '\'' +
-                ", fecha='" + fecha + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", localidad='" + localidad + '\'' +
-                ", codioPostal=" + codigoPostal +
-                ", importe=" + importe +
-                ", observaciones='" + observaciones + '\'' +
-                '}';
     }
 
     public double getImporte() {
@@ -44,7 +32,7 @@ public class ListaPedidos {
     }
 
     public int getNum_pedido() {
-        return num_pedido;
+        return numPedido;
     }
 
     public String getNombreUsuario() {
@@ -71,8 +59,8 @@ public class ListaPedidos {
         return observaciones;
     }
 
-    public void setNum_pedido(int num_pedido) {
-        this.num_pedido = num_pedido;
+    public void setNum_pedido(int numPedido) {
+        this.numPedido = numPedido;
     }
 
     public void setNombreUsuario(String nombreUsuario) {
@@ -97,5 +85,19 @@ public class ListaPedidos {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    @Override
+    public String toString() {
+        return "ListaPedidos{" +
+                "numPedido=" + numPedido +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", localidad='" + localidad + '\'' +
+                ", codioPostal=" + codigoPostal +
+                ", importe=" + importe +
+                ", observaciones='" + observaciones + '\'' +
+                '}';
     }
 }

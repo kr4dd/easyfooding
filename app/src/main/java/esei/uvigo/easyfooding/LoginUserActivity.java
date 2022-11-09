@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class LoginUserActivity extends AppCompatActivity {
     String usuario;
@@ -24,14 +25,14 @@ public class LoginUserActivity extends AppCompatActivity {
         //Ocultar la barra con el titulo
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        AccesoModelo db = new AccesoModelo(this);
 
         Button btnRegistrarse = findViewById(R.id.btnLogearse);
         btnRegistrarse.setOnClickListener(
                 view -> {
-                    if(checkearLogin(databaseAccess)) {
+                    if(checkearLogin(db)) {
                         //Crear sesion de usuario
-                        OperationsUserActivity.setSession(this, usuario);
+                        OperationsUser.setSession(this, usuario);
 
                         //Mandar a inicio
                         goToInicio();
@@ -41,7 +42,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
     }
 
-    public boolean checkearLogin(DatabaseAccess db) {
+    public boolean checkearLogin(AccesoModelo db) {
         EditText editTextUsuario = findViewById(R.id.editTextUsuario);
         usuario = editTextUsuario.getText().toString();
 
@@ -50,9 +51,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
         //Validar contra la base de datos
         boolean isAllow;
-        db.open();
-        isAllow = db.checkLogin(usuario, OperationsUserActivity.hashearMD5(pass));
-        db.close();
+        isAllow = db.checkLogin(usuario, OperationsUser.hashearMD5(pass));
 
         //Mensaje en caso de login no autorizado
         TextView errMsg = findViewById(R.id.errLogin);

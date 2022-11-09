@@ -15,9 +15,11 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 import esei.uvigo.easyfooding.core.LineaPedidos;
+import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class TicketActivity extends AppCompatActivity {
 
@@ -26,10 +28,11 @@ public class TicketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket);
         Bundle datos = getIntent().getExtras();
-        getSupportActionBar().hide();
-        int num_pedido = datos.getInt("numero_pedido");
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
-        ArrayList<LineaPedidos> lineasPedido =  getListaPedidos(num_pedido);
+        int numPedido = datos.getInt("numero_pedido");
+
+        ArrayList<LineaPedidos> lineasPedido = getListaPedidos(numPedido);
         if(lineasPedido.size() > 0){
             ListView list = findViewById(R.id.ticket);
             TextView vacio = findViewById(R.id.sinEntradas);
@@ -46,18 +49,11 @@ public class TicketActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<LineaPedidos> getListaPedidos(int num_pedido) {
-        DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+    private ArrayList<LineaPedidos> getListaPedidos(int numPedido) {
+        AccesoModelo db = new AccesoModelo(this);
 
-        ArrayList<LineaPedidos> l;
-        dataBaseAccess.open();
-        l = dataBaseAccess.getLineaPedidos(num_pedido);
-        dataBaseAccess.close();
-        return l;
+        return db.getLineaPedidos(numPedido);
     }
-
-
-
 
     public class ticketAdapter extends ArrayAdapter<LineaPedidos>{
         private Context context;
@@ -68,23 +64,22 @@ public class TicketActivity extends AppCompatActivity {
             this.context = context;
             this.linea = objects;
         }
+
         public View getView(int position, View convertView, ViewGroup parent){
-            DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+            AccesoModelo db = new AccesoModelo(getApplicationContext());
             LineaPedidos objetoActual = linea.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(TicketActivity.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.linea_pedidos_layout,null);
 
             //antes de setear el contenido tenemos que buscar cual es el nombre del alimento
-            dataBaseAccess.open();
-            String nombreComida =  dataBaseAccess.getNombreComidaPorId(String.valueOf(objetoActual.getCodigo_comida()));
-            dataBaseAccess.close();
+            String nombreComida = db.getNombreComidaPorId(String.valueOf(objetoActual.getCodigo_comida()));
 
             TextView nombre = view.findViewById(R.id.nombre);
             TextView cantidad = view.findViewById(R.id.cantidad);
             TextView precio = view.findViewById(R.id.precio);
 
             nombre.setText(nombreComida);
-            String toShow = "Cantidad: "+ String.valueOf(objetoActual.getCantidad());
+            String toShow = "Cantidad: " + objetoActual.getCantidad();
             cantidad.setText(toShow);
 
             double total = objetoActual.getPrecio();

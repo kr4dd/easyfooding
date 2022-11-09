@@ -1,11 +1,12 @@
 package esei.uvigo.easyfooding.core;
 
 public class Carrito {
-    int codigoComida;
-    int cantidad;
-    String nombreUsuario;
+    private int codigoComida;
+    private int cantidad;
+    private String nombreUsuario;
 
-    public Carrito(int codigoComida, int cantidad, String nombreUsuario) {
+    public Carrito(int codigoComida, int cantidad, String nombreUsuario)
+    {
         this.codigoComida = codigoComida;
         this.cantidad = cantidad;
         this.nombreUsuario = nombreUsuario;
@@ -13,10 +14,6 @@ public class Carrito {
 
     public int getCodigoComida() {
         return codigoComida;
-    }
-
-    public void setCodigoComida(int codigoComida) {
-        this.codigoComida = codigoComida;
     }
 
     public int getCantidad() {
@@ -31,6 +28,14 @@ public class Carrito {
         return nombreUsuario;
     }
 
+    public void setCodigoComida(int codigoComida) {
+        this.codigoComida = codigoComida;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
     @Override
     public String toString() {
         return "Carrito{" +
@@ -40,7 +45,4 @@ public class Carrito {
                 '}';
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
 }

@@ -2,27 +2,21 @@ package esei.uvigo.easyfooding;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Objects;
 
-import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class DetalleComida extends AppCompatActivity {
-
     TextView cantidadComida;
     TextView precioTotal;
     ImageView simboloPostivo;
@@ -35,10 +29,10 @@ public class DetalleComida extends AppCompatActivity {
         setContentView(R.layout.activity_detalle_comida);
 
         //Ocultar la barra con el titulo
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Conectar a BD
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        AccesoModelo db = new AccesoModelo(this);
 
         Bundle parametros = getIntent().getExtras();
         String codigoComida = parametros.get("codigo_comida").toString();
@@ -47,7 +41,7 @@ public class DetalleComida extends AppCompatActivity {
         simboloNegativo = findViewById(R.id.simboloNegativo);
         precioTotal = findViewById(R.id.textView_precio_total);
 
-        rellenarDatosActividad(codigoComida, databaseAccess);
+        rellenarDatosActividad(codigoComida, db);
 
         //Por defecto, la cantidad de esa comida a añadir al carrito es 1
         cantidadComida = findViewById(R.id.cantidad_comida);
@@ -57,10 +51,7 @@ public class DetalleComida extends AppCompatActivity {
         botonesCantidadComida();
 
         //Añadir funcionalidad al botón de añadir al carrito
-        botonCarrito(codigoComida, databaseAccess);
-
-        //Cerrar conexion a BD
-        databaseAccess.close();
+        botonCarrito(codigoComida, db);
 
         //Borrar parametros de la actividad
         parametros.clear();
@@ -68,9 +59,9 @@ public class DetalleComida extends AppCompatActivity {
 
 
     //Función para  extraer datos de la BD y mostrarlos en la actividad
-    private void rellenarDatosActividad(String codigoComida, DatabaseAccess databaseAccess) {
-        databaseAccess.open();
-        ArrayList<String> datosComida = databaseAccess.getDatosComidaPorId(codigoComida);
+    @SuppressLint("SetTextI18n")
+    private void rellenarDatosActividad(String codigoComida, AccesoModelo db) {
+        ArrayList<String> datosComida = db.getDatosComidaPorId(codigoComida);
 
         //nombre
         TextView titulo = findViewById(R.id.textView_nombre_comida);
@@ -98,7 +89,6 @@ public class DetalleComida extends AppCompatActivity {
         TextView tiempo_preparacion = findViewById(R.id.textView_tiempo_preparacion);
         tiempo_preparacion.setText(datosComida.get(5) + " min");
 
-        databaseAccess.close();
     }
 
     //Calcular el precio a añadir al carrito según la cantidad de comida que se pida
@@ -106,6 +96,7 @@ public class DetalleComida extends AppCompatActivity {
 
         //Añadir listener a los botones de mas y de menos
         simboloPostivo.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 int cantidad = Integer.parseInt(cantidadComida.getText().toString());
@@ -118,6 +109,7 @@ public class DetalleComida extends AppCompatActivity {
         });
 
         simboloNegativo.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 int cantidad = Integer.parseInt(cantidadComida.getText().toString());
@@ -130,29 +122,25 @@ public class DetalleComida extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void calcularNuevoImporte(int cantidad){
         float importe = precio_comida * cantidad;
         precioTotal.setText(importe +"€");
     }
 
-    private void botonCarrito(String codigoComida, DatabaseAccess databaseAccess){
+    private void botonCarrito(String codigoComida, AccesoModelo db){
         TextView carrito = findViewById(R.id.textView_add_carrito);
-        carrito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        carrito.setOnClickListener(view -> {
 
-                //insertar en la tabla carrito_temp el codigo del usuario, el codigo de la  comida y la cantidad.
-                databaseAccess.open();
-                databaseAccess.insertarLineaCarrito(OperationsUserActivity.getUserFromSession(getApplicationContext()), codigoComida, Integer.parseInt(cantidadComida.getText().toString()));
-                databaseAccess.close();
+            //insertar en la tabla carrito_temp el codigo del usuario, el codigo de la  comida y la cantidad.
+            db.insertarLineaCarrito(OperationsUser.getUserFromSession(getApplicationContext()), codigoComida, Integer.parseInt(cantidadComida.getText().toString()));
 
-                //Resetear la cantidad
-                cantidadComida.setText("1");
+            //Resetear la cantidad
+            cantidadComida.setText("1");
 
-                //Redirigir al usuario al inicio
-                finish();
-                startActivity(new Intent(DetalleComida.this, InicioActivity.class));
-            }
+            //Redirigir al usuario al inicio
+            finish();
+            startActivity(new Intent(DetalleComida.this, InicioActivity.class));
         });
     }
 

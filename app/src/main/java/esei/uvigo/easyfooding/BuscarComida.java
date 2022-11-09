@@ -14,8 +14,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class BuscarComida extends AppCompatActivity {
 
@@ -29,10 +31,10 @@ public class BuscarComida extends AppCompatActivity {
         setContentView(R.layout.buscar_comida_activity);
 
         //Ocultar la barra con el titulo
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Conectar a BD
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        AccesoModelo db = new AccesoModelo(this);
 
         //Conectar ListView con el Adaptador y con el Array de resultados
         ListView listViewItems = findViewById(R.id.listViewItems);
@@ -54,11 +56,11 @@ public class BuscarComida extends AppCompatActivity {
             if (parametros.get("nombre_categoria") != null) { //Si hemos buscado por categoria
                 nombreCategoria = parametros.getString("nombre_categoria");
                 titulo_busqueda.setText("Categoría " + nombreCategoria);
-                obtenerComidasPorCategoria(nombreCategoria, databaseAccess);
+                obtenerComidasPorCategoria(nombreCategoria, db);
             } else if (parametros.get("nombre_comida") != null) { //Si hemos buscado por nombre de comida
                 nombreComida = parametros.getString("nombre_comida");
                 titulo_busqueda.setText("Resultados para: " + "'" + nombreComida + "'");
-                obtenerComidasPorNombre(nombreComida, databaseAccess);
+                obtenerComidasPorNombre(nombreComida, db);
             } else { //No hay parametros
                 titulo_busqueda.setText("");
                 mensajeBusquedaFallida = findViewById(R.id.mensajeBusquedaFallida);
@@ -68,14 +70,11 @@ public class BuscarComida extends AppCompatActivity {
             throw new RuntimeException();
         }
 
-        listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent i = new Intent(BuscarComida.this, DetalleComida.class);
-                i.putExtra("codigo_comida", arrayItemsId.get(pos).toString()); //Pasarle a la nueva actividad por parametro el id de la comida en la que se ha clickado
-                startActivity(i);
+        listViewItems.setOnItemClickListener((adapterView, view, pos, l) -> {
+            Intent i = new Intent(BuscarComida.this, DetalleComida.class);
+            i.putExtra("codigo_comida", arrayItemsId.get(pos).toString()); //Pasarle a la nueva actividad por parametro el id de la comida en la que se ha clickado
+            startActivity(i);
 
-            }
         });
 
         if (arrayItemsId.isEmpty()) {
@@ -83,36 +82,29 @@ public class BuscarComida extends AppCompatActivity {
             mensajeBusquedaFallida.setText(R.string.busquedafallida);
         }
 
-        //Cerrar conexion a BD
-        databaseAccess.close();
-
         //Borrar parametros de la actividad
         parametros.clear();
     }
 
     //Rellenar ListView con comida filtrada por categoria
-    private void obtenerComidasPorCategoria(String nombreCategoria, DatabaseAccess databaseAccess) {
-        databaseAccess.open();
+    private void obtenerComidasPorCategoria(String nombreCategoria, AccesoModelo db) {
         String codigoComida;
-        this.arrayItemsId = databaseAccess.getCodigoComidaPorCategoria(nombreCategoria); //Obtener id de las comidas
+        this.arrayItemsId = db.getCodigoComidaPorCategoria(nombreCategoria); //Obtener id de las comidas
         for (int i = 0; i < arrayItemsId.size(); i++) {
             codigoComida = arrayItemsId.get(i).toString();
-            arrayItems.add(databaseAccess.getNombreComidaPorId(codigoComida)); //Obtener nombres de las comidas
+            arrayItems.add(db.getNombreComidaPorId(codigoComida)); //Obtener nombres de las comidas
             //La comida ya se añade automaticamente a la ListView porque esta conectada con un Adaptador
         }
-        databaseAccess.close();
     }
 
-    private void obtenerComidasPorNombre(String nombreComida, DatabaseAccess databaseAccess) {
-        databaseAccess.open();
+    private void obtenerComidasPorNombre(String nombreComida, AccesoModelo db) {
         String codigoComida;
-        this.arrayItemsId = databaseAccess.getCodigoComidaPorNombre(nombreComida); //Obtener id de las comidas filtradas por su nombre
+        this.arrayItemsId = db.getCodigoComidaPorNombre(nombreComida); //Obtener id de las comidas filtradas por su nombre
         for (int i = 0; i < arrayItemsId.size(); i++) {
             codigoComida = arrayItemsId.get(i).toString();
-            arrayItems.add(databaseAccess.getNombreComidaPorId(codigoComida)); //Obtener nombres de las comidas
+            arrayItems.add(db.getNombreComidaPorId(codigoComida)); //Obtener nombres de las comidas
             //La comida ya se añade automaticamente a la ListView porque esta conectada con un Adaptador
         }
-        databaseAccess.close();
     }
 
     @Override

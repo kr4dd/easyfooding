@@ -1,6 +1,5 @@
 package esei.uvigo.easyfooding;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class RegisterUserActivity extends AppCompatActivity {
     private UsuarioRegistro ur;
@@ -27,14 +26,14 @@ public class RegisterUserActivity extends AppCompatActivity {
         //Ocultar la barra con el titulo
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(this);
+        AccesoModelo db = new AccesoModelo(this);
 
         Button btnRegistrarse = findViewById(R.id.btnLogearse);
         btnRegistrarse.setOnClickListener(
                 view -> {
-                    if(registrarUsuario(databaseAccess)) {
+                    if(registrarUsuario(db)) {
                         //Crear sesion de usuario
-                        OperationsUserActivity.setSession(this, ur.getUsuario());
+                        OperationsUser.setSession(this, ur.getUsuario());
 
                         //Mandar a inicio
                         goToInicio();
@@ -43,7 +42,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     }
 
-    public boolean registrarUsuario(DatabaseAccess db) {
+    public boolean registrarUsuario(AccesoModelo db) {
         //Recoger datos
         EditText editTextUsuario = findViewById(R.id.editTextUsuario);
         EditText editTextPass = findViewById(R.id.editTextPass);
@@ -57,30 +56,16 @@ public class RegisterUserActivity extends AppCompatActivity {
 
         ur = new UsuarioRegistro(editTextUsuario, editTextPass, editTextNombre_real,
                 editTextApellidos, editTextCorreo, editTextTlfno, editTextDireccion,
-                editTextLocalidad, editTextCp, OperationsUserActivity.getActualDateSpanishStrFormat());
+                editTextLocalidad, editTextCp, OperationsUser.getActualDateSpanishStrFormat());
 
         //Validar datos
-        if(!validateInputFields(ur.getUsuario(),
-                ur.getPass(),
-                ur.getNombreReal(), ur.getApellidos(),
-                ur.getCorreo(), ur.getTlfno(),
-                ur.getDireccion(), ur.getLocalidad(),
-                ur.getCp()))
+        if(!validateInputFields(ur))
         {
              return false;
         }
 
         //Insertar datos en DB
-        db.open();
-        boolean res = db.insertarUsuario(ur.getUsuario(),
-                                    OperationsUserActivity.hashearMD5(ur.getPass()),
-                                    ur.getNombreReal(), ur.getApellidos(),
-                                    ur.getCorreo(), ur.getTlfno(),
-                                    ur.getDireccion(), ur.getLocalidad(),
-                                    ur.getCp(), ur.getFechaAlta());
-        db.close();
-
-        return res;
+        return db.insertarUsuario(ur);
     }
 
     public void goToInicio() {
@@ -89,9 +74,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         startActivity(new Intent(this, InicioActivity.class));
     }
 
-    public boolean validateInputFields(String usuario, String pass, String nombre_real,
-                                       String apellidos, String correo, String tlfno,
-                                       String direccion, String localidad, int codigoPostal)
+    public boolean validateInputFields(UsuarioRegistro ur)
     {
 
         TextView errUsuario = findViewById(R.id.errUsuario);
@@ -104,15 +87,15 @@ public class RegisterUserActivity extends AppCompatActivity {
         TextView errLocalidad = findViewById(R.id.errLocalidad);
         TextView errCodigoPostal = findViewById(R.id.errCodigoPostal);
 
-        validarUsuario(usuario);
-        validarPass(pass);
-        validarNombreReal(nombre_real);
-        validarApellidos(apellidos);
-        validarCorreo(correo);
-        validarTlfno(tlfno);
-        validarDireccion(direccion);
-        validarLocalidad(localidad);
-        validarCodigoPostal(codigoPostal);
+        validarUsuario(ur.getUsuario());
+        validarPass(ur.getPass());
+        validarNombreReal(ur.getNombreReal());
+        validarApellidos(ur.getApellidos());
+        validarCorreo(ur.getCorreo());
+        validarTlfno(ur.getTlfno());
+        validarDireccion(ur.getDireccion());
+        validarLocalidad(ur.getLocalidad());
+        validarCodigoPostal(ur.getCp());
 
         return errUsuario.getVisibility() == View.GONE && errContrasena.getVisibility() == View.GONE
                 && errNombreReal.getVisibility() == View.GONE && errApellidos.getVisibility() == View.GONE

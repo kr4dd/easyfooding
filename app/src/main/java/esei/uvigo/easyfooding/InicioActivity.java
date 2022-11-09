@@ -1,10 +1,8 @@
 package esei.uvigo.easyfooding;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -14,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class InicioActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
@@ -36,35 +34,31 @@ public class InicioActivity extends AppCompatActivity {
 
         //Cargar saludo a usuario
         TextView msgBienvenida = findViewById(R.id.saludoUsuario);
-        msgBienvenida.setText("Hola, " + OperationsUserActivity.getUserFromSession(this));
+        msgBienvenida.setText("Hola, " + OperationsUser.getUserFromSession(this));
 
         //Cambiar de actividades
         cambiarActividad();
 
         //Crear instancia de la BD
-        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
+        AccesoModelo db = new AccesoModelo(this);
 
         //Generar dinamicamente ScrollViewHorizontal de categorias
-        construirListaCategorias(databaseAccess);
+        construirListaCategorias(db);
 
         //Generar dinamicamente ScrollViewHorizontal de recomendaciones
-        construirListaRecomendaciones(databaseAccess);
+        construirListaRecomendaciones(db);
 
         funcionalidadesBarraBusqueda();
-
-        databaseAccess.close();
 
         //Colores personalizado del saludo al usuario
         TextView saludoUsuario = findViewById(R.id.saludoUsuario);
         saludoUsuario.setTextColor(Color.parseColor("#ff3d00"));
     }
 
-    private void construirListaCategorias(DatabaseAccess databaseAccess){
+    private void construirListaCategorias(AccesoModelo db){
         //Sacar info de la BD
-        databaseAccess.open();
-        int numCategorias = databaseAccess.getNumCategorias();
-        ArrayList<String> nombresCategorias = databaseAccess.getNombresCategorias();
-        databaseAccess.close();
+        int numCategorias = db.getNumCategorias();
+        ArrayList<String> nombresCategorias = db.getNombresCategorias();
 
         LinearLayout layoutHorizontalCategorias = findViewById(R.id.layoutHorizontalCategorias);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT );
@@ -98,10 +92,8 @@ public class InicioActivity extends AppCompatActivity {
         }
     }
 
-    private void construirListaRecomendaciones(DatabaseAccess databaseAccess){
-        databaseAccess.open();
-        ArrayList <String> nombresComidas = databaseAccess.getNombreComidasRandom();
-        databaseAccess.close();
+    private void construirListaRecomendaciones(AccesoModelo db){
+        ArrayList <String> nombresComidas = db.getNombreComidasRandom();
 
         LinearLayout layoutHorizontalRecomendaciones = findViewById(R.id.layoutHorizontalRecomendaciones);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT );
@@ -120,19 +112,14 @@ public class InicioActivity extends AppCompatActivity {
             button.setTextColor(Color.BLACK);
             button.setHeight(200);
 
-            databaseAccess.open();
             String nombre = nombresComidas.get(i);
-            ArrayList<Integer> codigo_comida = databaseAccess.getCodigoComidaPorNombre(nombre);
-            databaseAccess.close();
+            ArrayList<Integer> codigo_comida = db.getCodigoComidaPorNombre(nombre);
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Irse a la actividad de buscar comida pasandole parametros de busqueda
-                    Intent i = new Intent(InicioActivity.this, DetalleComida.class);
-                    i.putExtra("codigo_comida", codigo_comida.get(0)); //Pasarle a la nueva actividad por parametro el nombre de la comida a filtrar
-                    startActivity(i);
-                }
+            button.setOnClickListener(view -> {
+                //Irse a la actividad de buscar comida pasandole parametros de busqueda
+                Intent i1 = new Intent(InicioActivity.this, DetalleComida.class);
+                i1.putExtra("codigo_comida", codigo_comida.get(0)); //Pasarle a la nueva actividad por parametro el nombre de la comida a filtrar
+                startActivity(i1);
             });
 
             //Añadimos el botón a la barra de Scroll Horizontal
@@ -145,14 +132,11 @@ public class InicioActivity extends AppCompatActivity {
         EditText barraBusqueda = findViewById(R.id.barraBusqueda);
 
         ImageButton botonBusqueda = findViewById(R.id.botonBusqueda);
-        botonBusqueda.setOnClickListener(new View.OnClickListener()  {
-            @Override
-            public void onClick(View view) {
-                //Irse a la actividad de buscar comida pasandole parametros de busqueda
-                Intent i = new Intent(InicioActivity.this, BuscarComida.class);
-                i.putExtra("nombre_comida", barraBusqueda.getText().toString()); //Pasarle a la nueva actividad por parametro el nombre de la comida a filtrar
-                startActivity(i);
-            }
+        botonBusqueda.setOnClickListener(view -> {
+            //Irse a la actividad de buscar comida pasandole parametros de busqueda
+            Intent i = new Intent(InicioActivity.this, BuscarComida.class);
+            i.putExtra("nombre_comida", barraBusqueda.getText().toString()); //Pasarle a la nueva actividad por parametro el nombre de la comida a filtrar
+            startActivity(i);
         });
     }
 
@@ -226,16 +210,10 @@ public class InicioActivity extends AppCompatActivity {
         if(keyCode == event.KEYCODE_BACK){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.cerrarSesionDialog);
-            builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            finish();
-                        }
-                    });
-            builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //nothing
-                        }
-                    });
+            builder.setPositiveButton(R.string.aceptar, (dialog, id) -> finish());
+            builder.setNegativeButton(R.string.cancelar, (dialog, id) -> {
+                //nothing
+            });
             builder.create().show();
         }
         return super.onKeyDown(keyCode, event);

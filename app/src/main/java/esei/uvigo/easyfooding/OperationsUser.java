@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class OperationsUserActivity {
+public class OperationsUser {
 
     public static String hashearMD5(String password) {
         try {

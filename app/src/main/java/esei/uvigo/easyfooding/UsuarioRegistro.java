@@ -70,7 +70,7 @@ public class UsuarioRegistro {
     }
 
     public String getFechaAlta() {
-        return OperationsUserActivity.getActualDateSpanishStrFormat();
+        return OperationsUser.getActualDateSpanishStrFormat();
     }
 
     public int getCp() {

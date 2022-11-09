@@ -1,11 +1,9 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,13 +11,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.core.OperationsUser;
+import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class InicioActivity extends AppCompatActivity {
@@ -27,7 +25,7 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inicio_activity);
+        setContentView(R.layout.activity_inicio);
 
         //Ocultar la barra con el titulo
         Objects.requireNonNull(getSupportActionBar()).hide();
@@ -37,7 +35,7 @@ public class InicioActivity extends AppCompatActivity {
         msgBienvenida.setText("Hola, " + OperationsUser.getUserFromSession(this));
 
         //Cambiar de actividades
-        cambiarActividad();
+        OperationsUser.cambiarActividadPanelInterno(getWindow().getDecorView(), this, this);
 
         //Crear instancia de la BD
         AccesoModelo db = new AccesoModelo(this);
@@ -81,7 +79,7 @@ public class InicioActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //Irse a la actividad de buscar comida pasandole parametros de busqueda
-                    Intent i = new Intent(InicioActivity.this, BuscarComida.class);
+                    Intent i = new Intent(InicioActivity.this, BuscarComidaActivity.class);
                     i.putExtra("nombre_categoria", nombre); //Pasarle a la nueva actividad por parametro el nombre de la categoria a filtrar
                     startActivity(i);
                 }
@@ -117,7 +115,7 @@ public class InicioActivity extends AppCompatActivity {
 
             button.setOnClickListener(view -> {
                 //Irse a la actividad de buscar comida pasandole parametros de busqueda
-                Intent i1 = new Intent(InicioActivity.this, DetalleComida.class);
+                Intent i1 = new Intent(InicioActivity.this, DetalleComidaActivity.class);
                 i1.putExtra("codigo_comida", codigo_comida.get(0)); //Pasarle a la nueva actividad por parametro el nombre de la comida a filtrar
                 startActivity(i1);
             });
@@ -134,52 +132,10 @@ public class InicioActivity extends AppCompatActivity {
         ImageButton botonBusqueda = findViewById(R.id.botonBusqueda);
         botonBusqueda.setOnClickListener(view -> {
             //Irse a la actividad de buscar comida pasandole parametros de busqueda
-            Intent i = new Intent(InicioActivity.this, BuscarComida.class);
+            Intent i = new Intent(InicioActivity.this, BuscarComidaActivity.class);
             i.putExtra("nombre_comida", barraBusqueda.getText().toString()); //Pasarle a la nueva actividad por parametro el nombre de la comida a filtrar
             startActivity(i);
         });
-    }
-
-    private void cambiarActividad() {
-        // Cambiar a la actividad de Inicio
-        LinearLayout inicio = findViewById(R.id.inicio);
-        inicio.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(InicioActivity.this, InicioActivity.class));
-                });
-
-        // Cambiar a la actividad Perfil
-        LinearLayout perfil = findViewById(R.id.perfil);
-        perfil.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(InicioActivity.this, PerfilActivity.class));
-                });
-
-        // Cambiar a la actividad Carrito
-        LinearLayout carrito = findViewById(R.id.carrito);
-        carrito.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(InicioActivity.this, CarritoActivity.class));
-                });
-
-        // Cambiar a la actividad Pedidos
-        LinearLayout pedidos = findViewById(R.id.pedidos);
-        pedidos.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(InicioActivity.this, PedidosActivity.class));
-                });
-
-        // Cambiar a la actividad Ajustes
-        LinearLayout ajustes = findViewById(R.id.ajustes);
-        ajustes.setOnClickListener(
-                view -> {
-                    finish();
-                    // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
-                });
     }
 
     @Override
@@ -205,19 +161,6 @@ public class InicioActivity extends AppCompatActivity {
          */
     }
 
-    //Método para controlar que pulsamos la tecla de back en el dispositivo movil
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if(keyCode == event.KEYCODE_BACK){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.cerrarSesionDialog);
-            builder.setPositiveButton(R.string.aceptar, (dialog, id) -> finish());
-            builder.setNegativeButton(R.string.cancelar, (dialog, id) -> {
-                //nothing
-            });
-            builder.create().show();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }
 
 

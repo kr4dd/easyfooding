@@ -1,4 +1,4 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.core;
 
 import android.widget.EditText;
 

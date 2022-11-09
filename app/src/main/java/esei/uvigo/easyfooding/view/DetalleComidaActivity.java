@@ -1,4 +1,4 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,9 +14,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import esei.uvigo.easyfooding.core.OperationsUser;
+import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.model.AccesoModelo;
 
-public class DetalleComida extends AppCompatActivity {
+public class DetalleComidaActivity extends AppCompatActivity {
     TextView cantidadComida;
     TextView precioTotal;
     ImageView simboloPostivo;
@@ -140,7 +142,7 @@ public class DetalleComida extends AppCompatActivity {
 
             //Redirigir al usuario al inicio
             finish();
-            startActivity(new Intent(DetalleComida.this, InicioActivity.class));
+            startActivity(new Intent(DetalleComidaActivity.this, InicioActivity.class));
         });
     }
 

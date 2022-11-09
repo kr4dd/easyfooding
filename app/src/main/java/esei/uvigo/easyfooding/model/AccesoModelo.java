@@ -7,9 +7,9 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
-import esei.uvigo.easyfooding.OperationsUser;
+import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.UsuarioRegistro;
+import esei.uvigo.easyfooding.core.UsuarioRegistro;
 import esei.uvigo.easyfooding.core.Carrito;
 import esei.uvigo.easyfooding.core.Comida;
 import esei.uvigo.easyfooding.core.LineaPedidos;

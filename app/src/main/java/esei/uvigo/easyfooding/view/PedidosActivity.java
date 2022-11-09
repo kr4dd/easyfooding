@@ -1,4 +1,4 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.core.OperationsUser;
+import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.ListaPedidos;
 import esei.uvigo.easyfooding.model.AccesoModelo;
 
@@ -38,8 +39,11 @@ public class PedidosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedidos);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        cambiarActividad();
-        this.res = new ArrayList<ListaPedidos>();
+
+        //Cambiar de actividades
+        OperationsUser.cambiarActividadPanelInterno(getWindow().getDecorView(), this, this);
+
+        this.res = new ArrayList<>();
 
         AccesoModelo db = new AccesoModelo(this);
         // ejecutamos query
@@ -48,13 +52,10 @@ public class PedidosActivity extends AppCompatActivity {
         this.adapter = new listaAdapter(PedidosActivity.this, 0, res);
         ListView ticket = (ListView) this.findViewById(R.id.ticket);
         ticket.setAdapter(this.adapter);
-        ticket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                Intent intent = new Intent(PedidosActivity.this, TicketActivity.class);
-                intent.putExtra("numero_pedido", res.get(pos).getNum_pedido());
-                startActivity(intent);
-            }
+        ticket.setOnItemClickListener((adapterView, view, pos, l) -> {
+            Intent intent = new Intent(PedidosActivity.this, TicketActivity.class);
+            intent.putExtra("numero_pedido", res.get(pos).getNum_pedido());
+            startActivity(intent);
         });
 
         if (res.size() < 1) {
@@ -124,69 +125,6 @@ public class PedidosActivity extends AppCompatActivity {
 
             return view;
         }
-    }
-
-    private void cambiarActividad() {
-
-        // Cambiar a la actividad de Inicio
-        LinearLayout inicio = findViewById(R.id.inicio);
-        inicio.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PedidosActivity.this, InicioActivity.class));
-                });
-
-        // Cambiar a la actividad Perfil
-        LinearLayout perfil = findViewById(R.id.perfil);
-        perfil.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PedidosActivity.this, PerfilActivity.class));
-                });
-
-        // Cambiar a la actividad Carrito
-        LinearLayout carrito = findViewById(R.id.carrito);
-        carrito.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PedidosActivity.this, CarritoActivity.class));
-                });
-
-        // Cambiar a la actividad Pedidos
-        LinearLayout pedidos = findViewById(R.id.pedidos);
-        pedidos.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PedidosActivity.this, PedidosActivity.class));
-                });
-
-        // Cambiar a la actividad Ajustes
-        LinearLayout ajustes = findViewById(R.id.ajustes);
-        ajustes.setOnClickListener(
-                view -> {
-                    finish();
-                    // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
-                });
-    }
-
-    //Método para controlar que pulsamos la tecla de back en el dispositivo movil
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == event.KEYCODE_BACK) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.cerrarSesionDialog);
-            builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    finish();
-                }
-            });
-            builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    //nothing
-                }
-            });
-            builder.create().show();
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
 }

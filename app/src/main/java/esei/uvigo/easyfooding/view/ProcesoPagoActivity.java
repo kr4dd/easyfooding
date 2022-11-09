@@ -1,10 +1,9 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +12,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.core.OperationsUser;
+import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.Comida;
 import esei.uvigo.easyfooding.model.AccesoModelo;
 
@@ -53,6 +51,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         String varCiudad = ciudad.getText().toString();
         String varCodigo = codigoPost.getText().toString();
         String varObs = obs.getText().toString();
+
         if (TextUtils.isEmpty(varDireccion)
                 || TextUtils.isEmpty(varCiudad)
                 || TextUtils.isEmpty(varCodigo)) {
@@ -60,11 +59,8 @@ public class ProcesoPagoActivity extends AppCompatActivity {
             builder.setMessage("Debes introducir todos los campos");
             builder.setPositiveButton(
                     R.string.aceptar,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            return;
-                        }
+                    (dialogInterface, i) -> {
+                        dialogInterface.dismiss();
                     });
             builder.create().show();
             // validaciones

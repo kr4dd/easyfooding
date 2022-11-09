@@ -1,4 +1,4 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -23,6 +23,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import esei.uvigo.easyfooding.core.OperationsUser;
+import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.Carrito;
 import esei.uvigo.easyfooding.core.Comida;
 import esei.uvigo.easyfooding.model.AccesoModelo;
@@ -52,8 +54,9 @@ public class CarritoActivity extends AppCompatActivity {
         iva.setText(String.valueOf(precioImpuestos));
         envio.setText(String.valueOf(precioEnvio));
 
-        // para la barra de movimientos
-        cambiarActividad();
+        //Cambiar de actividades
+        OperationsUser.cambiarActividadPanelInterno(getWindow().getDecorView(), this, this);
+
         // Recuperamos los datos de compra
         if(listaComida.size()>0){
             listaComida.clear();
@@ -371,72 +374,6 @@ public class CarritoActivity extends AppCompatActivity {
                 cantidadTotal.setTextColor(Color.GRAY);
             }
         }
-    }
-
-    /*Funciones auxiliares*/
-
-    // barra navegacion
-    private void cambiarActividad() {
-
-        // Cambiar a la actividad de Inicio
-        LinearLayout inicio = findViewById(R.id.inicio);
-        inicio.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(CarritoActivity.this, InicioActivity.class));
-                });
-
-        // Cambiar a la actividad Perfil
-        LinearLayout perfil = findViewById(R.id.perfil);
-        perfil.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(CarritoActivity.this, PerfilActivity.class));
-                });
-
-        // Cambiar a la actividad Carrito
-        LinearLayout carrito = findViewById(R.id.carrito);
-        carrito.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(CarritoActivity.this, CarritoActivity.class));
-                });
-
-        // Cambiar a la actividad Pedidos
-        LinearLayout pedidos = findViewById(R.id.pedidos);
-        pedidos.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(CarritoActivity.this, PedidosActivity.class));
-                });
-
-        // Cambiar a la actividad Ajustes
-        LinearLayout ajustes = findViewById(R.id.ajustes);
-        ajustes.setOnClickListener(
-                view -> {
-                    finish();
-                    // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
-                });
-    }
-
-    //Método para controlar que pulsamos la tecla de back en el dispositivo movil
-    public boolean onKeyDown(int keyCode, KeyEvent event){
-        if(keyCode == event.KEYCODE_BACK){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.cerrarSesionDialog);
-            builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    finish();
-                }
-            });
-            builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    //nothing
-                }
-            });
-            builder.create().show();
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
 }

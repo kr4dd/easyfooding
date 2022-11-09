@@ -1,14 +1,11 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,10 +13,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.model.AccesoModelo;
 
-public class BuscarComida extends AppCompatActivity {
+public class BuscarComidaActivity extends AppCompatActivity {
 
     private ArrayList<Integer> arrayItemsId; //Guarda los codigos de las comidas del listView
     private ArrayList<String> arrayItems; //Guarda los nombres de las comidas del listView
@@ -71,7 +68,7 @@ public class BuscarComida extends AppCompatActivity {
         }
 
         listViewItems.setOnItemClickListener((adapterView, view, pos, l) -> {
-            Intent i = new Intent(BuscarComida.this, DetalleComida.class);
+            Intent i = new Intent(BuscarComidaActivity.this, DetalleComidaActivity.class);
             i.putExtra("codigo_comida", arrayItemsId.get(pos).toString()); //Pasarle a la nueva actividad por parametro el id de la comida en la que se ha clickado
             startActivity(i);
 

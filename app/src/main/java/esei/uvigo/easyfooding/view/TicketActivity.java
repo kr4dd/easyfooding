@@ -1,4 +1,4 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.LineaPedidos;
 import esei.uvigo.easyfooding.model.AccesoModelo;
 

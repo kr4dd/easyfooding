@@ -1,4 +1,4 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import java.util.Objects;
+
+import esei.uvigo.easyfooding.R;
 
 public class WelcomeUserActivity extends AppCompatActivity {
 

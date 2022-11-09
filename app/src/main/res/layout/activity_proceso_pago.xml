@@ -137,7 +137,7 @@
         android:ems="10"
         android:gravity="center_horizontal|center_vertical"
         android:hint="@string/codigoPostal"
-        android:inputType="number"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/direc" />
@@ -157,7 +157,6 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
     <RadioGroup
-        android:id="@+id/metodoPago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -170,14 +169,14 @@
         app:layout_constraintTop_toBottomOf="@+id/obs">
 
         <RadioButton
-            android:id="@+id/efectivo"
+            android:id="@+id/expenseRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/efectivo" />
 
         <RadioButton
-            android:id="@+id/tarjeta"
+            android:id="@+id/incomeRadio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tarjeta" />

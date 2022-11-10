@@ -24,17 +24,13 @@ public class WelcomeUserActivity extends AppCompatActivity {
         //Ir a pantalla de registro
         Button btnGoToRegistro = findViewById(R.id.btnGoRegistro);
         btnGoToRegistro.setOnClickListener(
-                view -> {
-                    startActivity(new Intent(this, RegisterUserActivity.class));
-                });
+                view -> startActivity(new Intent(this, RegisterUserActivity.class)));
 
 
         //Ir a pantalla de login
         Button btnGoToLogin = findViewById(R.id.btnGoLogin);;
         btnGoToLogin.setOnClickListener(
-                view -> {
-                    startActivity(new Intent(this, LoginUserActivity.class));
-                });
+                view -> startActivity(new Intent(this, LoginUserActivity.class)));
 
     }
 }

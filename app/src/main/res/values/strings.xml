@@ -1,16 +1,83 @@
 <resources>
     <string name="app_name">EasyFooding</string>
+
+    <!-- Panel inicio-->
     <string name="buscarypedir">Busca y pide tu comida a domicilio.</string>
     <string name="saludouser">Hola user</string>
     <string name="buscarcomida">Busca tu comida favorita...</string>
     <string name="categorias">Categorías</string>
     <string name="recomendaciones">Recomendaciones</string>
     <string name="resultadosbusqueda">Resultados de tu búsqueda:</string>
-    <string name="busquedavacia">No se han obtenido resultados para tu búsqueda. Prueba otra vez.</string>
+    <string name="busquedafallida">No se han obtenido resultados para tu búsqueda. Prueba otra vez.</string>
+    <string name="descripcion">Descripción</string>
+    <string name="preciototal">Precio Total</string>
+    <string name="addcarrito">Añadir al carrito</string>
 
+    <!-- Panel inferior interno-->
     <string name="inicio">Inicio</string>
     <string name="perfil">Perfil</string>
     <string name="carrito">Carrito</string>
     <string name="pedidos">Pedidos</string>
     <string name="ajustes">Ajustes</string>
+
+    <!-- Paneles Carrito-->
+    <string name="elementosCarrito">Precio comida:</string>
+    <string name="impuestos"> Impuestos:</string>
+    <string name="envio"> Envío:</string>
+    <string name="total">Total:</string>
+    <string name="pagar">Pagar</string>
+    <string name="contacto">Pedidos</string>
+    <string name="conf">Ajustes</string>
+    <string name="carro">Carrito</string>
+    <string name="vacio">No tienes productos en el carrito</string>
+    <string name="gracias">¡Gracias por tu fidelidad!</string>
+    <string name="cantidad">Cantidad:</string>
+    <string name="lineaVacia">Sin pedidos que mostrar</string>
+    <string name="volverPedidos">Volver a pedidos</string>
+    <string name="direccion">Dirección</string>
+    <string name="localidad">Localidad</string>
+    <string name="codigoPostal">Codigo Postal</string>
+    <string name="obs">Observaciones</string>
+    <string name="procesoPago">Procesando el pago</string>
+    <string name="efectivo">Pagar al repartidor</string>
+    <string name="tarjeta">Pagar con tarjeta</string>
+    <string name="borrar">Eliminar del carrito</string>
+    <string name="confirma">¿Quieres borrar este producto del carrito?</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="local">Localidad</string>
+    <string name="fecha">Fecha</string>
+    <string name="obsErr">Solo puedes introducir hasta 80 caracteres y sin caracteres especiales</string>
+
+    <!-- Welcome panel -->
+    <string name="btnGoToRegistro">Registrarse</string>
+    <string name="btnGoToLogin">Iniciar sesión</string>
+
+    <!-- Register panel -->
+    <string name="username">Usuario</string>
+    <string name="pass">Contraseña</string>
+    <string name="nombre_real">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="mail">Correo electrónico</string>
+    <string name="telefono">Teléfono</string>
+    <string name="btnRegistrarse">Registrarse</string>
+
+    <!-- Register panel errores -->
+    <string name="usernameErr">Usuario de 3 a 40 letras o números y sin espacios</string>
+    <string name="passErr">Contraseña de 3 a 40 letras o números y sin espacios</string>
+    <string name="nombreRealErr">Nombre de 3 a 40 letras y sin espacios</string>
+    <string name="apellidosErr">Apellidos de 2 a 40 letras</string>
+    <string name="mailErr">Formato de email como ejemplo@mail.es</string>
+    <string name="telefonoErr">Nueve números y sin prefijo</string>
+    <string name="direccionErr">Dirección de 4 a 60 letras, números, con espacios</string>
+    <string name="localidadErr">Localidad de 4 a 35 letras o con espacios</string>
+    <string name="codigoPostalErr">Formato 12345</string>
+
+    <!-- Login panel -->
+    <string name="btnLogearse">Iniciar sesión</string>
+
+    <!-- Login panel errores -->
+    <string name="loginErr">Usuario o contraseña no válidos</string>
+    <string name="cerrarSesionDialog">¿Seguro que deseas cerrar sesión?</string>
+
 </resources>

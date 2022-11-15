@@ -210,6 +210,14 @@ public class AccesoModelo {
         return toret;
     }
 
+    public  Cursor getCursorLineaPedidos(int numPedido){
+        singletonInstance.open();
+
+        String toQuery = String.valueOf(numPedido);
+        Cursor c = singletonInstance.getDb().rawQuery("SELECT num_linea as _id, num_pedido, codigo_comida, cantidad, precio_linea  FROM linea_pedidos WHERE num_pedido = ?", new String[] { toQuery });
+        return c;
+    }
+
     public boolean insertarPedido(int id,String nombreUsr, String fecha,
                                   String dir, String localidad, int cp, double importe,
                                   String obs) {

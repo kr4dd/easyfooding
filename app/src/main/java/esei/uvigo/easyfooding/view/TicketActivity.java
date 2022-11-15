@@ -3,12 +3,15 @@ package esei.uvigo.easyfooding.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,67 +30,61 @@ public class TicketActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ticket);
-        Bundle datos = getIntent().getExtras();
         Objects.requireNonNull(getSupportActionBar()).hide();
+    }
+    protected void onStart() {
 
+        super.onStart();
+        Bundle datos = getIntent().getExtras();
         int numPedido = datos.getInt("numero_pedido");
-
-        ArrayList<LineaPedidos> lineasPedido = getListaPedidos(numPedido);
-        if(lineasPedido.size() > 0){
+        Cursor listaPedidos = getCursorListaPedidos(numPedido);
+        if(listaPedidos.moveToNext()){
             ListView list = findViewById(R.id.ticket);
             TextView vacio = findViewById(R.id.sinEntradas);
             list.setVisibility(View.VISIBLE);
             vacio.setVisibility(View.INVISIBLE);
-            ArrayAdapter<LineaPedidos> adapter = new ticketAdapter(TicketActivity.this,0,lineasPedido);
             ListView lineas = findViewById(R.id.ticket);
+            ticketCursorAdapter adapter = new ticketCursorAdapter(this,listaPedidos,0);
             lineas.setAdapter(adapter);
-        }else{
-           ListView list = findViewById(R.id.ticket);
-           TextView vacio = findViewById(R.id.sinEntradas);
-           list.setVisibility(View.INVISIBLE);
-           vacio.setVisibility(View.VISIBLE);
         }
     }
 
-    private ArrayList<LineaPedidos> getListaPedidos(int numPedido) {
+    private Cursor getCursorListaPedidos(int numPedidos){
         AccesoModelo db = new AccesoModelo(this);
+        return db.getCursorLineaPedidos(numPedidos);
 
-        return db.getLineaPedidos(numPedido);
     }
 
-    public class ticketAdapter extends ArrayAdapter<LineaPedidos>{
-        private Context context;
-        private List <LineaPedidos> linea;
-
-        public ticketAdapter(@NonNull Context context, int resource, @NonNull ArrayList<LineaPedidos> objects) {
-            super(context, resource, objects);
-            this.context = context;
-            this.linea = objects;
+    public class ticketCursorAdapter extends CursorAdapter{
+        private LayoutInflater cursorInflater;
+        public ticketCursorAdapter(Context context, Cursor cursor, int flags){
+            super(context,cursor, flags);
+            cursorInflater = (LayoutInflater) context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        public View getView(int position, View convertView, ViewGroup parent){
-            AccesoModelo db = new AccesoModelo(getApplicationContext());
-            LineaPedidos objetoActual = linea.get(position);
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(TicketActivity.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.linea_pedidos_layout,null);
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return cursorInflater.inflate(R.layout.linea_pedidos_layout,parent,false);
+        }
 
-            //antes de setear el contenido tenemos que buscar cual es el nombre del alimento
-            String nombreComida = db.getNombreComidaPorId(String.valueOf(objetoActual.getCodigo_comida()));
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            AccesoModelo db = new AccesoModelo(getApplicationContext());
+            @SuppressLint("Range") String idComida = cursor.getString(cursor.getColumnIndex("codigo_comida"));
+            String nombreComida = db.getNombreComidaPorId(idComida);
 
             TextView nombre = view.findViewById(R.id.nombre);
             TextView cantidad = view.findViewById(R.id.cantidad);
             TextView precio = view.findViewById(R.id.precio);
-
             nombre.setText(nombreComida);
-            String toShow = "Cantidad: " + objetoActual.getCantidad();
+            @SuppressLint("Range") String toShow = "Cantidad: " + cursor.getString(cursor.getColumnIndex("cantidad"));
             cantidad.setText(toShow);
 
-            double total = objetoActual.getPrecio();
+            @SuppressLint("Range") double total = cursor.getDouble(cursor.getColumnIndex("precio_linea"));
             DecimalFormat df = new DecimalFormat("###,###,###,##0.0");
 
             precio.setText(df.format(total) + "€");
-
-            return  view;
         }
     }
 }

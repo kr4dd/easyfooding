@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -30,8 +33,10 @@ import esei.uvigo.easyfooding.core.ListaPedidos;
 import esei.uvigo.easyfooding.model.AccesoModelo;
 
 public class PedidosActivity extends AppCompatActivity {
+    private Cursor cursor;
     private ArrayList<ListaPedidos> res;
     private ArrayAdapter<ListaPedidos> adapter;
+    private pedidoCursorAdapter cursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,89 +47,71 @@ public class PedidosActivity extends AppCompatActivity {
 
         //Cambiar de actividades
         OperationsUser.cambiarActividadPanelInterno(getWindow().getDecorView(), this, this);
-
-        this.res = new ArrayList<>();
-
-        AccesoModelo db = new AccesoModelo(this);
-        // ejecutamos query
-        res = db.historial(OperationsUser.getUserFromSession(this)); // aqui hay que meter el usuario logeado
-
-        this.adapter = new listaAdapter(PedidosActivity.this, 0, res);
-        ListView ticket = this.findViewById(R.id.ticket);
-        ticket.setAdapter(this.adapter);
-        ticket.setOnItemClickListener((adapterView, view, pos, l) -> {
-            Intent intent = new Intent(PedidosActivity.this, TicketActivity.class);
-            intent.putExtra("numero_pedido", res.get(pos).getNum_pedido());
-            startActivity(intent);
-        });
-
-        if (res.size() < 1) {
-            // anunciamos que no hay nada
-            ListView list = findViewById(R.id.ticket);
-            TextView vacio = findViewById(R.id.sinPedidos);
-            list.setVisibility(View.INVISIBLE);
-            vacio.setVisibility(View.VISIBLE);
-        } else {
-            ListView list = findViewById(R.id.ticket);
-            TextView vacio = findViewById(R.id.sinPedidos);
-            list.setVisibility(View.VISIBLE);
-            vacio.setVisibility(View.INVISIBLE);
-        }
+        
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AccesoModelo db = new AccesoModelo(this);
+        cursor = db.getHistorialCursor(OperationsUser.getUserFromSession(this));
+        ListView ticket = this.findViewById(R.id.ticket);
+
+        cursorAdapter = new pedidoCursorAdapter(this,cursor,0);
+        ticket.setAdapter(adapter);
+    ticket.setOnItemClickListener(
+        new AdapterView.OnItemClickListener() {
+          @SuppressLint("Range")
+          @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent(PedidosActivity.this, TicketActivity.class);
+            intent.putExtra("numero_pedido", Integer.parseInt(cursor.getString(cursor.getColumnIndex("_id"))));
+            startActivity(intent);
+          }
+        });
+    }
 
     //refresco de la lista con los nuevos datos de la BD
     @Override
     protected void onResume() {
         super.onResume();
         AccesoModelo db = new AccesoModelo(this);
-        ArrayList<ListaPedidos> nuevaLista = db.historial(OperationsUser.getUserFromSession(this));
-        adapter.clear();
-        adapter.addAll(nuevaLista);
-        adapter.notifyDataSetChanged();
+        ListView ticket = this.findViewById(R.id.ticket);
+        cursor = db.getHistorialCursor(OperationsUser.getUserFromSession(this));
+        pedidoCursorAdapter cursorAdapterNuevo = new pedidoCursorAdapter(this,cursor,0);
+        ticket.setAdapter(null);
+        ticket.setAdapter(cursorAdapterNuevo);
     }
 
-    // ArrayAdapder para la lista
-    public static class listaAdapter extends ArrayAdapter<ListaPedidos> {
-        private Context context;
-        private List<ListaPedidos> listaHistorial;
-
-        public listaAdapter(@NonNull Context context, int resource, ArrayList<ListaPedidos> objetos) {
-            super(context, resource, objetos);
-
-            this.context = context;
-            this.listaHistorial = objetos;
+    public class pedidoCursorAdapter extends CursorAdapter{
+        private LayoutInflater cursorInflater;
+        public pedidoCursorAdapter(Context context, Cursor cursor, int flags){
+            super(context,cursor, flags);
+            cursorInflater = (LayoutInflater) context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
         }
-        // renderizamos la lista con los objetos que obtuvimos
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return cursorInflater.inflate(R.layout.historial_compras,parent,false);
+        }
 
-        @SuppressLint("SetTextI18n")
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ListaPedidos objActual = listaHistorial.get(position);
-
-            // inflamos le layout personalizado
-            LayoutInflater inflater =
-                    (LayoutInflater) context.getSystemService(PedidosActivity.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("ViewHolder") View view = inflater.inflate(R.layout.historial_compras, null);
-
+        @SuppressLint("Range")
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
             TextView fecha_pedido = view.findViewById(R.id.fecha_pedido);
             TextView direccion = view.findViewById(R.id.direccion);
             TextView codigo_postal = view.findViewById(R.id.codigo_postal);
             TextView localidad = view.findViewById(R.id.localidad);
             TextView pTotal = view.findViewById(R.id.pTotal);
 
-            // añadimos los datos a la vista
+            fecha_pedido.setText(cursor.getString(cursor.getColumnIndex("fecha_pedido")));
+            direccion.setText(cursor.getString(cursor.getColumnIndex("direccion_envio")));
+            codigo_postal.setText(cursor.getString(cursor.getColumnIndex("codigo_postal_envio")));
+            localidad.setText(cursor.getString(cursor.getColumnIndex("localidad_envio")));
 
-            fecha_pedido.setText(objActual.getFecha());
-            direccion.setText(objActual.getDireccion());
-            codigo_postal.setText(Integer.toString(objActual.getCodioPostal()));
-            localidad.setText(objActual.getLocalidad());
-
-            double total = objActual.getImporte();
+            double total =Double.parseDouble(cursor.getString(cursor.getColumnIndex("importe_total")));
             DecimalFormat df = new DecimalFormat("###,###,###,##0.0");
             pTotal.setText(df.format(total) + "€");
-
-            return view;
         }
     }
-
 }

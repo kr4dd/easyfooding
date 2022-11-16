@@ -52,7 +52,7 @@ public class PedidosActivity extends AppCompatActivity {
         ListView ticket = this.findViewById(R.id.ticket);
 
         cursorAdapter = new pedidoCursorAdapter(this,cursor,0);
-        ticket.setAdapter(adapter);
+        ticket.setAdapter(cursorAdapter);
     ticket.setOnItemClickListener(
         new AdapterView.OnItemClickListener() {
           @SuppressLint("Range")
@@ -63,6 +63,12 @@ public class PedidosActivity extends AppCompatActivity {
             startActivity(intent);
           }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cursorAdapter.getCursor().close();
     }
 
     //refresco de la lista con los nuevos datos de la BD

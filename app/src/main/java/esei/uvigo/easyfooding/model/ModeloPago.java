@@ -3,107 +3,134 @@ package esei.uvigo.easyfooding.model;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.util.Log;
 
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 
 public class ModeloPago {
 
-    public DatabaseAccess singletonInstance;
+  public DatabaseAccess singletonInstance;
 
-    public ModeloPago(Context c) {
-        singletonInstance = DatabaseAccess.getInstance(c);
+  public ModeloPago(Context c) {
+    singletonInstance = DatabaseAccess.getInstance(c);
+  }
+
+  public boolean insertarPedido(
+      int id,
+      String nombreUsr,
+      String fecha,
+      String dir,
+      String localidad,
+      int cp,
+      double importe,
+      String obs) {
+    singletonInstance.openW();
+    long res = -1;
+
+    ContentValues contentValues = new ContentValues();
+    contentValues.put("num_pedido", id);
+    contentValues.put("nombre_usuario", nombreUsr);
+    contentValues.put("fecha_pedido", fecha);
+    contentValues.put("direccion_envio", dir);
+    contentValues.put("localidad_envio", localidad);
+    contentValues.put("codigo_postal_envio", cp);
+    contentValues.put("importe_total", importe);
+    contentValues.put("observaciones", obs);
+    try {
+      singletonInstance.getDb().beginTransaction();
+      res = singletonInstance.getDb().insertOrThrow("pedidos", null, contentValues);
+      singletonInstance.getDb().setTransactionSuccessful();
+
+    } catch (SQLException e) {
+      Log.e("DBManager.insertarPedido", e.getMessage());
+    } finally {
+      singletonInstance.getDb().endTransaction();
+      singletonInstance.close();
     }
 
-    public boolean insertarPedido(
-            int id,
-            String nombreUsr,
-            String fecha,
-            String dir,
-            String localidad,
-            int cp,
-            double importe,
-            String obs) {
-        singletonInstance.openW();
+    return res != 1;
+  }
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("num_pedido", id);
-        contentValues.put("nombre_usuario", nombreUsr);
-        contentValues.put("fecha_pedido", fecha);
-        contentValues.put("direccion_envio", dir);
-        contentValues.put("localidad_envio", localidad);
-        contentValues.put("codigo_postal_envio", cp);
-        contentValues.put("importe_total", importe);
-        contentValues.put("observaciones", obs);
+  public int getMaxIdPedido() {
+    singletonInstance.openR();
 
-        long res = singletonInstance.getDb().insertOrThrow("pedidos", null,
-                contentValues);
-
-        singletonInstance.close();
-
-        return res != 1;
+    Cursor c =
+        singletonInstance
+            .getDb()
+            .rawQuery("SELECT MAX(num_pedido)  " + "AS max_id FROM pedidos", null);
+    String toret = "";
+    if (c.moveToNext()) {
+      toret = c.getString(0);
     }
 
-    public int getMaxIdPedido() {
-        singletonInstance.openR();
+    singletonInstance.close();
 
-        Cursor c =
-                singletonInstance.getDb().rawQuery("SELECT MAX(num_pedido)  " +
-                        "AS max_id FROM pedidos", null);
-        String toret = "";
-        if (c.moveToNext()) {
-            toret = c.getString(0);
-        }
+    c.close();
 
-        singletonInstance.close();
+    return Integer.parseInt(toret);
+  }
 
-        c.close();
+  public int getMaxIdLineaPedido() {
+    singletonInstance.openR();
 
-        return Integer.parseInt(toret);
+    Cursor c =
+        singletonInstance
+            .getDb()
+            .rawQuery("SELECT MAX(num_linea)  AS max_id FROM linea_pedidos", null);
+    String toret = "";
+    if (c.moveToNext()) {
+      toret = c.getString(0);
     }
 
-    public int getMaxIdLineaPedido() {
-        singletonInstance.openR();
+    singletonInstance.close();
 
-        Cursor c =
-                singletonInstance
-                        .getDb()
-                        .rawQuery("SELECT MAX(num_linea)  AS max_id FROM linea_pedidos",
-                                null);
-        String toret = "";
-        if (c.moveToNext()) {
-            toret = c.getString(0);
-        }
+    c.close();
 
-        singletonInstance.close();
+    return Integer.parseInt(toret);
+  }
 
-        c.close();
+  public boolean insertarLineaPedido(
+      int idLinea, int numPedido, int codigoComida, int cantidad, double precio) {
+    singletonInstance.openW();
+    ContentValues contentValues = new ContentValues();
+    contentValues.put("num_linea", idLinea);
+    contentValues.put("num_pedido", numPedido);
+    contentValues.put("codigo_comida", codigoComida);
+    contentValues.put("cantidad", cantidad);
+    contentValues.put("precio_linea", precio);
+    long res = -1;
+    try{
+      singletonInstance.getDb().beginTransaction();
+      res = singletonInstance.getDb().insertOrThrow("linea_pedidos", null, contentValues);
+      singletonInstance.getDb().setTransactionSuccessful();
 
-        return Integer.parseInt(toret);
+    }catch (SQLException e) {
+      Log.e("DBManager.InsertarLineaCarrito", e.getMessage());
+    }finally{
+      singletonInstance.getDb().endTransaction();
+      singletonInstance.close();
     }
+    return res != 1;
+  }
 
-    public boolean insertarLineaPedido(int idLinea, int numPedido, int codigoComida,
-                                       int cantidad, double precio) {
-        singletonInstance.openW();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("num_linea", idLinea);
-        contentValues.put("num_pedido", numPedido);
-        contentValues.put("codigo_comida", codigoComida);
-        contentValues.put("cantidad", cantidad);
-        contentValues.put("precio_linea", precio);
-        long res = singletonInstance.getDb().insertOrThrow("linea_pedidos", null,
-                contentValues);
+  // eliminamos la comida del carrito cuando ya la hemos comprado
+  public boolean eliminarProductorComprados(String usuario) {
+    singletonInstance.openW();
+    boolean toret = false;
+    try{
+      singletonInstance.getDb().beginTransaction();
+      toret =
+              singletonInstance.getDb().delete("carrito_temp", "nombre_usuario=?", new String[] {usuario})
+                      > 0;
+      singletonInstance.getDb().setTransactionSuccessful();
 
-        singletonInstance.close();
-        return res != 1;
+    } catch (SQLException e) {
+      Log.e("DBManager.InsertarLineaCarrito", e.getMessage());
+    }finally{
+      singletonInstance.getDb().endTransaction();
+      singletonInstance.close();
     }
-
-    // eliminamos la comida del carrito cuando ya la hemos comprado
-    public boolean eliminarProductorComprados(String usuario) {
-        singletonInstance.openW();
-        boolean toret =
-                singletonInstance.getDb().delete("carrito_temp", "nombre_usuario=?", new String[] {usuario})
-                        > 0;
-        singletonInstance.close();
-        return toret;
-    }
+    return toret;
+  }
 }

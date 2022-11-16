@@ -96,8 +96,11 @@ public class ModeloUsuario {
                                     + "where nombre_usuario = ?",
                             new String[] {usuario});
 
-            if(cursor.getCount()>=1) {
-                result = true;
+
+            while (cursor.moveToNext()) {
+                if(cursor.getInt(0) >= 1) {
+                    result = true;
+                }
             }
 
         } catch (SQLException e) {
@@ -124,11 +127,13 @@ public class ModeloUsuario {
                     .getDb()
                     .rawQuery(
                             "select count(mail) from usuarios "
-                                    + "where nombre_usuario = ?",
+                                    + "where mail = ?",
                             new String[] {email});
 
-            if(cursor.getCount()>=1) {
-                result = true;
+            while (cursor.moveToNext()) {
+                if(cursor.getInt(0) >= 1) {
+                    result = true;
+                }
             }
 
         } catch (SQLException e) {

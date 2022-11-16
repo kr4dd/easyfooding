@@ -24,6 +24,7 @@ public class ModeloUsuario {
         Cursor cursor = null;
         int result = 0;
         try {
+            singletonInstance.getDb().beginTransaction();
 
             cursor = singletonInstance
                     .getDb()
@@ -36,6 +37,7 @@ public class ModeloUsuario {
                 result = cursor.getInt(0);
             }
 
+            singletonInstance.getDb().setTransactionSuccessful();
 
         } catch (SQLException e) {
             Log.e( "DBManager.checkLogin", e.getMessage() );
@@ -43,6 +45,7 @@ public class ModeloUsuario {
             if ( cursor != null ) {
                 cursor.close();
             }
+            singletonInstance.getDb().endTransaction();
 
             singletonInstance.close();
         }
@@ -88,6 +91,7 @@ public class ModeloUsuario {
         Cursor cursor = null;
         boolean result = false;
         try {
+            singletonInstance.getDb().beginTransaction();
 
             cursor = singletonInstance
                     .getDb()
@@ -102,12 +106,15 @@ public class ModeloUsuario {
                 }
             }
 
+            singletonInstance.getDb().setTransactionSuccessful();
+
         } catch (SQLException e) {
             Log.e( "DBManager.existeUsuario", e.getMessage() );
         } finally {
             if ( cursor != null ) {
                 cursor.close();
             }
+            singletonInstance.getDb().endTransaction();
 
             singletonInstance.close();
         }

@@ -84,4 +84,42 @@ public class ModeloUsuario {
 
         return res != -1;
     }
+
+    public boolean existeUsuario(String usuario) {
+        singletonInstance.open();
+
+        Cursor cursor = null;
+        boolean result = false;
+        try {
+            singletonInstance.getDb().beginTransaction();
+
+            cursor = singletonInstance
+                    .getDb()
+                    .rawQuery(
+                            "select count(nombre_usuario) from usuarios "
+                                    + "where nombre_usuario = ?",
+                            new String[] {usuario});
+
+            while (cursor.moveToNext()) {
+                if(cursor.getInt(0) >= 1) {
+                    result = true;
+                }
+            }
+
+            singletonInstance.getDb().setTransactionSuccessful();
+
+        } catch (SQLException e) {
+            Log.e( "DBManager.existeUsuario", e.getMessage() );
+        } finally {
+            if ( cursor != null ) {
+                cursor.close();
+            }
+            singletonInstance.getDb().endTransaction();
+
+            singletonInstance.close();
+        }
+
+        return result;
+    }
+
 }

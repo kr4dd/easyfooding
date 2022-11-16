@@ -2,6 +2,7 @@ package esei.uvigo.easyfooding.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,6 +82,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     {
 
         TextView errUsuario = findViewById(R.id.errUsuario);
+        TextView errUsuarioExists = findViewById(R.id.errUsuarioExists);
         TextView errContrasena = findViewById(R.id.errContrasena);
         TextView errNombreReal = findViewById(R.id.errNombreReal);
         TextView errApellidos = findViewById(R.id.errApellidos);
@@ -91,6 +93,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         TextView errCodigoPostal = findViewById(R.id.errCodigoPostal);
 
         validarUsuario(ur.getUsuario());
+        existePrevioUsuario(ur.getUsuario());
         validarPass(ur.getPass());
         validarNombreReal(ur.getNombreReal());
         validarApellidos(ur.getApellidos());
@@ -104,7 +107,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                 && errNombreReal.getVisibility() == View.GONE && errApellidos.getVisibility() == View.GONE
                 && errCorreo.getVisibility() == View.GONE && errTelefono.getVisibility() == View.GONE
                 && errDireccion.getVisibility() == View.GONE && errLocalidad.getVisibility() == View.GONE
-                && errCodigoPostal.getVisibility() == View.GONE;
+                && errCodigoPostal.getVisibility() == View.GONE && errUsuarioExists.getVisibility() == View.GONE;
 
     }
 
@@ -112,6 +115,14 @@ public class RegisterUserActivity extends AppCompatActivity {
         Pattern p = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚ]{3,40}$");
 
         showErrMessagesForRegisterTxtViews(p, input, R.id.errUsuario);
+    }
+
+    public void existePrevioUsuario(String input) {
+        ModeloUsuario db = new ModeloUsuario(this);
+
+        //En caso de que el usuario ya estuviese registrado
+        showErrMessagesForRegisterTxtViews(db.existeUsuario(input), R.id.errUsuarioExists);
+
     }
 
     public void validarPass(String input) {
@@ -167,6 +178,17 @@ public class RegisterUserActivity extends AppCompatActivity {
         TextView errMsg = findViewById(view);
 
         if(!p.matcher(input).matches()) {
+            errMsg.setVisibility(View.VISIBLE); //Muestra el error
+
+        } else {
+            errMsg.setVisibility(View.GONE); //Hace que el error desaparezca
+        }
+    }
+
+    public void showErrMessagesForRegisterTxtViews(boolean existeUsuario, int view) {
+        TextView errMsg = findViewById(view);
+
+        if(existeUsuario) {
             errMsg.setVisibility(View.VISIBLE); //Muestra el error
 
         } else {

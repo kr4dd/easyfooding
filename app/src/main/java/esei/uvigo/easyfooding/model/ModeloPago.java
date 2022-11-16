@@ -56,6 +56,8 @@ public class ModeloPago {
 
         singletonInstance.close();
 
+        c.close();
+
         return Integer.parseInt(toret);
     }
 
@@ -73,6 +75,8 @@ public class ModeloPago {
         }
 
         singletonInstance.close();
+
+        c.close();
 
         return Integer.parseInt(toret);
     }

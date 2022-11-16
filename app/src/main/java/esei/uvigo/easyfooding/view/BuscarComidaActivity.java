@@ -104,18 +104,6 @@ public class BuscarComidaActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-
-    }
-
     //Método para controlar que pulsamos la tecla de back en el dispositivo movil
     public boolean onKeyDown(int keyCode, KeyEvent event){
         if(keyCode == event.KEYCODE_BACK){

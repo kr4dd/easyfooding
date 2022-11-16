@@ -1,5 +1,6 @@
 package esei.uvigo.easyfooding.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -177,10 +178,11 @@ public class RegisterUserActivity extends AppCompatActivity {
         showErrMessagesForRegisterTxtViews(p, input, R.id.errLocalidad);
     }
 
+    @SuppressLint("DefaultLocale")
     public void validarCodigoPostal(int input) {
         Pattern p = Pattern.compile("^[0-9]{5}$");
 
-        showErrMessagesForRegisterTxtViews(p, Integer.toString(input), R.id.errCodigoPostal);
+        showErrMessagesForRegisterTxtViews(p, String.format("%05d", input), R.id.errCodigoPostal);
 
     }
 

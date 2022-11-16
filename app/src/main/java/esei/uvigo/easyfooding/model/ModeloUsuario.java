@@ -3,6 +3,8 @@ package esei.uvigo.easyfooding.model;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.util.Log;
 
 import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.core.UsuarioRegistro;
@@ -19,19 +21,34 @@ public class ModeloUsuario {
     public boolean checkLogin(String usuario, String pass) {
         singletonInstance.open();
 
-        Cursor cursor = singletonInstance
-                        .getDb()
-                        .rawQuery(
-                                "select count(nombre_usuario) from usuarios "
-                                        + "where nombre_usuario = ? and pass = ?",
-                                new String[] {usuario, pass});
-
+        Cursor cursor = null;
         int result = 0;
-        while (cursor.moveToNext()) {
-            result = cursor.getInt(0);
-        }
+        try {
+            singletonInstance.getDb().beginTransaction();
 
-        singletonInstance.close();
+            cursor = singletonInstance
+                    .getDb()
+                    .rawQuery(
+                            "select count(nombre_usuario) from usuarios "
+                                    + "where nombre_usuario = ? and pass = ?",
+                            new String[] {usuario, pass});
+
+            while (cursor.moveToNext()) {
+                result = cursor.getInt(0);
+            }
+
+            singletonInstance.getDb().setTransactionSuccessful();
+
+        } catch (SQLException e) {
+            Log.e( "DBManager.checkLogin", e.getMessage() );
+        } finally {
+            if ( cursor != null ) {
+                cursor.close();
+            }
+            singletonInstance.getDb().endTransaction();
+
+            singletonInstance.close();
+        }
 
         return result == 1;
     }
@@ -51,9 +68,19 @@ public class ModeloUsuario {
         cv.put("codigo_postal", ur.getCp());
         cv.put("fecha_alta", ur.getFechaAlta());
 
-        long res = singletonInstance.getDb().insertOrThrow("usuarios", null, cv);
+        long res = -1;
+        try {
+            singletonInstance.getDb().beginTransaction();
 
-        singletonInstance.close();
+            res = singletonInstance.getDb().insertOrThrow("usuarios", null, cv);
+
+            singletonInstance.getDb().setTransactionSuccessful();
+        } catch (SQLException e) {
+            Log.e( "DBManager.insertarUsuario", e.getMessage() );
+        } finally {
+            singletonInstance.getDb().endTransaction();
+            singletonInstance.close();
+        }
 
         return res != -1;
     }

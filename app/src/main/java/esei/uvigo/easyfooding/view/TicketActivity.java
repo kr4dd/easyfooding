@@ -1,8 +1,5 @@
 package esei.uvigo.easyfooding.view;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,19 +7,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.core.LineaPedidos;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.model.ModeloInicio;
+import esei.uvigo.easyfooding.model.ModeloTicket;
 
 public class TicketActivity extends AppCompatActivity {
 
@@ -50,7 +46,7 @@ public class TicketActivity extends AppCompatActivity {
     }
 
     private Cursor getCursorListaPedidos(int numPedidos){
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloTicket db = new ModeloTicket(this);
         return db.getCursorLineaPedidos(numPedidos);
 
     }
@@ -68,9 +64,10 @@ public class TicketActivity extends AppCompatActivity {
             return cursorInflater.inflate(R.layout.linea_pedidos_layout,parent,false);
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            AccesoModelo db = new AccesoModelo(getApplicationContext());
+            ModeloInicio db = new ModeloInicio(getApplicationContext());
             @SuppressLint("Range") String idComida = cursor.getString(cursor.getColumnIndex("codigo_comida"));
             String nombreComida = db.getNombreComidaPorId(idComida);
 

@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.UsuarioRegistro;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.model.ModeloUsuario;
 
 public class RegisterUserActivity extends AppCompatActivity {
     private UsuarioRegistro ur;
@@ -29,7 +29,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         //Ocultar la barra con el titulo
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloUsuario db = new ModeloUsuario(this);
 
         Button btnRegistrarse = findViewById(R.id.btnLogearse);
         btnRegistrarse.setOnClickListener(
@@ -45,7 +45,7 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     }
 
-    public boolean registrarUsuario(AccesoModelo db) {
+    public boolean registrarUsuario(ModeloUsuario db) {
         //Recoger datos
         EditText editTextUsuario = findViewById(R.id.editTextUsuario);
         EditText editTextPass = findViewById(R.id.editTextPass);

@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.model.ModeloUsuario;
 
 public class LoginUserActivity extends AppCompatActivity {
     String usuario;
@@ -26,7 +26,7 @@ public class LoginUserActivity extends AppCompatActivity {
         //Ocultar la barra con el titulo
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloUsuario db = new ModeloUsuario(this);
 
         Button btnRegistrarse = findViewById(R.id.btnLogearse);
         btnRegistrarse.setOnClickListener(
@@ -43,7 +43,7 @@ public class LoginUserActivity extends AppCompatActivity {
 
     }
 
-    public boolean checkearLogin(AccesoModelo db) {
+    public boolean checkearLogin(ModeloUsuario db) {
         EditText editTextUsuario = findViewById(R.id.editTextUsuario);
         usuario = editTextUsuario.getText().toString();
 

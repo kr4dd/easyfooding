@@ -1,15 +1,12 @@
 package esei.uvigo.easyfooding.view;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,11 +20,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.Carrito;
 import esei.uvigo.easyfooding.core.Comida;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.core.OperationsUser;
+import esei.uvigo.easyfooding.model.ModeloCarrito;
 
 public class CarritoActivity extends AppCompatActivity {
     private RecyclerView listaProductos;
@@ -102,7 +99,7 @@ public class CarritoActivity extends AppCompatActivity {
     private void recuperarComidasEnCarro() {
         // primero obtenemos todos los elementos del carrito de este usuario:
 
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloCarrito db = new ModeloCarrito(this);
         ArrayList<Carrito> carro;
 
         // ejecutamos query
@@ -163,7 +160,7 @@ public class CarritoActivity extends AppCompatActivity {
         Double vprecioComida = Double.parseDouble(precioComida.getText().toString());
         boolean seguir = true;
         for (int i = 0; i < listaComida.size(); i++) {
-            if (listaComida.get(i).getNombre().equals(nombre) && seguir == true) {
+            if (listaComida.get(i).getNombre().equals(nombre) && seguir) {
                 vprecioComida = vprecioComida - listaComida.get(i).getPrecio() * cantidad;
                 vprecioTotal = vprecioTotal - listaComida.get(i).getPrecio() * cantidad;
                 int codigoComida = listaComida.get(i).getCodigo();
@@ -173,7 +170,7 @@ public class CarritoActivity extends AppCompatActivity {
                 listaComida.remove(i);
                 ap.notifyDataSetChanged();
                 //lo eliminamos de la tabla
-                AccesoModelo db = new AccesoModelo(this);
+                ModeloCarrito db = new ModeloCarrito(this);
                 int codigoLineaEliminada = db.getIdLineaConCodigoComida(codigoComida, OperationsUser.getUserFromSession(this));
                 db.eliminarProductorCompradosConCodigo(codigoLineaEliminada, OperationsUser.getUserFromSession(this));
                 seguir = false;
@@ -214,7 +211,7 @@ public class CarritoActivity extends AppCompatActivity {
             TextView precioUno = holder.itemView.findViewById(R.id.precioUnitario);
             TextView cantidad = holder.itemView.findViewById(R.id.total);
 
-            AccesoModelo db = new AccesoModelo(this);
+            ModeloCarrito db = new ModeloCarrito(this);
             int codigo = db.getIdComida(nombreComida.getText().toString());
             Comida add = new Comida(nombreComida.getText().toString(),
                             Double.parseDouble(precioUno.getText().toString()),
@@ -266,54 +263,39 @@ public class CarritoActivity extends AppCompatActivity {
 
                 // para añadir uno mas
                 add.setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                int actual = Integer.parseInt(cantidadTotal.getText().toString());
-                                masProducto(actual);
-                            }
+                        view -> {
+                            int actual = Integer.parseInt(cantidadTotal.getText().toString());
+                            masProducto(actual);
                         });
 
                 // para retirar un producto
                 resta.setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                int actual = Integer.parseInt(cantidadTotal.getText().toString());
-                                menosProducto(actual);
-                            }
+                        view -> {
+                            int actual = Integer.parseInt(cantidadTotal.getText().toString());
+                            menosProducto(actual);
                         });
                 itemView.setOnLongClickListener(
-                        new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View view) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(CarritoActivity.this);
-                                builder.setTitle(R.string.borrar);
-                                builder.setMessage(R.string.confirma);
-                                builder.setPositiveButton(
-                                        "Confirmar",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                String eliminar = nombre.getText().toString();
-                                                int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
-                                                eliminarComidaCarrito(eliminar, cantidad);
-                                                ap.notifyItemRemoved(getAdapterPosition());
-                                                calculoComida();
-                                            }
-                                        });
-                                builder.setNegativeButton(
-                                        "Cancelar",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                return;
-                                            }
-                                        });
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                                return true;
-                            }
+                        view -> {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CarritoActivity.this);
+                            builder.setTitle(R.string.borrar);
+                            builder.setMessage(R.string.confirma);
+                            builder.setPositiveButton(
+                                    "Confirmar",
+                                    (dialogInterface, i) -> {
+                                        String eliminar = nombre.getText().toString();
+                                        int cantidad = Integer.parseInt(cantidadTotal.getText().toString());
+                                        eliminarComidaCarrito(eliminar, cantidad);
+                                        ap.notifyItemRemoved(getAdapterPosition());
+                                        calculoComida();
+                                    });
+                            builder.setNegativeButton(
+                                    "Cancelar",
+                                    (dialogInterface, i) -> {
+                                        return;
+                                    });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            return true;
                         });
             }
 
@@ -330,7 +312,7 @@ public class CarritoActivity extends AppCompatActivity {
 
                     calculoComida(); // llamamos a la funcion que actualiza el precio total
 
-                    AccesoModelo db = new AccesoModelo(getApplicationContext());
+                    ModeloCarrito db = new ModeloCarrito(getApplicationContext());
                     //actualizamos cantidad en base de datos
                     int idLineaTemp = db.getIdLineaConCantidad(listaComida.get(getAdapterPosition()).getCodigo(), OperationsUser.getUserFromSession(CarritoActivity.this),actual);
                     db.addUnProductoCarrito(idLineaTemp,add);
@@ -351,7 +333,7 @@ public class CarritoActivity extends AppCompatActivity {
 
                     calculoComida(); // llamamos a la funcion que actualiza el precio total
 
-                    AccesoModelo db = new AccesoModelo(getApplicationContext());
+                    ModeloCarrito db = new ModeloCarrito(getApplicationContext());
                     int idLineaTemp = db.getIdLineaConCantidad(listaComida.get(getAdapterPosition()).getCodigo(), OperationsUser.getUserFromSession(CarritoActivity.this),actual);
                     //actualizamos cantidad en base de datos
                     db.deleteUnProductoCarrito(idLineaTemp,subs);

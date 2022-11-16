@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.Comida;
 import esei.uvigo.easyfooding.core.OperationsUser;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.model.ModeloPago;
 
 public class ProcesoPagoActivity extends AppCompatActivity {
 
@@ -91,7 +91,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
         double precio = Double.parseDouble(importe.replaceFirst(",","."));
 
         //Acceso a la base de datos
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloPago db = new ModeloPago(this);
         int maxId = db.getMaxIdPedido();
         int idNuevoPedido = maxId + 1;
         db.insertarPedido(idNuevoPedido, nombreUsuario, fechaActual, direccion, localidad,
@@ -112,12 +112,12 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     }
 
     private void limpiarTablaCarrito() {
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloPago db = new ModeloPago(this);
         db.eliminarProductorComprados(OperationsUser.getUserFromSession(this));
     }
 
     private void insertarLineasPedido(int idPedido, Comida comida) {
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloPago db = new ModeloPago(this);
         int maxIDLinea = db.getMaxIdLineaPedido();
         int idActual = maxIDLinea + 1;
         int codigoComida = comida.getCodigo();

@@ -16,7 +16,7 @@ import java.util.Objects;
 
 import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.model.ModeloCarrito;
 
 public class DetalleComidaActivity extends AppCompatActivity {
     TextView cantidadComida;
@@ -34,7 +34,7 @@ public class DetalleComidaActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Conectar a BD
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloCarrito db = new ModeloCarrito(this);
 
         Bundle parametros = getIntent().getExtras();
         String codigoComida = parametros.get("codigo_comida").toString();
@@ -62,7 +62,7 @@ public class DetalleComidaActivity extends AppCompatActivity {
 
     //Función para  extraer datos de la BD y mostrarlos en la actividad
     @SuppressLint("SetTextI18n")
-    private void rellenarDatosActividad(String codigoComida, AccesoModelo db) {
+    private void rellenarDatosActividad(String codigoComida, ModeloCarrito db) {
         ArrayList<String> datosComida = db.getDatosComidaPorId(codigoComida);
 
         //nombre
@@ -130,7 +130,7 @@ public class DetalleComidaActivity extends AppCompatActivity {
         precioTotal.setText(importe +"€");
     }
 
-    private void botonCarrito(String codigoComida, AccesoModelo db){
+    private void botonCarrito(String codigoComida, ModeloCarrito db){
         TextView carrito = findViewById(R.id.textView_add_carrito);
         carrito.setOnClickListener(view -> {
 

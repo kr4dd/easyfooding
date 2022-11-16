@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,9 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.core.OperationsUser;
+import esei.uvigo.easyfooding.model.ModeloInicio;
 
 public class InicioActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
@@ -31,14 +30,14 @@ public class InicioActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Cargar saludo a usuario
-        TextView msgBienvenida = findViewById(R.id.saludoUsuario);
+        @SuppressLint("CutPasteId") TextView msgBienvenida = findViewById(R.id.saludoUsuario);
         msgBienvenida.setText("Hola, " + OperationsUser.getUserFromSession(this));
 
         //Cambiar de actividades
         OperationsUser.cambiarActividadPanelInterno(getWindow().getDecorView(), this, this);
 
         //Crear instancia de la BD
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloInicio db = new ModeloInicio(this);
 
         //Generar dinamicamente ScrollViewHorizontal de categorias
         construirListaCategorias(db);
@@ -49,11 +48,11 @@ public class InicioActivity extends AppCompatActivity {
         funcionalidadesBarraBusqueda();
 
         //Colores personalizado del saludo al usuario
-        TextView saludoUsuario = findViewById(R.id.saludoUsuario);
+        @SuppressLint("CutPasteId") TextView saludoUsuario = findViewById(R.id.saludoUsuario);
         saludoUsuario.setTextColor(Color.parseColor("#ff3d00"));
     }
 
-    private void construirListaCategorias(AccesoModelo db){
+    private void construirListaCategorias(ModeloInicio db){
         //Sacar info de la BD
         int numCategorias = db.getNumCategorias();
         ArrayList<String> nombresCategorias = db.getNombresCategorias();
@@ -75,14 +74,11 @@ public class InicioActivity extends AppCompatActivity {
             button.setHeight(200);
 
             String nombre = nombresCategorias.get(i);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Irse a la actividad de buscar comida pasandole parametros de busqueda
-                    Intent i = new Intent(InicioActivity.this, BuscarComidaActivity.class);
-                    i.putExtra("nombre_categoria", nombre); //Pasarle a la nueva actividad por parametro el nombre de la categoria a filtrar
-                    startActivity(i);
-                }
+            button.setOnClickListener(view -> {
+                //Irse a la actividad de buscar comida pasandole parametros de busqueda
+                Intent i1 = new Intent(InicioActivity.this, BuscarComidaActivity.class);
+                i1.putExtra("nombre_categoria", nombre); //Pasarle a la nueva actividad por parametro el nombre de la categoria a filtrar
+                startActivity(i1);
             });
 
             //Añadimos el botón a la barra de Scroll Horizontal
@@ -90,7 +86,7 @@ public class InicioActivity extends AppCompatActivity {
         }
     }
 
-    private void construirListaRecomendaciones(AccesoModelo db){
+    private void construirListaRecomendaciones(ModeloInicio db){
         ArrayList <String> nombresComidas = db.getNombreComidasRandom();
 
         LinearLayout layoutHorizontalRecomendaciones = findViewById(R.id.layoutHorizontalRecomendaciones);

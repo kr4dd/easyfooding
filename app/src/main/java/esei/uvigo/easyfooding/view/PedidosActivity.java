@@ -1,42 +1,36 @@
 package esei.uvigo.easyfooding.view;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.ListaPedidos;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.core.OperationsUser;
+import esei.uvigo.easyfooding.model.ModeloPedido;
 
 public class PedidosActivity extends AppCompatActivity {
     private Cursor cursor;
-    private ArrayList<ListaPedidos> res;
     private ArrayAdapter<ListaPedidos> adapter;
     private pedidoCursorAdapter cursorAdapter;
+
+    public PedidosActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +47,7 @@ public class PedidosActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloPedido db = new ModeloPedido(this);
         cursor = db.getHistorialCursor(OperationsUser.getUserFromSession(this));
         ListView ticket = this.findViewById(R.id.ticket);
 
@@ -75,7 +69,7 @@ public class PedidosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloPedido db = new ModeloPedido(this);
         ListView ticket = this.findViewById(R.id.ticket);
         cursor = db.getHistorialCursor(OperationsUser.getUserFromSession(this));
         pedidoCursorAdapter cursorAdapterNuevo = new pedidoCursorAdapter(this,cursor,0);

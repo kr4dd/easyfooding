@@ -1,7 +1,5 @@
 package esei.uvigo.easyfooding.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +8,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.model.AccesoModelo;
+import esei.uvigo.easyfooding.model.ModeloInicio;
 
 public class BuscarComidaActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class BuscarComidaActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         //Conectar a BD
-        AccesoModelo db = new AccesoModelo(this);
+        ModeloInicio db = new ModeloInicio(this);
 
         //Conectar ListView con el Adaptador y con el Array de resultados
         ListView listViewItems = findViewById(R.id.listViewItems);
@@ -84,7 +84,7 @@ public class BuscarComidaActivity extends AppCompatActivity {
     }
 
     //Rellenar ListView con comida filtrada por categoria
-    private void obtenerComidasPorCategoria(String nombreCategoria, AccesoModelo db) {
+    private void obtenerComidasPorCategoria(String nombreCategoria, ModeloInicio db) {
         String codigoComida;
         this.arrayItemsId = db.getCodigoComidaPorCategoria(nombreCategoria); //Obtener id de las comidas
         for (int i = 0; i < arrayItemsId.size(); i++) {
@@ -94,7 +94,7 @@ public class BuscarComidaActivity extends AppCompatActivity {
         }
     }
 
-    private void obtenerComidasPorNombre(String nombreComida, AccesoModelo db) {
+    private void obtenerComidasPorNombre(String nombreComida, ModeloInicio db) {
         String codigoComida;
         this.arrayItemsId = db.getCodigoComidaPorNombre(nombreComida); //Obtener id de las comidas filtradas por su nombre
         for (int i = 0; i < arrayItemsId.size(); i++) {

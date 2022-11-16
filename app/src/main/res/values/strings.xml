@@ -69,6 +69,7 @@
     <string name="nombreRealErr">Nombre de 3 a 40 letras y sin espacios</string>
     <string name="apellidosErr">Apellidos de 2 a 40 letras</string>
     <string name="mailErr">Formato de email como ejemplo@mail.es</string>
+    <string name="mailErrExists">El email ya existe</string>
     <string name="telefonoErr">Nueve números y sin prefijo</string>
     <string name="direccionErr">Dirección de 4 a 60 letras, números, con espacios</string>
     <string name="localidadErr">Localidad de 4 a 35 letras o con espacios</string>

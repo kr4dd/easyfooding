@@ -17,7 +17,7 @@ public class ModeloInicio {
 
     // Obtener el nombre de 5 comidas aleatorias
     public ArrayList<String> getNombreComidasRandom() {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         ArrayList<String> toret = new ArrayList<>();
 
@@ -42,7 +42,7 @@ public class ModeloInicio {
 
     // Obtener los ids de las comidas dado un nombre de comida
     public ArrayList<Integer> getCodigoComidaPorNombre(String nombreComida) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         ArrayList<Integer> toret = new ArrayList<>();
 
@@ -66,7 +66,7 @@ public class ModeloInicio {
 
     // Obtener el nombre de todas las categorias
     public ArrayList<String> getNombresCategorias() {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         ArrayList<String> toret = new ArrayList<>();
         @SuppressLint("Recycle")
@@ -89,7 +89,7 @@ public class ModeloInicio {
     // Obtener el numero de categorias actuales
     public int getNumCategorias() {
 
-        singletonInstance.open();
+        singletonInstance.openR();
 
         int toret;
         Cursor cursor = singletonInstance.getDb().rawQuery("SELECT count(*) FROM categorias", null);
@@ -107,7 +107,7 @@ public class ModeloInicio {
 
     // Obtener el nombre de la comida que tiene un codigo_comida dado
     public String getNombreComidaPorId(String codigoComida) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         String toret = "";
         Cursor cursor =
@@ -126,7 +126,7 @@ public class ModeloInicio {
 
     // Obtener el codigo de las comidas que pertenecen a una categoria
     public ArrayList<Integer> getCodigoComidaPorCategoria(String nombreCategoria) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         ArrayList<Integer> toret = new ArrayList<>();
         @SuppressLint("Recycle")

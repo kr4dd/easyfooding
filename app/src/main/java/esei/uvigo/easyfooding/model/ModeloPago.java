@@ -23,7 +23,7 @@ public class ModeloPago {
             int cp,
             double importe,
             String obs) {
-        singletonInstance.open();
+        singletonInstance.openW();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("num_pedido", id);
@@ -44,7 +44,7 @@ public class ModeloPago {
     }
 
     public int getMaxIdPedido() {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         Cursor c =
                 singletonInstance.getDb().rawQuery("SELECT MAX(num_pedido)  " +
@@ -60,7 +60,7 @@ public class ModeloPago {
     }
 
     public int getMaxIdLineaPedido() {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         Cursor c =
                 singletonInstance
@@ -79,7 +79,7 @@ public class ModeloPago {
 
     public boolean insertarLineaPedido(int idLinea, int numPedido, int codigoComida,
                                        int cantidad, double precio) {
-        singletonInstance.open();
+        singletonInstance.openW();
         ContentValues contentValues = new ContentValues();
         contentValues.put("num_linea", idLinea);
         contentValues.put("num_pedido", numPedido);
@@ -95,7 +95,7 @@ public class ModeloPago {
 
     // eliminamos la comida del carrito cuando ya la hemos comprado
     public boolean eliminarProductorComprados(String usuario) {
-        singletonInstance.open();
+        singletonInstance.openW();
         boolean toret =
                 singletonInstance.getDb().delete("carrito_temp", "nombre_usuario=?", new String[] {usuario})
                         > 0;

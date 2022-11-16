@@ -21,7 +21,7 @@ public class ModeloCarrito {
     }
 
     public boolean insertarLineaCarrito(String username, String codigoComida, int cantidad) {
-        singletonInstance.open();
+        singletonInstance.openW();
 
         ContentValues contentValues = new ContentValues();
         contentValues.put("nombre_usuario", username);
@@ -35,7 +35,7 @@ public class ModeloCarrito {
     }
 
     public boolean deleteUnProductoCarrito(int idProducto, int numeroActual) {
-        singletonInstance.open();
+        singletonInstance.openW();
 
         ContentValues cv = new ContentValues();
         String toQuery = String.valueOf(idProducto);
@@ -59,7 +59,7 @@ public class ModeloCarrito {
     }
 
     public boolean addUnProductoCarrito(int idProducto, int numeroActual) {
-        singletonInstance.open();
+        singletonInstance.openW();
 
         ContentValues cv = new ContentValues();
         String toQuery = String.valueOf(idProducto);
@@ -83,7 +83,7 @@ public class ModeloCarrito {
 
     // Cogemos los objetos del carrito
     public ArrayList<Carrito> getObjetosEnCarro(String usuario) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         Cursor c =
                 singletonInstance
@@ -105,7 +105,7 @@ public class ModeloCarrito {
 
     // con el id buscamos las caracteristicas del producto
     public Comida getDatosComida(int idComida, int cantidad) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         String toQuery = String.valueOf(idComida);
         Cursor c =
@@ -130,7 +130,7 @@ public class ModeloCarrito {
     }
 
     public int getIdLineaConCantidad(int codigoComida, String usuario, int cantidad) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         String toQuery = String.valueOf(codigoComida);
         String cantidadStr = String.valueOf(cantidad);
@@ -153,7 +153,7 @@ public class ModeloCarrito {
 
     // Obtener los ids de las comidas dado un nombre
     public ArrayList<String> getDatosComidaPorId(String codigo_comida) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         ArrayList<String> toret = new ArrayList<>();
         @SuppressLint("Recycle")
@@ -179,7 +179,7 @@ public class ModeloCarrito {
     }
 
     public int getIdComida(String nombre) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         Cursor cursor =
                 singletonInstance
@@ -196,7 +196,7 @@ public class ModeloCarrito {
     }
 
     public boolean eliminarProductorCompradosConCodigo(int codigoLinea, String usuario) {
-        singletonInstance.open();
+        singletonInstance.openW();
         String toQuery = String.valueOf(codigoLinea);
         boolean toret =
                 singletonInstance
@@ -212,7 +212,7 @@ public class ModeloCarrito {
     }
 
     public int getIdLineaConCodigoComida(int codigoComida, String usuario) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         String toQuery = String.valueOf(codigoComida);
         Cursor c =

@@ -22,8 +22,13 @@ public class DatabaseAccess {
     }
 
     // open the database connection
-    public void open() {
+    public void openW() {
         this.db = openHelper.getWritableDatabase();
+    }
+
+    // open the database connection
+    public void openR() {
+        this.db = openHelper.getReadableDatabase();
     }
 
     // close the database connection

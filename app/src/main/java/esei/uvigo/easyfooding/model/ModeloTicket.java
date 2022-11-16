@@ -13,7 +13,7 @@ public class ModeloTicket {
     }
 
     public Cursor getCursorLineaPedidos(int numPedido) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         String toQuery = String.valueOf(numPedido);
         Cursor c =

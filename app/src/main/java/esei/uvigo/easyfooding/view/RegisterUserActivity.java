@@ -2,7 +2,6 @@ package esei.uvigo.easyfooding.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,6 +86,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         TextView errNombreReal = findViewById(R.id.errNombreReal);
         TextView errApellidos = findViewById(R.id.errApellidos);
         TextView errCorreo = findViewById(R.id.errCorreo);
+        TextView errCorreoExists = findViewById(R.id.errCorreoExists);
         TextView errTelefono = findViewById(R.id.errTelefono);
         TextView errDireccion = findViewById(R.id.errDireccion);
         TextView errLocalidad = findViewById(R.id.errLocalidad);
@@ -98,6 +98,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         validarNombreReal(ur.getNombreReal());
         validarApellidos(ur.getApellidos());
         validarCorreo(ur.getCorreo());
+        existePrevioCorreo(ur.getCorreo());
         validarTlfno(ur.getTlfno());
         validarDireccion(ur.getDireccion());
         validarLocalidad(ur.getLocalidad());
@@ -107,7 +108,8 @@ public class RegisterUserActivity extends AppCompatActivity {
                 && errNombreReal.getVisibility() == View.GONE && errApellidos.getVisibility() == View.GONE
                 && errCorreo.getVisibility() == View.GONE && errTelefono.getVisibility() == View.GONE
                 && errDireccion.getVisibility() == View.GONE && errLocalidad.getVisibility() == View.GONE
-                && errCodigoPostal.getVisibility() == View.GONE && errUsuarioExists.getVisibility() == View.GONE;
+                && errCodigoPostal.getVisibility() == View.GONE && errUsuarioExists.getVisibility() == View.GONE
+                && errCorreoExists.getVisibility() == View.GONE;
 
     }
 
@@ -149,6 +151,14 @@ public class RegisterUserActivity extends AppCompatActivity {
         showErrMessagesForRegisterTxtViews(p, input, R.id.errCorreo);
     }
 
+    public void existePrevioCorreo(String input) {
+        ModeloUsuario db = new ModeloUsuario(this);
+
+        //En caso de que el usuario ya estuviese registrado
+        showErrMessagesForRegisterTxtViews(db.existeCorreo(input), R.id.errCorreoExists);
+
+    }
+
     public void validarTlfno(String input) {
         Pattern p = Pattern.compile("^[0-9]{9}$");
 
@@ -185,14 +195,15 @@ public class RegisterUserActivity extends AppCompatActivity {
         }
     }
 
-    public void showErrMessagesForRegisterTxtViews(boolean existeUsuario, int view) {
+    public void showErrMessagesForRegisterTxtViews(boolean existeCampo, int view) {
         TextView errMsg = findViewById(view);
 
-        if(existeUsuario) {
+        if(existeCampo) {
             errMsg.setVisibility(View.VISIBLE); //Muestra el error
 
         } else {
             errMsg.setVisibility(View.GONE); //Hace que el error desaparezca
+
         }
     }
 

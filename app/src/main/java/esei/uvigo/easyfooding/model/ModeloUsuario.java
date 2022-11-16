@@ -19,7 +19,7 @@ public class ModeloUsuario {
     }
 
     public boolean checkLogin(String usuario, String pass) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         Cursor cursor = null;
         int result = 0;
@@ -51,7 +51,7 @@ public class ModeloUsuario {
     }
 
     public boolean insertarUsuario(UsuarioRegistro ur) {
-        singletonInstance.open();
+        singletonInstance.openW();
 
         ContentValues cv = new ContentValues();
         cv.put("nombre_usuario", ur.getUsuario());
@@ -83,7 +83,7 @@ public class ModeloUsuario {
     }
 
     public boolean existeUsuario(String usuario) {
-        singletonInstance.open();
+        singletonInstance.openR();
 
         Cursor cursor = null;
         boolean result = false;
@@ -96,10 +96,8 @@ public class ModeloUsuario {
                                     + "where nombre_usuario = ?",
                             new String[] {usuario});
 
-            while (cursor.moveToNext()) {
-                if(cursor.getInt(0) >= 1) {
-                    result = true;
-                }
+            if(cursor.getCount()>=1) {
+                result = true;
             }
 
         } catch (SQLException e) {
@@ -115,4 +113,34 @@ public class ModeloUsuario {
         return result;
     }
 
+    public boolean existeCorreo(String email) {
+        singletonInstance.openR();
+
+        Cursor cursor = null;
+        boolean result = false;
+        try {
+
+            cursor = singletonInstance
+                    .getDb()
+                    .rawQuery(
+                            "select count(mail) from usuarios "
+                                    + "where nombre_usuario = ?",
+                            new String[] {email});
+
+            if(cursor.getCount()>=1) {
+                result = true;
+            }
+
+        } catch (SQLException e) {
+            Log.e( "DBManager.existeCorreo", e.getMessage() );
+        } finally {
+            if ( cursor != null ) {
+                cursor.close();
+            }
+
+            singletonInstance.close();
+        }
+
+        return result;
+    }
 }

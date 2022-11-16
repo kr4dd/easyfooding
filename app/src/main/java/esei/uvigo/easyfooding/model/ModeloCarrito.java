@@ -100,7 +100,7 @@ public class ModeloCarrito {
             singletonInstance.getDb().setTransactionSuccessful();
 
         } catch (SQLException e) {
-            Log.e("DBManager.add1producto", e.getMessage());
+            Log.e("DBManager.addUnProductoCarrito", e.getMessage());
         } finally {
             singletonInstance.getDb().endTransaction();
             singletonInstance.close();
@@ -112,22 +112,29 @@ public class ModeloCarrito {
     public ArrayList<Carrito> getObjetosEnCarro(String usuario) {
         singletonInstance.openR();
 
-        Cursor c =
-                singletonInstance
-                        .getDb()
-                        .rawQuery(
-                                "SELECT * FROM carrito_temp WHERE nombre_usuario = ?", new String[]{usuario});
+        Cursor cursor = null;
         ArrayList<Carrito> toret = new ArrayList<Carrito>();
-        while (c.moveToNext()) {
-            int codigo_comida = c.getInt(1);
-            int cantidad = c.getInt(2);
-            String usr = c.getString(0);
-            toret.add(new Carrito(codigo_comida, cantidad, usr));
-        }
 
-        singletonInstance.close();
+        try{
+            cursor = singletonInstance
+                            .getDb()
+                            .rawQuery(
+                                    "SELECT * FROM carrito_temp WHERE nombre_usuario = ?", new String[]{usuario});
+            while (cursor.moveToNext()) {
+                int codigo_comida = cursor.getInt(1);
+                int cantidad = cursor.getInt(2);
+                String usr = cursor.getString(0);
+                toret.add(new Carrito(codigo_comida, cantidad, usr));
+            }
 
-        c.close();
+        }catch(SQLException e){
+            Log.e( "DBManager.getObjetosEnCarro", e.getMessage() );
+        }finally{
+            if ( cursor != null ) {
+                cursor.close();
+            }
+            singletonInstance.close();
+        };
 
         return toret;
     }
@@ -137,25 +144,32 @@ public class ModeloCarrito {
         singletonInstance.openR();
 
         String toQuery = String.valueOf(idComida);
-        Cursor c =
-                singletonInstance
-                        .getDb()
-                        .rawQuery("SELECT * FROM comidas WHERE codigo_comida = ?", new String[]{toQuery});
         Comida toret = new Comida();
-        while (c.moveToNext()) {
-            int codigo = Integer.parseInt(c.getString(0));
-            String nombre = c.getString(1);
-            Double precio = Double.parseDouble(c.getString(3));
-            toret.setCantidad(cantidad);
-            toret.setPrecio(precio);
-            toret.setNombre(nombre);
-            toret.setCodigo(codigo);
-            toret.setImagen(R.mipmap.logo);
-        }
+        Cursor c = null;
 
-        singletonInstance.close();
+        try{
+            c = singletonInstance
+                            .getDb()
+                            .rawQuery("SELECT * FROM comidas WHERE codigo_comida = ?", new String[]{toQuery});
+            while (c.moveToNext()) {
+                int codigo = Integer.parseInt(c.getString(0));
+                String nombre = c.getString(1);
+                Double precio = Double.parseDouble(c.getString(3));
+                toret.setCantidad(cantidad);
+                toret.setPrecio(precio);
+                toret.setNombre(nombre);
+                toret.setCodigo(codigo);
+                toret.setImagen(R.mipmap.logo);
+            }
 
-        c.close();
+        }catch(SQLException e){
+            Log.e( "DBManager.getDatosComida", e.getMessage() );
+        }finally{
+            if ( c != null ) {
+                c.close();
+            }
+            singletonInstance.close();
+        };
 
         return toret;
     }
@@ -165,21 +179,29 @@ public class ModeloCarrito {
 
         String toQuery = String.valueOf(codigoComida);
         String cantidadStr = String.valueOf(cantidad);
-        Cursor c =
-                singletonInstance
-                        .getDb()
-                        .rawQuery(
-                                "SELECT * FROM carrito_temp WHERE codigo_comida = ? AND nombre_usuario = ? AND cantidad = ?",
-                                new String[]{toQuery, usuario, cantidadStr});
+
         int toret = 0;
-        while (c.moveToNext()) {
-            int codigoLinea = c.getInt(3);
-            toret = codigoLinea;
-        }
+        Cursor c = null;
 
-        singletonInstance.close();
+        try{
+            c = singletonInstance
+                            .getDb()
+                            .rawQuery(
+                                    "SELECT * FROM carrito_temp WHERE codigo_comida = ? AND nombre_usuario = ? AND cantidad = ?",
+                                    new String[]{toQuery, usuario, cantidadStr});
+            while (c.moveToNext()) {
+                int codigoLinea = c.getInt(3);
+                toret = codigoLinea;
+            }
 
-        c.close();
+        }catch(SQLException e){
+            Log.e( "DBManager.getIdLineaConCantidad", e.getMessage() );
+        }finally{
+            if ( c != null ) {
+                c.close();
+            }
+            singletonInstance.close();
+        };
 
         return toret;
     }
@@ -187,47 +209,59 @@ public class ModeloCarrito {
     // Obtener los ids de las comidas dado un nombre
     public ArrayList<String> getDatosComidaPorId(String codigo_comida) {
         singletonInstance.openR();
-
         ArrayList<String> toret = new ArrayList<>();
-        @SuppressLint("Recycle")
-        Cursor cursor =
-                singletonInstance
-                        .getDb()
-                        .rawQuery(
-                                "select nombre, descripcion, precio, valoracion, calorias, tiempo_preparacion\n"
-                                        + "from comidas \n"
-                                        + "where codigo_comida = ?",
-                                new String[]{codigo_comida});
+        Cursor cursor = null;
 
-        while (cursor.moveToNext()) {
-            for (int i = 0; i < cursor.getColumnCount(); i++) {
-                String elemento = cursor.getString(i);
-                toret.add(elemento);
+        try{
+            cursor = singletonInstance
+                            .getDb()
+                            .rawQuery(
+                                    "select nombre, descripcion, precio, valoracion, calorias, tiempo_preparacion\n"
+                                            + "from comidas \n"
+                                            + "where codigo_comida = ?",
+                                    new String[]{codigo_comida});
+
+            while (cursor.moveToNext()) {
+                for (int i = 0; i < cursor.getColumnCount(); i++) {
+                    String elemento = cursor.getString(i);
+                    toret.add(elemento);
+                }
             }
-        }
 
-        singletonInstance.close();
+        }catch(SQLException e){
+            Log.e( "DBManager.getIdLineaConCantidad", e.getMessage() );
+        }finally{
+            if ( cursor != null ) {
+                cursor.close();
+            }
+            singletonInstance.close();
+        };
 
-        cursor.close();
 
         return toret;
     }
 
     public int getIdComida(String nombre) {
         singletonInstance.openR();
-
-        Cursor cursor =
-                singletonInstance
-                        .getDb()
-                        .rawQuery("select codigo_comida from comidas where nombre = ?", new String[]{nombre});
         int toret = 0;
-        if (cursor.moveToNext()) {
-            toret = cursor.getInt(0);
-        }
+        Cursor cursor = null;
 
-        singletonInstance.close();
+        try{
+            cursor = singletonInstance
+                            .getDb()
+                            .rawQuery("select codigo_comida from comidas where nombre = ?", new String[]{nombre});
+            if (cursor.moveToNext()) {
+                toret = cursor.getInt(0);
+            }
 
-        cursor.close();
+        }catch(SQLException e){
+            Log.e( "DBManager.getIdLineaConCantidad", e.getMessage() );
+        }finally{
+            if ( cursor != null ) {
+                cursor.close();
+            }
+            singletonInstance.close();
+        };
 
         return toret;
     }
@@ -259,23 +293,28 @@ public class ModeloCarrito {
 
     public int getIdLineaConCodigoComida(int codigoComida, String usuario) {
         singletonInstance.openR();
-
         String toQuery = String.valueOf(codigoComida);
-        Cursor c =
-                singletonInstance
-                        .getDb()
-                        .rawQuery(
-                                "SELECT * FROM carrito_temp WHERE codigo_comida = ? AND nombre_usuario = ?",
-                                new String[]{toQuery, usuario});
         int toret = 0;
-        while (c.moveToNext()) {
-            int codigoLinea = c.getInt(3);
-            toret = codigoLinea;
-        }
+        Cursor cursor = null;
+        try{
+            cursor = singletonInstance
+                            .getDb()
+                            .rawQuery(
+                                    "SELECT * FROM carrito_temp WHERE codigo_comida = ? AND nombre_usuario = ?",
+                                    new String[]{toQuery, usuario});
+            while (cursor.moveToNext()) {
+                int codigoLinea = cursor.getInt(3);
+                toret = codigoLinea;
+            }
 
-        singletonInstance.close();
-
-        c.close();
+        }catch(SQLException e){
+            Log.e( "DBManager.getIdLineaConCantidad", e.getMessage() );
+        }finally{
+            if ( cursor != null ) {
+                cursor.close();
+            }
+            singletonInstance.close();
+        };
 
         return toret;
     }

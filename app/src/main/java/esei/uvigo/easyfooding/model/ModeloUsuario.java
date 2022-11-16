@@ -30,7 +30,7 @@ public class ModeloUsuario {
                     .rawQuery(
                             "select count(nombre_usuario) from usuarios "
                                     + "where nombre_usuario = ? and pass = ?",
-                            new String[] {usuario, pass});
+                            new String[]{usuario, pass});
 
             while (cursor.moveToNext()) {
                 result = cursor.getInt(0);
@@ -38,9 +38,9 @@ public class ModeloUsuario {
 
 
         } catch (SQLException e) {
-            Log.e( "DBManager.checkLogin", e.getMessage() );
+            Log.e("DBManager.checkLogin", e.getMessage());
         } finally {
-            if ( cursor != null ) {
+            if (cursor != null) {
                 cursor.close();
             }
 
@@ -73,7 +73,7 @@ public class ModeloUsuario {
 
             singletonInstance.getDb().setTransactionSuccessful();
         } catch (SQLException e) {
-            Log.e( "DBManager.insertarUsuario", e.getMessage() );
+            Log.e("DBManager.insertarUsuario", e.getMessage());
         } finally {
             singletonInstance.getDb().endTransaction();
             singletonInstance.close();
@@ -94,19 +94,19 @@ public class ModeloUsuario {
                     .rawQuery(
                             "select count(nombre_usuario) from usuarios "
                                     + "where nombre_usuario = ?",
-                            new String[] {usuario});
+                            new String[]{usuario});
 
 
             while (cursor.moveToNext()) {
-                if(cursor.getInt(0) >= 1) {
+                if (cursor.getInt(0) >= 1) {
                     result = true;
                 }
             }
 
         } catch (SQLException e) {
-            Log.e( "DBManager.existeUsuario", e.getMessage() );
+            Log.e("DBManager.existeUsuario", e.getMessage());
         } finally {
-            if ( cursor != null ) {
+            if (cursor != null) {
                 cursor.close();
             }
 
@@ -128,18 +128,18 @@ public class ModeloUsuario {
                     .rawQuery(
                             "select count(mail) from usuarios "
                                     + "where mail = ?",
-                            new String[] {email});
+                            new String[]{email});
 
             while (cursor.moveToNext()) {
-                if(cursor.getInt(0) >= 1) {
+                if (cursor.getInt(0) >= 1) {
                     result = true;
                 }
             }
 
         } catch (SQLException e) {
-            Log.e( "DBManager.existeCorreo", e.getMessage() );
+            Log.e("DBManager.existeCorreo", e.getMessage());
         } finally {
-            if ( cursor != null ) {
+            if (cursor != null) {
                 cursor.close();
             }
 

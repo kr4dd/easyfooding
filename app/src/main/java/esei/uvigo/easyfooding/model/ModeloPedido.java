@@ -21,7 +21,7 @@ public class ModeloPedido {
                         .getDb()
                         .rawQuery(
                                 "SELECT num_pedido as _id, nombre_usuario,fecha_pedido,direccion_envio,localidad_envio,codigo_postal_envio,importe_total,observaciones FROM pedidos WHERE nombre_usuario = ?",
-                                new String[] {usuario});
+                                new String[]{usuario});
         return c;
     }
 }

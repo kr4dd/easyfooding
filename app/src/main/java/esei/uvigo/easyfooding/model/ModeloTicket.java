@@ -21,7 +21,7 @@ public class ModeloTicket {
                         .getDb()
                         .rawQuery(
                                 "SELECT num_linea as _id, num_pedido, codigo_comida, cantidad, precio_linea  FROM linea_pedidos WHERE num_pedido = ?",
-                                new String[] {toQuery});
+                                new String[]{toQuery});
         return c;
     }
 

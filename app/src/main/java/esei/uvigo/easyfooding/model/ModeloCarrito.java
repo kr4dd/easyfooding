@@ -68,7 +68,7 @@ public class ModeloCarrito {
                             > 0;
             singletonInstance.getDb().setTransactionSuccessful();
         } catch (SQLException e) {
-            Log.e("DBManager.delete1producto", e.getMessage());
+            Log.e("DBManager.deleteUnProductoCarrito", e.getMessage());
         } finally {
             singletonInstance.getDb().endTransaction();
             singletonInstance.close();
@@ -229,7 +229,7 @@ public class ModeloCarrito {
             }
 
         }catch(SQLException e){
-            Log.e( "DBManager.getIdLineaConCantidad", e.getMessage() );
+            Log.e( "DBManager.getDatosComidaPorId", e.getMessage() );
         }finally{
             if ( cursor != null ) {
                 cursor.close();
@@ -255,7 +255,7 @@ public class ModeloCarrito {
             }
 
         }catch(SQLException e){
-            Log.e( "DBManager.getIdLineaConCantidad", e.getMessage() );
+            Log.e( "DBManager.getIdComida", e.getMessage() );
         }finally{
             if ( cursor != null ) {
                 cursor.close();
@@ -282,7 +282,7 @@ public class ModeloCarrito {
                             > 0;
             singletonInstance.getDb().setTransactionSuccessful();
         } catch (SQLException e) {
-            Log.e("DBManager.add1producto", e.getMessage());
+            Log.e("DBManager.eliminarProductorCompradosConCodigo", e.getMessage());
         } finally {
             singletonInstance.getDb().endTransaction();
             singletonInstance.close();
@@ -308,7 +308,7 @@ public class ModeloCarrito {
             }
 
         }catch(SQLException e){
-            Log.e( "DBManager.getIdLineaConCantidad", e.getMessage() );
+            Log.e( "DBManager.getIdLineaConCodigoComida", e.getMessage() );
         }finally{
             if ( cursor != null ) {
                 cursor.close();

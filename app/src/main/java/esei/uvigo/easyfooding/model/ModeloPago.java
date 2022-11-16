@@ -93,7 +93,7 @@ public class ModeloPago {
             }
 
         }catch(SQLException e){
-            Log.e( "DBManager.getMaxIdPedido", e.getMessage() );
+            Log.e( "DBManager.getMaxIdLineaPedido", e.getMessage() );
         }finally{
             if ( cursor != null ) {
                 cursor.close();
@@ -142,7 +142,7 @@ public class ModeloPago {
             singletonInstance.getDb().setTransactionSuccessful();
 
         } catch (SQLException e) {
-            Log.e("DBManager.InsertarLineaCarrito", e.getMessage());
+            Log.e("DBManager.eliminarProductorComprados", e.getMessage());
         } finally {
             singletonInstance.getDb().endTransaction();
             singletonInstance.close();

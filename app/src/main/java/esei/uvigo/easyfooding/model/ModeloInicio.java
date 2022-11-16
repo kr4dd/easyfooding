@@ -37,6 +37,8 @@ public class ModeloInicio {
 
         singletonInstance.close();
 
+        cursor.close();
+
         return toret;
     }
 
@@ -61,6 +63,8 @@ public class ModeloInicio {
 
         singletonInstance.close();
 
+        cursor.close();
+
         return toret;
     }
 
@@ -83,6 +87,8 @@ public class ModeloInicio {
 
         singletonInstance.close();
 
+        cursor.close();
+
         return toret;
     }
 
@@ -101,6 +107,8 @@ public class ModeloInicio {
         toret = Integer.parseInt(buffer.toString());
 
         singletonInstance.close();
+
+        cursor.close();
 
         return toret;
     }
@@ -121,6 +129,8 @@ public class ModeloInicio {
 
         singletonInstance.close();
 
+        cursor.close();
+
         return toret;
     }
 
@@ -140,6 +150,8 @@ public class ModeloInicio {
             int elemento = Integer.parseInt(cursor.getString(0));
             toret.add(elemento);
         }
+
+        cursor.close();
 
         singletonInstance.close();
 

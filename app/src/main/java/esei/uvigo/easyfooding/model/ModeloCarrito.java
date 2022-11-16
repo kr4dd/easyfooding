@@ -55,6 +55,7 @@ public class ModeloCarrito {
 
         singletonInstance.close();
 
+
         return toret;
     }
 
@@ -100,6 +101,8 @@ public class ModeloCarrito {
 
         singletonInstance.close();
 
+        c.close();
+
         return toret;
     }
 
@@ -126,6 +129,8 @@ public class ModeloCarrito {
 
         singletonInstance.close();
 
+        c.close();
+
         return toret;
     }
 
@@ -147,6 +152,8 @@ public class ModeloCarrito {
         }
 
         singletonInstance.close();
+
+        c.close();
 
         return toret;
     }
@@ -175,6 +182,8 @@ public class ModeloCarrito {
 
         singletonInstance.close();
 
+        cursor.close();
+
         return toret;
     }
 
@@ -191,6 +200,8 @@ public class ModeloCarrito {
         }
 
         singletonInstance.close();
+
+        cursor.close();
 
         return toret;
     }
@@ -228,6 +239,8 @@ public class ModeloCarrito {
         }
 
         singletonInstance.close();
+
+        c.close();
 
         return toret;
     }

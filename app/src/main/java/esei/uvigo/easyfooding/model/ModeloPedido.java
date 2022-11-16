@@ -16,7 +16,6 @@ public class ModeloPedido {
     public Cursor getHistorialCursor(String usuario) {
         singletonInstance.openR();
 
-        @SuppressLint("Recycle")
         Cursor c =
                 singletonInstance
                         .getDb()

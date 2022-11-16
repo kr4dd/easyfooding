@@ -21,7 +21,7 @@ import esei.uvigo.easyfooding.model.ModeloInicio;
 import esei.uvigo.easyfooding.model.ModeloTicket;
 
 public class TicketActivity extends AppCompatActivity {
-
+ticketCursorAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +40,20 @@ public class TicketActivity extends AppCompatActivity {
             list.setVisibility(View.VISIBLE);
             vacio.setVisibility(View.INVISIBLE);
             ListView lineas = findViewById(R.id.ticket);
-            ticketCursorAdapter adapter = new ticketCursorAdapter(this,listaPedidos,0);
+            adapter = new ticketCursorAdapter(this,listaPedidos,0);
             lineas.setAdapter(adapter);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        adapter.getCursor().close();
     }
 
     private Cursor getCursorListaPedidos(int numPedidos){
         ModeloTicket db = new ModeloTicket(this);
         return db.getCursorLineaPedidos(numPedidos);
-
     }
 
     public class ticketCursorAdapter extends CursorAdapter{

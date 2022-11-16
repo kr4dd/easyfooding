@@ -27,6 +27,9 @@ public class ModeloCarrito {
         contentValues.put("nombre_usuario", username);
         contentValues.put("codigo_comida", codigoComida);
         contentValues.put("cantidad", cantidad);
+
+
+
         long res = singletonInstance.getDb().insertOrThrow("carrito_temp", null, contentValues);
 
         singletonInstance.close();

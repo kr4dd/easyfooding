@@ -71,11 +71,12 @@
             android:name=".view.PerfilActivity"
             android:exported="false" />
         <activity
-            android:name=".view.InicioActivity"
-            android:exported="false"></activity>
+            android:name=".InicioActivity"
+            android:exported="false" >
+        </activity>
         <activity
-            android:name=".view.WelcomeUserActivity"
-            android:exported="true">
+            android:name=".WelcomeUserActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

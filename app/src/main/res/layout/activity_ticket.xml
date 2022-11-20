@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ecebe6"
-    tools:context=".view.TicketActivity">
+    tools:context=".TicketActivity">
 
     <ScrollView
         android:id="@+id/scrollView4"

@@ -35,8 +35,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:backgroundTint="#ecebe6"
+        android:background="@color/app_background_color"
         tools:layout_editor_absoluteX="-35dp"
         tools:layout_editor_absoluteY="-41dp">
 
@@ -54,7 +53,7 @@
                 android:paddingStart="15sp"
                 android:text="@string/carrito"
                 android:textAlignment="viewStart"
-                android:textColor="#E64A19"
+                android:textColor="#FF6E40"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -85,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/elementosCarrito"
-                        android:textColor="@color/black"
+                        android:textColor="@color/app_text_color"
                         android:textStyle="bold" />
 
                     <TextView
@@ -93,8 +92,8 @@
                         android:layout_width="37dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="0"
-                        android:textColor="@color/black"
+                        android:text="0€"
+                        android:textColor="@color/app_text_color"
                         android:textStyle="italic" />
 
                     <TextView
@@ -123,7 +122,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="@string/impuestos"
-                        android:textColor="@color/black"
+                        android:textColor="@color/app_text_color"
                         android:textStyle="bold" />
 
                     <TextView
@@ -131,8 +130,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="0"
-                        android:textColor="@color/black"
+                        android:text="0€"
+                        android:textColor="@color/app_text_color"
                         android:textStyle="italic" />
 
                     <TextView
@@ -161,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/envio"
-                        android:textColor="@color/black"
+                        android:textColor="@color/app_text_color"
                         android:textStyle="bold" />
 
                     <TextView
@@ -169,8 +168,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="0"
-                        android:textColor="@color/black"
+                        android:text="0€"
+                        android:textColor="@color/app_text_color"
                         android:textStyle="italic" />
 
                     <TextView
@@ -211,7 +210,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/total"
-                        android:textColor="@color/black"
+                        android:textColor="@color/app_text_color"
                         android:textSize="30sp"
                         android:textStyle="bold" />
 
@@ -220,8 +219,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="0"
-                        android:textColor="@color/black"
+                        android:text="0€"
+                        android:textColor="@color/app_text_color"
                         android:textSize="30sp"
                         android:textStyle="italic" />
 
@@ -250,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pagar"
-                    android:textColor="#000000"
+                    android:textColor="@color/app_text_color"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -269,7 +268,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="#f6f6f6"
+        android:backgroundTint="@color/app_bar_background"
         app:fabCradleMargin="8dp"
         app:fabCradleRoundedCornerRadius="50dp"
         app:fabCradleVerticalOffset="6dp"
@@ -301,7 +300,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/inicio"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
 
@@ -323,7 +323,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/perfil"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
 
@@ -345,7 +346,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/carrito"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
 
@@ -367,7 +369,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/pedidos"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
 
@@ -389,7 +392,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ajustes"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
         </LinearLayout>

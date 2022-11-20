@@ -67,11 +67,13 @@ public class BuscarComidaActivity extends AppCompatActivity {
             throw new RuntimeException();
         }
 
-        listViewItems.setOnItemClickListener((adapterView, view, pos, l) -> {
-            Intent i = new Intent(BuscarComidaActivity.this, DetalleComidaActivity.class);
-            i.putExtra("codigo_comida", arrayItemsId.get(pos).toString()); //Pasarle a la nueva actividad por parametro el id de la comida en la que se ha clickado
-            startActivity(i);
-
+        listViewItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                Intent i = new Intent(BuscarComida.this, DetalleComida.class);
+                i.putExtra("codigo_comida", arrayItemsId.get(pos).toString()); //Pasarle a la nueva actividad por parametro el id de la comida en la que se ha clickado
+                startActivity(i);
+            }
         });
 
         if (arrayItemsId.isEmpty()) {
@@ -81,6 +83,12 @@ public class BuscarComidaActivity extends AppCompatActivity {
 
         //Borrar parametros de la actividad
         parametros.clear();
+    }
+
+    private void setColoresAndroidModoOscuro() {
+        //Colores del mensaje de busqueda sin resultados
+        TextView textoAjustes = findViewById(R.id.mensajeBusquedaFallida);
+        textoAjustes.setTextColor(getColor(R.color.app_text_color));
     }
 
     //Rellenar ListView con comida filtrada por categoria

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_background_color">#1c2938</color>
+    <color name="app_text_color">#ECEBE6</color>
+    <color name="app_border_bottom_color">#ECEBE6</color>
+    <color name="app_bar_background">#151f2a</color>
+    <color name="app_bar_text">#ECEBE6</color>
+    <color name="app_rounded_button">#ff774d</color>
+    <color name="app_rounded_button_stroke">#ff774d</color>
+</resources>

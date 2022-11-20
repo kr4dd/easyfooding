@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ecebe6"
-    tools:context=".view.PedidosActivity">
+    android:background="@color/app_background_color"
+    tools:context=".PedidosActivity">
 
 
     <ScrollView
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lineaVacia"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="invisible"
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="#f6f6f6"
+        android:backgroundTint="@color/app_bar_background"
         app:fabCradleMargin="8dp"
         app:fabCradleRoundedCornerRadius="50dp"
         app:fabCradleVerticalOffset="6dp"
@@ -84,7 +84,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/inicio"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
 
@@ -106,7 +107,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/perfil"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
 
@@ -128,7 +130,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/carrito"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
 
@@ -150,7 +153,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/pedidos"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
 
@@ -172,7 +176,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ajustes"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textColor="@color/app_bar_text" />
             </LinearLayout>
 
         </LinearLayout>

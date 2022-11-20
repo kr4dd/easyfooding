@@ -17,9 +17,12 @@ import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.R;
 import esei.uvigo.easyfooding.core.UsuarioRegistro;
 import esei.uvigo.easyfooding.model.ModeloUsuario;
+import esei.uvigo.easyfooding.database.DatabaseAccess;
+import esei.uvigo.easyfooding.entities.Validators.UserValidator;
 
 public class RegisterUserActivity extends AppCompatActivity {
     private UsuarioRegistro ur;
+    private UserValidator validator;
 
 
     @Override
@@ -115,9 +118,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     public void validarUsuario(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚ]{3,40}$");
-
-        showErrMessagesForRegisterTxtViews(p, input, R.id.errUsuario);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarUsuario(input), R.id.errUsuario);
     }
 
     public void existePrevioUsuario(String input) {
@@ -129,27 +130,19 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     public void validarPass(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z0-9áéíóúÁÉÍÓÚ]{3,40}$");
-
-        showErrMessagesForRegisterTxtViews(p, input, R.id.errContrasena);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarPass(input), R.id.errContrasena);
     }
 
     public void validarNombreReal(String input) {
-        Pattern p = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚ]{3,40}$");
-
-        showErrMessagesForRegisterTxtViews(p, input, R.id.errNombreReal);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarNombreReal(input), R.id.errNombreReal);
     }
 
     public void validarApellidos(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z\\sáéíóúÁÉÍÓÚ]{2,60}$");
-
-        showErrMessagesForRegisterTxtViews(p, input, R.id.errApellidos);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarApellidos(input), R.id.errApellidos);
     }
 
     public void validarCorreo(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$");
-
-        showErrMessagesForRegisterTxtViews(p, input, R.id.errCorreo);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarCorreo(input), R.id.errCorreo);
     }
 
     public void existePrevioCorreo(String input) {
@@ -161,39 +154,30 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     public void validarTlfno(String input) {
-        Pattern p = Pattern.compile("^[0-9]{9}$");
-
-        showErrMessagesForRegisterTxtViews(p, input, R.id.errTelefono);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarTlfno(input), R.id.errTelefono);
     }
 
     public void validarDireccion(String input) {
-        Pattern p = Pattern.compile("^[a-zA-Zº0-9áéíóúÁÉÍÓÚ,.\\s-]{4,60}$");
-
-        showErrMessagesForRegisterTxtViews(p, input, R.id.errDireccion);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarDireccion(input), R.id.errDireccion);
     }
 
     public void validarLocalidad(String input) {
-        Pattern p = Pattern.compile("^[a-zA-ZáéíóúÁÉÍÓÚ\\s]{4,35}$");
-
-        showErrMessagesForRegisterTxtViews(p, input, R.id.errLocalidad);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarLocalidad(input), R.id.errLocalidad);
     }
 
     @SuppressLint("DefaultLocale")
     public void validarCodigoPostal(int input) {
-        Pattern p = Pattern.compile("^[0-9]{5}$");
-
-        showErrMessagesForRegisterTxtViews(p, String.format("%05d", input), R.id.errCodigoPostal);
+        showErrMessagesForRegisterTxtViews(UserValidator.validarCodigoPostal(input), R.id.errCodigoPostal);
 
     }
 
-    public void showErrMessagesForRegisterTxtViews(Pattern p, String input, int view) {
+    public void showErrMessagesForRegisterTxtViews(boolean bool, int view) {
         TextView errMsg = findViewById(view);
 
-        if(!p.matcher(input).matches()) {
-            errMsg.setVisibility(View.VISIBLE); //Muestra el error
-
+        if (bool) {
+            errMsg.setVisibility(View.VISIBLE);
         } else {
-            errMsg.setVisibility(View.GONE); //Hace que el error desaparezca
+            errMsg.setVisibility(View.GONE);
         }
     }
 

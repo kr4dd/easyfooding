@@ -9,17 +9,18 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/app_background_color">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView6"
                 android:layout_width="match_parent"
                 android:layout_height="210dp"
+                android:background="@color/app_background_color"
                 app:srcCompat="@mipmap/logo" />
 
             <LinearLayout
@@ -35,7 +36,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="16dp"
                     android:gravity="center"
-                    android:textColor="#000000"
+                    android:textColor="@color/app_text_color"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     tools:text="@tools:sample/cities" />
@@ -50,7 +51,7 @@
                         android:id="@+id/textView_precio_unidad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#000000"
+                        android:textColor="@color/app_text_color"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +149,7 @@
                             android:id="@+id/textView_valoracion"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#000000"
+                            android:textColor="@color/app_text_color"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             tools:text="@tools:sample/date/day_of_week" />
@@ -172,7 +173,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="#000000"
+                            android:textColor="@color/app_text_color"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             tools:text="@tools:sample/date/day_of_week" />
@@ -198,7 +199,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="#000000"
+                            android:textColor="@color/app_text_color"
                             android:textSize="24sp"
                             android:textStyle="bold"
                             tools:text="@tools:sample/date/day_of_week" />
@@ -212,7 +213,7 @@
                     android:layout_marginTop="30dp"
                     android:gravity="center"
                     android:text="@string/descripcion"
-                    android:textColor="#000000"
+                    android:textColor="@color/app_text_color"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -223,7 +224,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="30dp"
-                    android:textColor="#000000"
+                    android:textColor="@color/app_text_color"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -242,7 +243,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/grey_btn_background"
                         android:padding="20dp"
-                        android:textColor="#000000"
+                        android:textColor="@color/app_text_color"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         tools:text="@tools:sample/cities" />

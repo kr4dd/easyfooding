@@ -64,7 +64,14 @@
             android:name=".PerfilActivity"
             android:exported="false" />
         <activity
+            android:name=".OptionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".InicioActivity"
+            android:exported="false" >
+        </activity>
+        <activity
+            android:name=".PrivacyPolictyDetail"
             android:exported="false" >
         </activity>
         <activity

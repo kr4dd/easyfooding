@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/app_background_color">
 
 
     <TextView
@@ -14,7 +15,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
         android:text="Fecha"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="248dp"
         android:text="Direccion"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         app:layout_constraintBottom_toBottomOf="@+id/dir"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -34,7 +35,7 @@
         android:layout_height="15dp"
         android:layout_marginStart="30dp"
         android:text="Codigo postal"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         app:layout_constraintEnd_toEndOf="@+id/localidad"
         app:layout_constraintStart_toEndOf="@+id/codigo"
         app:layout_constraintTop_toTopOf="@+id/codigo" />
@@ -46,7 +47,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="68dp"
         android:text="Localidad"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/fecha_pedido" />
 
@@ -68,7 +69,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="100€"
-            android:textColor="#000000"
+            android:textColor="@color/app_text_color"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -85,7 +86,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:text="@string/fecha"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/fecha_pedido"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +100,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:text="@string/localidad"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/localidad"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +114,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:text="@string/direccion"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/direccion"
         app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +128,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/codigoPostal"
-        android:textColor="#000000"
+        android:textColor="@color/app_text_color"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

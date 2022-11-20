@@ -73,7 +73,6 @@ public class BuscarComida extends AppCompatActivity {
                 Intent i = new Intent(BuscarComida.this, DetalleComida.class);
                 i.putExtra("codigo_comida", arrayItemsId.get(pos).toString()); //Pasarle a la nueva actividad por parametro el id de la comida en la que se ha clickado
                 startActivity(i);
-
             }
         });
 
@@ -95,7 +94,7 @@ public class BuscarComida extends AppCompatActivity {
     private void setColoresAndroidModoOscuro() {
         //Colores del mensaje de busqueda sin resultados
         TextView textoAjustes = findViewById(R.id.mensajeBusquedaFallida);
-        textoAjustes.setTextColor(Color.GRAY);
+        textoAjustes.setTextColor(getColor(R.color.app_text_color));
     }
 
     //Rellenar ListView con comida filtrada por categoria

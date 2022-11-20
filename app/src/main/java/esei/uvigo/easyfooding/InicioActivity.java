@@ -1,17 +1,23 @@
 package esei.uvigo.easyfooding;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -23,6 +29,13 @@ public class InicioActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+        String theme = sharedPreferences.getString("theme", "");
+
+        if(theme.equals("dark"))
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
         setContentView(R.layout.inicio_activity);
 
         //Ocultar la barra con el titulo
@@ -53,27 +66,9 @@ public class InicioActivity extends AppCompatActivity {
     }
 
     private void setColoresAndroidModoOscuro(){
-
         //Colores del saludo al usuario
         TextView saludoUsuario = findViewById(R.id.saludoUsuario);
-        saludoUsuario.setTextColor(Color.parseColor("#ff3d00"));
-
-        //Colores de la barra de busqueda
-        EditText barraBusqueda = findViewById(R.id.barraBusqueda);
-        barraBusqueda.setHintTextColor(Color.GRAY);
-        barraBusqueda.setTextColor(Color.BLACK);
-
-        //Colores de los textos de la navbar inferior
-        TextView textoInicio = findViewById(R.id.textoInicio);
-        textoInicio.setTextColor(Color.GRAY);
-        TextView textoPerfil = findViewById(R.id.textoPerfil);
-        textoPerfil.setTextColor(Color.GRAY);
-        TextView textoCarrito = findViewById(R.id.textoCarrito);
-        textoCarrito.setTextColor(Color.GRAY);
-        TextView textoPedidos = findViewById(R.id.textoPedidos);
-        textoPedidos.setTextColor(Color.GRAY);
-        TextView textoAjustes = findViewById(R.id.textoAjustes);
-        textoAjustes.setTextColor(Color.GRAY);
+        saludoUsuario.setTextColor(Color.parseColor("#FF6E40"));
     }
 
     private void construirListaCategorias(DatabaseAccess databaseAccess){
@@ -90,14 +85,18 @@ public class InicioActivity extends AppCompatActivity {
             Button button = new Button(this);
 
             //Asignamos propiedades de layout al boton
-            lp.setMargins(10, 10, 10, 10);
+            lp.setMargins(20, 15, 20, 0);
             button.setLayoutParams(lp);
             button.setBackgroundResource(R.drawable.categoria_background);
 
             //Asignamos Texto al botón
             button.setText(nombresCategorias.get(i));
-            button.setTextColor(Color.BLACK);
-            button.setHeight(200);
+            button.setTextColor(getColor(R.color.app_text_color));
+            button.setTextSize(12);
+            button.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            button.setGravity(Gravity.CENTER);
+            button.setHeight(125);
+            button.setWidth(300);
 
             String nombre = nombresCategorias.get(i);
             button.setOnClickListener(new View.OnClickListener() {
@@ -123,19 +122,22 @@ public class InicioActivity extends AppCompatActivity {
         LinearLayout layoutHorizontalRecomendaciones = findViewById(R.id.layoutHorizontalRecomendaciones);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT );
 
-
         for (int i=0; i<4; i++){
             Button button = new Button(this);
 
             //Asignamos propiedades de layout al boton
-            lp.setMargins(10, 10, 10, 10);
+            lp.setMargins(20, 15, 20, 0);
             button.setLayoutParams(lp);
             button.setBackgroundResource(R.drawable.categoria_background);
 
             //Asignamos Texto al botón
             button.setText(nombresComidas.get(i));
-            button.setTextColor(Color.BLACK);
-            button.setHeight(200);
+            button.setTextColor(getColor(R.color.app_text_color));
+            button.setTextSize(12);
+            button.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            button.setGravity(Gravity.CENTER);
+            button.setHeight(125);
+            button.setWidth(300);
 
 
             databaseAccess.open();
@@ -213,7 +215,7 @@ public class InicioActivity extends AppCompatActivity {
         ajustes.setOnClickListener(
                 view -> {
                     finish();
-                    // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
+                    startActivity(new Intent(InicioActivity.this, OptionsActivity.class));
                 });
     }
 

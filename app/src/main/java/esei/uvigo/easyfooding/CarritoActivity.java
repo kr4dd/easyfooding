@@ -72,21 +72,6 @@ public class CarritoActivity extends AppCompatActivity {
 
     // Accion para mandar al usuario a la actividad de pago
     activarPago();
-    setColoresAndroidModoOscuro();
-  }
-
-  private void setColoresAndroidModoOscuro() {
-    // Colores de los textos de la navbar inferior
-    TextView textoInicio = findViewById(R.id.textoInicio);
-    textoInicio.setTextColor(Color.GRAY);
-    TextView textoPerfil = findViewById(R.id.textoPerfil);
-    textoPerfil.setTextColor(Color.GRAY);
-    TextView textoCarrito = findViewById(R.id.textoCarrito);
-    textoCarrito.setTextColor(Color.GRAY);
-    TextView textoPedidos = findViewById(R.id.textoPedidos);
-    textoPedidos.setTextColor(Color.GRAY);
-    TextView textoAjustes = findViewById(R.id.textoAjustes);
-    textoAjustes.setTextColor(Color.GRAY);
   }
 
   // metodo que nos permite rellenar el array de objetos comida para mostrarlo
@@ -435,7 +420,7 @@ public class CarritoActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             finish();
-            // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
+            startActivity(new Intent(CarritoActivity.this, OptionsActivity.class));
           }
         });
   }

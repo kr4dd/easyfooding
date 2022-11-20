@@ -38,7 +38,7 @@ public class PedidosActivity extends AppCompatActivity {
     setContentView(R.layout.activity_pedidos);
     getSupportActionBar().hide();
     cambiarActividad();
-    setColoresAndroidModoOscuro();
+
     this.res = new ArrayList<ListaPedidos>();
 
     DatabaseAccess dataBaseAccess = DatabaseAccess.getInstance(getApplicationContext());
@@ -181,22 +181,8 @@ public class PedidosActivity extends AppCompatActivity {
           @Override
           public void onClick(View view) {
             finish();
-            // startActivity(new Intent(InicioActivity.this, AjustesActivity.class));
+            startActivity(new Intent(PedidosActivity.this, OptionsActivity.class));
           }
         });
-  }
-
-  private void setColoresAndroidModoOscuro() {
-    // Colores de los textos de la navbar inferior
-    TextView textoInicio = findViewById(R.id.textoInicio);
-    textoInicio.setTextColor(Color.GRAY);
-    TextView textoPerfil = findViewById(R.id.textoPerfil);
-    textoPerfil.setTextColor(Color.GRAY);
-    TextView textoCarrito = findViewById(R.id.textoCarrito);
-    textoCarrito.setTextColor(Color.GRAY);
-    TextView textoPedidos = findViewById(R.id.textoPedidos);
-    textoPedidos.setTextColor(Color.GRAY);
-    TextView textoAjustes = findViewById(R.id.textoAjustes);
-    textoAjustes.setTextColor(Color.GRAY);
   }
 }

@@ -142,7 +142,7 @@ public class ProcesoPagoActivity extends AppCompatActivity {
     }
 
     public void validarObs(String input) {
-        Pattern p = Pattern.compile("(^$|^[A-Za-z0-9\\s(),.¿?=\\-+áéíóúñÁÉÍÓÚÑ]{1,80}$)");
+            Pattern p = Pattern.compile("(^$|^[A-Za-z0-9\\s(),.¿?=\\-+áéíóúñÁÉÍÓÚÑ]{1,80}$)");
 
         showErrMessagesForRegisterTxtViews(p, input, R.id.errObs);
     }

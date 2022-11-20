@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background_color"
-    tools:context=".InicioActivity">
+    android:background="#ECEBE6"
+    tools:context=".view.InicioActivity">
 
     <ScrollView
-        android:id="@+id/inicio_main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -44,7 +43,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/buscarypedir"
-                        android:textColor="@color/app_text_color"
+                        android:textColor="#000000"
                         android:textSize="20sp" />
 
                     <ImageView
@@ -71,7 +70,6 @@
                             android:inputType="textPersonName"
                             android:maxLength="40"
                             android:paddingStart="20dp"
-                            android:textColor="@color/app_text_color"
                             android:textStyle="italic" />
 
                         <ImageButton
@@ -90,7 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/categorias"
-                        android:textColor="@color/app_text_color"
+                        android:textColor="#000000"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -111,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:text="@string/recomendaciones"
-                        android:textColor="@color/app_text_color"
+                        android:textColor="#000000"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -136,7 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/app_bar_background"
+        android:backgroundTint="#f6f6f6"
         app:fabCradleMargin="8dp"
         app:fabCradleRoundedCornerRadius="50dp"
         app:fabCradleVerticalOffset="6dp"
@@ -168,8 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/inicio"
-                    android:textAlignment="center"
-                    android:textColor="@color/app_bar_text" />
+                    android:textAlignment="center" />
             </LinearLayout>
 
 
@@ -191,8 +188,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/perfil"
-                    android:textAlignment="center"
-                    android:textColor="@color/app_bar_text" />
+                    android:textAlignment="center" />
             </LinearLayout>
 
 
@@ -214,8 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/carrito"
-                    android:textAlignment="center"
-                    android:textColor="@color/app_bar_text" />
+                    android:textAlignment="center" />
             </LinearLayout>
 
 
@@ -237,8 +232,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/pedidos"
-                    android:textAlignment="center"
-                    android:textColor="@color/app_bar_text" />
+                    android:textAlignment="center" />
             </LinearLayout>
 
 
@@ -260,8 +254,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ajustes"
-                    android:textAlignment="center"
-                    android:textColor="@color/app_bar_text" />
+                    android:textAlignment="center" />
             </LinearLayout>
 
         </LinearLayout>

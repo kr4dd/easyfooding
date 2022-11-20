@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ecebe6"
-    tools:context=".ProcesoPagoActivity">
+    tools:context=".view.ProcesoPagoActivity">
 
     <TextView
         android:id="@+id/titulo2"
@@ -114,6 +114,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:hint="@string/direccion"
         android:inputType="textPersonName"
+        android:maxLength="60"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -127,6 +128,8 @@
         android:gravity="center_horizontal|center_vertical"
         android:hint="@string/localidad"
         android:inputType="textPersonName"
+        android:maxLength="35"
+        android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/codigoPost"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -142,6 +145,7 @@
         android:gravity="center_horizontal|center_vertical"
         android:hint="@string/codigoPostal"
         android:inputType="number"
+        android:maxLength="5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/direc" />

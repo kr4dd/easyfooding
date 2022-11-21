@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -11,72 +11,79 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyFooding"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
-            android:name=".RegisterUserActivity"
-            android:exported="false" >
+            android:name=".view.AjustesActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LoginUserActivity"
-            android:exported="false" >
+            android:name=".view.RegisterUserActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ProcesoPagoActivity"
-            android:exported="false" >
+            android:name=".view.LoginUserActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".TicketActivity"
-            android:exported="false" >
+            android:name=".view.ProcesoPagoActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".PedidosActivity"
-            android:exported="false" >
+            android:name=".view.TicketActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CarritoActivity"
-            android:exported="false" >
+            android:name=".view.PedidosActivity"
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".DetalleComida"
+            android:name=".view.CarritoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.DetalleComidaActivity"
             android:exported="false" />
         <activity
-            android:name=".BuscarComida"
+            android:name=".view.BuscarComidaActivity"
             android:exported="false" />
         <activity
-            android:name=".PerfilActivity"
+            android:name=".view.PerfilActivity"
             android:exported="false" />
         <activity
-            android:name=".OptionsActivity"
+            android:name="view.OptionsActivity"
             android:exported="false" />
         <activity
-            android:name=".InicioActivity"
+            android:name="view.InicioActivity"
             android:exported="false" >
         </activity>
         <activity
-            android:name=".PrivacyPolictyDetail"
+            android:name="view.PrivacyPolictyDetail"
             android:exported="false" >
         </activity>
         <activity
-            android:name=".WelcomeUserActivity"
-            android:exported="true" >
+            android:name="view.view.WelcomeUserActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

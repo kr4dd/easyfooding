@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeUserActivity">
+    tools:context=".view.WelcomeUserActivity">
 
     <ImageView
         android:id="@+id/imgViewBackgroundColorMain"
@@ -63,6 +63,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/localidad"
                 android:inputType="textPersonName"
+                android:maxLength="35"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,6 +103,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/codigoPostal"
                 android:inputType="number"
+                android:maxLength="5"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,6 +143,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/direccion"
                 android:inputType="textPersonName"
+                android:maxLength="60"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -180,6 +183,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/telefono"
                 android:inputType="number"
+                android:maxLength="9"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -219,6 +223,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/mail"
                 android:inputType="textPersonName|textEmailAddress"
+                android:maxLength="120"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -243,6 +248,22 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errCorreoExists"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/mailErrExists"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center|center_horizontal|center_vertical"
@@ -258,6 +279,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/apellidos"
                 android:inputType="textPersonName"
+                android:maxLength="40"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -297,6 +319,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/nombre_real"
                 android:inputType="textPersonName"
+                android:maxLength="40"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -336,6 +359,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/pass"
                 android:inputType="textPassword"
+                android:maxLength="40"
                 app:layout_constraintStart_toStartOf="@+id/editTextUsuario"
                 app:layout_constraintTop_toBottomOf="@+id/editTextUsuario" />
 
@@ -375,6 +399,7 @@
                 android:gravity="center|center_horizontal|center_vertical"
                 android:hint="@string/username"
                 android:inputType="textPersonName"
+                android:maxLength="40"
                 app:layout_constraintBottom_toTopOf="@+id/editTextPass"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -393,6 +418,23 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/usernameErr"
+                android:textColor="#FF3333"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/errUsuarioExists"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/usernameErrExists"
                 android:textColor="#FF3333"
                 android:visibility="gone" />
         </LinearLayout>

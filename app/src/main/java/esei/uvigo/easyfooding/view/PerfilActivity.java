@@ -64,7 +64,8 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
     private void onDeleteUserPressed(DatabaseAccess dbAccess, String nombre_usuario)
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Are you sure to do this action?");
+        alert.setTitle(R.string.eliminarUsuarioTitle);
+        alert.setMessage(R.string.eliminarUsuarioMsg);
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener()
         {
@@ -111,7 +112,8 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
     private void onSaveChangesPressed (DatabaseAccess dbAccess, User currentUser)
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Are you sure to do this action?");
+        alert.setTitle(R.string.guardarCambiosTitle);
+        alert.setMessage(R.string.guardarCambiosMsg);
 
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener()
         {

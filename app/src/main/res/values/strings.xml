@@ -82,4 +82,18 @@
     <string name="loginErr">Usuario o contraseña no válidos</string>
     <string name="cerrarSesionDialog">¿Seguro que deseas cerrar sesión?</string>
 
+    <!-- Ajustes -->
+    <string name="logoutTitle">Cerrar sesión</string>
+    <string name="logoutMsg">¿Estás seguro de que deseas cerrar sesión?</string>
+
+    <!-- Perfil -->
+    <string name="guardarCambios">Guardar cambios</string>
+    <string name="eliminarUsuario">Eliminar usuario</string>
+    <string name="guardarCambiosTitle">Guardar cambios</string>
+    <string name="guardarCambiosMsg">¿Estás seguro de que deseas guardar los cambios realizados en tu perfil?</string>
+    <string name="eliminarUsuarioTitle">Eliminar usuario</string>
+    <string name="eliminarUsuarioMsg">¿Estás seguro de que deseas eliminar tu usuario?</string>
+
+
+
 </resources>

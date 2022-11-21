@@ -334,7 +334,7 @@
                     android:paddingTop="12dp"
                     android:paddingEnd="50dp"
                     android:paddingBottom="12dp"
-                    android:text="delete user"
+                    android:text="@string/eliminarUsuario"
                     app:cornerRadius="7dp" />
 
             </LinearLayout>
@@ -423,7 +423,7 @@
             android:paddingTop="12dp"
             android:paddingEnd="30dp"
             android:paddingBottom="12dp"
-            android:text="Save changes"
+            android:text="@string/guardarCambios"
             app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

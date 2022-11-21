@@ -24,11 +24,10 @@
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="@string/ajustes"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="#DDDDDD"
-                android:textStyle="bold"
-                tools:text="Opciones" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout

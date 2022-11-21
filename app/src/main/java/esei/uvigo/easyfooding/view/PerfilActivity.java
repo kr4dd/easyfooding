@@ -3,7 +3,6 @@ package esei.uvigo.easyfooding.view;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +13,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
-
 import java.util.Locale;
 import java.util.Objects;
 
+import esei.uvigo.easyfooding.R;
+import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 import esei.uvigo.easyfooding.entities.User;
 import esei.uvigo.easyfooding.entities.Validators.UserValidator;
@@ -31,13 +30,14 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         setContentView(R.layout.perfil_activity);
-        cambiarActividad();
 
-        String username = OperationsUserActivity.getUserFromSession(this);
+        OperationsUser.cambiarActividadPanelInterno(getWindow().getDecorView(), this, this);
+
+        String username = OperationsUser.getUserFromSession(this);
 
         DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
 
-        dbAccess.open();
+        dbAccess.openR();
 
         User currentUser = dbAccess.getCurrentUser(username);
         setUserParams(currentUser);
@@ -70,7 +70,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         {
             public void onClick(DialogInterface dialog, int whichButton)
             {
-                dbAccess.open();
+                dbAccess.openW();
 
                 int result = dbAccess.DeleteUser(nombre_usuario);
 
@@ -119,13 +119,13 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
             {
                 updateUserWithViewValues(currentUser);
 
-                dbAccess.open();
+                dbAccess.openW();
 
                 int result = dbAccess.UpdateUser(currentUser);
 
                 if (result > 0)
                 {
-                    String username = OperationsUserActivity.getUserFromSession(PerfilActivity.this);
+                    String username = OperationsUser.getUserFromSession(PerfilActivity.this);
                     User updatedUser = dbAccess.getCurrentUser(username);
 
                     setUserParams(updatedUser);
@@ -343,49 +343,6 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         onLayoutPressed(textView, label);
-    }
-
-    private void cambiarActividad ()
-    {
-        // Cambiar a la actividad de Inicio
-        LinearLayout inicio = findViewById(R.id.inicio);
-        inicio.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PerfilActivity.this, InicioActivity.class));
-                });
-
-        // Cambiar a la actividad Perfil
-        LinearLayout perfil = findViewById(R.id.perfil);
-        perfil.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PerfilActivity.this, PerfilActivity.class));
-                });
-
-        // Cambiar a la actividad Carrito
-        LinearLayout carrito = findViewById(R.id.carrito);
-        carrito.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PerfilActivity.this, CarritoActivity.class));
-                });
-
-        // Cambiar a la actividad Pedidos
-        LinearLayout pedidos = findViewById(R.id.pedidos);
-        pedidos.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PerfilActivity.this, PedidosActivity.class));
-                });
-
-        // Cambiar a la actividad Ajustes
-        LinearLayout ajustes = findViewById(R.id.ajustes);
-        ajustes.setOnClickListener(
-                view -> {
-                    finish();
-                    startActivity(new Intent(PerfilActivity.this, OptionsActivity.class));
-                });
     }
 
     private boolean isInteger(String strNum) {

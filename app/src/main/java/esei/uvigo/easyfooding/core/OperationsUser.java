@@ -16,9 +16,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.view.AjustesActivity;
 import esei.uvigo.easyfooding.view.CarritoActivity;
 import esei.uvigo.easyfooding.view.InicioActivity;
+import esei.uvigo.easyfooding.view.OptionsActivity;
 import esei.uvigo.easyfooding.view.PedidosActivity;
 import esei.uvigo.easyfooding.view.PerfilActivity;
 
@@ -104,7 +104,7 @@ public class OperationsUser {
         ajustes.setOnClickListener(
                 view -> {
                     a.finish();
-                    a.startActivity(new Intent(c, AjustesActivity.class));
+                    a.startActivity(new Intent(c, OptionsActivity.class));
                 });
     }
 }

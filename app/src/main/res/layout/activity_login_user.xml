@@ -58,6 +58,8 @@
                 android:hint="@string/username"
                 android:inputType="textPersonName"
                 android:maxLength="40"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintBottom_toTopOf="@+id/editTextPass"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -79,6 +81,8 @@
                 android:hint="@string/pass"
                 android:inputType="textPassword"
                 android:maxLength="40"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/editTextUsuario"
                 app:layout_constraintTop_toBottomOf="@+id/editTextUsuario" />
         </LinearLayout>
@@ -112,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="#3d33a8"
-                android:text="@string/btnLogearse" />
+                android:text="@string/btnLogearse"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <ImageView

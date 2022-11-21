@@ -1,5 +1,6 @@
 package esei.uvigo.easyfooding.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -10,9 +11,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import esei.uvigo.easyfooding.entities.User;
-import esei.uvigo.easyfooding.objetosCarrito.Comida;
-import esei.uvigo.easyfooding.objetosCarrito.LineaPedidos;
-import esei.uvigo.easyfooding.objetosCarrito.ListaPedidos;
+import esei.uvigo.easyfooding.core.Comida;
+import esei.uvigo.easyfooding.core.LineaPedidos;
+import esei.uvigo.easyfooding.core.ListaPedidos;
 
 public class DatabaseAccess {
     private SQLiteOpenHelper openHelper;

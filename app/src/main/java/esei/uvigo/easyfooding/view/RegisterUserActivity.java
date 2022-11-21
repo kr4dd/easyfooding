@@ -176,17 +176,4 @@ public class RegisterUserActivity extends AppCompatActivity {
             errMsg.setVisibility(View.GONE);
         }
     }
-
-    public void showErrMessagesForRegisterTxtViews(boolean existeCampo, int view) {
-        TextView errMsg = findViewById(view);
-
-        if(existeCampo) {
-            errMsg.setVisibility(View.VISIBLE); //Muestra el error
-
-        } else {
-            errMsg.setVisibility(View.GONE); //Hace que el error desaparezca
-
-        }
-    }
-
 }

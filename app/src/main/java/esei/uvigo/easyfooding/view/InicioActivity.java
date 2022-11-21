@@ -1,16 +1,20 @@
 package esei.uvigo.easyfooding.view;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -23,6 +27,12 @@ public class InicioActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Set night mode if needed
+        SharedPreferences sharedPreferences = this.getSharedPreferences("data", Context.MODE_PRIVATE);
+
+        if(sharedPreferences.getString("theme", "").equals("dark"));
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
@@ -70,7 +80,7 @@ public class InicioActivity extends AppCompatActivity {
 
             //Asignamos Texto al botón
             button.setText(nombresCategorias.get(i));
-            button.setTextColor(Color.BLACK);
+            button.setTextColor(getColor(R.color.app_text_color));
             button.setHeight(200);
 
             String nombre = nombresCategorias.get(i);
@@ -103,7 +113,7 @@ public class InicioActivity extends AppCompatActivity {
 
             //Asignamos Texto al botón
             button.setText(nombresComidas.get(i));
-            button.setTextColor(Color.BLACK);
+            button.setTextColor(getColor(R.color.app_text_color));
             button.setHeight(200);
 
             String nombre = nombresComidas.get(i);

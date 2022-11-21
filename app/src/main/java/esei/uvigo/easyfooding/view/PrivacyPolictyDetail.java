@@ -1,12 +1,13 @@
-package esei.uvigo.easyfooding;
+package esei.uvigo.easyfooding.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Objects;
+
+import esei.uvigo.easyfooding.R;
 
 public class PrivacyPolictyDetail extends AppCompatActivity {
 

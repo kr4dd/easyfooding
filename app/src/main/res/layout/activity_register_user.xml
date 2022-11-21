@@ -64,6 +64,8 @@
                 android:hint="@string/localidad"
                 android:inputType="textPersonName"
                 android:maxLength="35"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -104,6 +106,8 @@
                 android:hint="@string/codigoPostal"
                 android:inputType="number"
                 android:maxLength="5"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -144,6 +148,8 @@
                 android:hint="@string/direccion"
                 android:inputType="textPersonName"
                 android:maxLength="60"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -184,6 +190,8 @@
                 android:hint="@string/telefono"
                 android:inputType="number"
                 android:maxLength="9"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -224,6 +232,8 @@
                 android:hint="@string/mail"
                 android:inputType="textPersonName|textEmailAddress"
                 android:maxLength="120"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -280,6 +290,8 @@
                 android:hint="@string/apellidos"
                 android:inputType="textPersonName"
                 android:maxLength="40"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -320,6 +332,8 @@
                 android:hint="@string/nombre_real"
                 android:inputType="textPersonName"
                 android:maxLength="40"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -360,6 +374,8 @@
                 android:hint="@string/pass"
                 android:inputType="textPassword"
                 android:maxLength="40"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintStart_toStartOf="@+id/editTextUsuario"
                 app:layout_constraintTop_toBottomOf="@+id/editTextUsuario" />
 
@@ -400,6 +416,8 @@
                 android:hint="@string/username"
                 android:inputType="textPersonName"
                 android:maxLength="40"
+                android:textColor="@color/black"
+                android:textColorHint="#888888"
                 app:layout_constraintBottom_toTopOf="@+id/editTextPass"
                 app:layout_constraintStart_toStartOf="@+id/txtViewTitleMain"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -454,7 +472,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#3d33a8"
                 android:hint="@string/btnRegistrarse"
-                android:text="@string/btnRegistrarse" />
+                android:text="@string/btnRegistrarse"
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </LinearLayout>

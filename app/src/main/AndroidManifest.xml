@@ -13,13 +13,6 @@
         android:theme="@style/Theme.EasyFooding"
         tools:targetApi="31">
         <activity
-            android:name=".view.AjustesActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".view.RegisterUserActivity"
             android:exported="false">
             <meta-data
@@ -71,22 +64,21 @@
             android:name=".view.PerfilActivity"
             android:exported="false" />
         <activity
-            android:name="view.OptionsActivity"
+            android:name=".view.OptionsActivity"
             android:exported="false" />
         <activity
-            android:name="view.InicioActivity"
+            android:name=".view.InicioActivity"
             android:exported="false" >
         </activity>
         <activity
-            android:name="view.PrivacyPolictyDetail"
+            android:name=".view.PrivacyPolictyDetail"
             android:exported="false" >
         </activity>
         <activity
-            android:name="view.view.WelcomeUserActivity"
+            android:name=".view.WelcomeUserActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -53,7 +53,8 @@ public class PedidosActivity extends AppCompatActivity {
 
         cursorAdapter = new pedidoCursorAdapter(this,cursor,0);
         ticket.setAdapter(cursorAdapter);
-    ticket.setOnItemClickListener(
+
+        ticket.setOnItemClickListener(
         new AdapterView.OnItemClickListener() {
           @SuppressLint("Range")
           @Override

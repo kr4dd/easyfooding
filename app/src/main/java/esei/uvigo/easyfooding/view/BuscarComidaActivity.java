@@ -2,8 +2,11 @@ package esei.uvigo.easyfooding.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,11 +41,25 @@ public class BuscarComidaActivity extends AppCompatActivity {
         this.arrayItemsId = new ArrayList<>();
         this.arrayItems = new ArrayList<>();
         //El adaptador une el ListView con el ArrayList
-        ArrayAdapter<String> listaItemsAdapter = new ArrayAdapter<>(
+        ArrayAdapter<String> listaItemsAdapter = new ArrayAdapter<String>(
                 this.getApplicationContext(),
                 android.R.layout.simple_selectable_list_item,
                 this.arrayItems
-        );
+        ){
+            // Brozada para cambiar color texto ListView
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view =super.getView(position, convertView, parent);
+
+                TextView textView=(TextView) view.findViewById(android.R.id.text1);
+
+                /*YOUR CHOICE OF COLOR*/
+                textView.setTextColor(getColor(R.color.app_text_color));
+
+                return view;
+            }
+        };
+
         listViewItems.setAdapter(listaItemsAdapter);
 
         String nombreCategoria, nombreComida;

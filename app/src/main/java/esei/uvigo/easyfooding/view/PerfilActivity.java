@@ -21,6 +21,7 @@ import esei.uvigo.easyfooding.core.OperationsUser;
 import esei.uvigo.easyfooding.database.DatabaseAccess;
 import esei.uvigo.easyfooding.entities.User;
 import esei.uvigo.easyfooding.entities.Validators.UserValidator;
+import esei.uvigo.easyfooding.model.ModeloUsuario;
 
 public class PerfilActivity extends AppCompatActivity implements View.OnClickListener {
     @Override
@@ -35,20 +36,16 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
 
         String username = OperationsUser.getUserFromSession(this);
 
-        DatabaseAccess dbAccess = DatabaseAccess.getInstance(getApplicationContext());
+        ModeloUsuario db = new ModeloUsuario(this);
 
-        dbAccess.openR();
-
-        User currentUser = dbAccess.getCurrentUser(username);
+        User currentUser = db.getCurrentUser(username);
         setUserParams(currentUser);
         setLayoutEventListeners();
-        setSaveChangesEvent(dbAccess, currentUser);
-        setDeleteUserEvent(dbAccess, currentUser.getNombre_usuario());
-
-        dbAccess.close();
+        setSaveChangesEvent(db, currentUser);
+        setDeleteUserEvent(db, currentUser.getNombre_usuario());
     }
 
-    private void setDeleteUserEvent(DatabaseAccess dbAccess, String nombre_usuario)
+    private void setDeleteUserEvent(ModeloUsuario dbAccess, String nombre_usuario)
     {
         Button deleteUserBtn = findViewById(R.id.profile_delete_user_button);
         deleteUserBtn.setOnClickListener(new View.OnClickListener()
@@ -61,7 +58,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void onDeleteUserPressed(DatabaseAccess dbAccess, String nombre_usuario)
+    private void onDeleteUserPressed(ModeloUsuario dbAccess, String nombre_usuario)
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.eliminarUsuarioTitle);
@@ -71,13 +68,9 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         {
             public void onClick(DialogInterface dialog, int whichButton)
             {
-                dbAccess.openW();
+                boolean result = dbAccess.DeleteUser(nombre_usuario);
 
-                int result = dbAccess.DeleteUser(nombre_usuario);
-
-                dbAccess.close();
-
-                if (result > 0)
+                if (result)
                 {
                     finish();
                     startActivity(new Intent(PerfilActivity.this, WelcomeUserActivity.class));
@@ -96,7 +89,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         alert.show();
     }
 
-    private void setSaveChangesEvent (DatabaseAccess dbAccess, User currentUser)
+    private void setSaveChangesEvent (ModeloUsuario dbAccess, User currentUser)
     {
         Button saveChangesBtn = findViewById(R.id.profile_save_changes);
         saveChangesBtn.setOnClickListener(new View.OnClickListener()
@@ -109,7 +102,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void onSaveChangesPressed (DatabaseAccess dbAccess, User currentUser)
+    private void onSaveChangesPressed (ModeloUsuario dbAccess, User currentUser)
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.guardarCambiosTitle);
@@ -121,19 +114,15 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
             {
                 updateUserWithViewValues(currentUser);
 
-                dbAccess.openW();
+                boolean result = dbAccess.UpdateUser(currentUser);
 
-                int result = dbAccess.UpdateUser(currentUser);
-
-                if (result > 0)
+                if (result)
                 {
                     String username = OperationsUser.getUserFromSession(PerfilActivity.this);
                     User updatedUser = dbAccess.getCurrentUser(username);
 
                     setUserParams(updatedUser);
                 }
-
-                dbAccess.close();
             }
         });
 
@@ -175,7 +164,14 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         direccion.setText(currentUser.getDireccion());
 
         TextView codigo_postal = findViewById(R.id.profile_codigoPostal);
-        codigo_postal.setText(String.valueOf(currentUser.getCodigo_postal()));
+        String cp = String.valueOf(currentUser.getCodigo_postal());
+
+        // Brozada para mantener longitud de CP con 0 iniciales.
+        while(cp.length() < 5){
+            cp = "0" + cp;
+        }
+
+        codigo_postal.setText(cp);
     }
 
     private void updateUserWithViewValues (User currentUser)
@@ -251,10 +247,12 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
 
         dialog.show();
 
+        EditText input = dialogView.findViewById(R.id.alert_input_field);
+        input.setText(textView.getText());
+
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText input = dialogView.findViewById(R.id.alert_input_field);
                 String errorMsg = validateInputField(input.getText().toString(), textView);
                 TextView errorMsgInput = dialogView.findViewById(R.id.alert_input_error_message);
 
@@ -299,7 +297,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
                 if(UserValidator.validarDireccion(input)) result = getString(R.string.direccionErr);
                 break;
             case R.id.profile_codigoPostal:
-                if(!isInteger(input) || UserValidator.validarCodigoPostal(Integer.parseInt(input))) result = getString(R.string.codigoPostalErr);
+                if(!isInteger(input) || UserValidator.validarCodigoPostal(input)) result = getString(R.string.codigoPostalErr);
                 break;
         }
 

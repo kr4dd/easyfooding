@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
-                    android:text="Tema de la aplicación"
+                    android:text="@string/themeTitlePanel"
                     android:textColor="@color/app_text_color"
                     android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="10"
                         android:justificationMode="none"
-                        android:text="Administra el tema de la aplicación. Cambia a tema claro / oscuro." />
+                        android:text="@string/themeMsgPanel" />
 
                     <Switch
                         android:id="@+id/change_theme_switch"
@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
-                    android:text="Cerrar sesión"
+                    android:text="@string/logoutTitlePanel"
                     android:textColor="@color/app_text_color"
                     android:textStyle="bold" />
 
@@ -122,8 +122,7 @@
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cierra tu sesión actual y desconectate de la aplicación."
-                    tools:text="Cierra tu sesión actual y desconectate de la aplicación." />
+                    android:text="@string/logoutMsgPanel" />
             </LinearLayout>
         </LinearLayout>
 
@@ -155,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="3dp"
-                    android:text="Política de privacidad"
+                    android:text="@string/privacyTitlePanel"
                     android:textColor="@color/app_text_color"
                     android:textStyle="bold" />
 
@@ -163,7 +162,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Consulta la política de privacidad y los datos proporcionados a la aplicación." />
+                    android:text="@string/privacyMsgPanel" />
             </LinearLayout>
         </LinearLayout>
 

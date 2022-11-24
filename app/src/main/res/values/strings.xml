@@ -86,6 +86,13 @@
     <string name="logoutTitle">Cerrar sesión</string>
     <string name="logoutMsg">¿Estás seguro de que deseas cerrar sesión?</string>
 
+    <string name="themeTitlePanel">Tema de la aplicación</string>
+    <string name="themeMsgPanel">Administra el tema de la aplicación. Cambia a tema claro / oscuro.</string>
+    <string name="logoutTitlePanel">Cerrar sesión</string>
+    <string name="logoutMsgPanel">Cierra tu sesión actual y desconectate de la aplicación.</string>
+    <string name="privacyTitlePanel">Política de privacidad</string>
+    <string name="privacyMsgPanel">Consulta la política de privacidad y los datos proporcionados a la aplicación.</string>
+
     <!-- Perfil -->
     <string name="guardarCambios">Guardar cambios</string>
     <string name="eliminarUsuario">Eliminar usuario</string>
@@ -93,6 +100,7 @@
     <string name="guardarCambiosMsg">¿Estás seguro de que deseas guardar los cambios realizados en tu perfil?</string>
     <string name="eliminarUsuarioTitle">Eliminar usuario</string>
     <string name="eliminarUsuarioMsg">¿Estás seguro de que deseas eliminar tu usuario?</string>
+    <string name="userInfo">Información del usuario</string>
 
 
 

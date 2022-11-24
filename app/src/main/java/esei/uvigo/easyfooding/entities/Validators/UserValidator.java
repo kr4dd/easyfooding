@@ -45,9 +45,9 @@ public class UserValidator {
         return checkValidation(p, input);
     }
 
-    public static boolean validarCodigoPostal(int input) {
+    public static boolean validarCodigoPostal(String input) {
         Pattern p = Pattern.compile("^[0-9]{5}$");
-        return checkValidation(p, Integer.toString(input));
+        return checkValidation(p, input);
     }
 
     private static boolean checkValidation(Pattern p, String input) {

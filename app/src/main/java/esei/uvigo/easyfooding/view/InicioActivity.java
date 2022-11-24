@@ -30,7 +30,7 @@ public class InicioActivity extends AppCompatActivity {
         // Set night mode if needed
         SharedPreferences sharedPreferences = this.getSharedPreferences("data", Context.MODE_PRIVATE);
 
-        if(sharedPreferences.getString("theme", "").equals("dark"));
+        if(sharedPreferences.getString("theme", "").equals("dark"))
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         super.onCreate(savedInstanceState);

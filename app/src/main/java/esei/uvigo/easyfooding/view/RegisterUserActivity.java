@@ -106,7 +106,7 @@ public class RegisterUserActivity extends AppCompatActivity {
         validarTlfno(ur.getTlfno());
         validarDireccion(ur.getDireccion());
         validarLocalidad(ur.getLocalidad());
-        validarCodigoPostal(ur.getCp());
+        validarCodigoPostal(String.format("%5",ur.getCp()));
 
         return errUsuario.getVisibility() == View.GONE && errContrasena.getVisibility() == View.GONE
                 && errNombreReal.getVisibility() == View.GONE && errApellidos.getVisibility() == View.GONE
@@ -163,7 +163,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     @SuppressLint("DefaultLocale")
-    public void validarCodigoPostal(int input) {
+    public void validarCodigoPostal(String input) {
         showErrMessagesForRegisterTxtViews(UserValidator.validarCodigoPostal(input), R.id.errCodigoPostal);
     }
 

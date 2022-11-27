@@ -171,7 +171,7 @@ public class ModeloUsuario {
 
             singletonInstance.getDb().setTransactionSuccessful();
         } catch (SQLException e) {
-            Log.e("DBManager.insertarUsuario", e.getMessage());
+            Log.e("DBManager.UpdateUser", e.getMessage());
         } finally {
             singletonInstance.getDb().endTransaction();
             singletonInstance.close();
@@ -191,7 +191,7 @@ public class ModeloUsuario {
 
             singletonInstance.getDb().setTransactionSuccessful();
         } catch (SQLException e) {
-            Log.e("DBManager.insertarUsuario", e.getMessage());
+            Log.e("DBManager.DeleteUser", e.getMessage());
         } finally {
             singletonInstance.getDb().endTransaction();
             singletonInstance.close();
@@ -232,7 +232,7 @@ public class ModeloUsuario {
             }
 
         } catch (SQLException e) {
-            Log.e("DBManager.existeCorreo", e.getMessage());
+            Log.e("DBManager.getCurrentUser", e.getMessage());
         } finally {
             if (c != null) {
                 c.close();

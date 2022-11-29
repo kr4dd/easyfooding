@@ -106,7 +106,9 @@ public class RegisterUserActivity extends AppCompatActivity {
         validarTlfno(ur.getTlfno());
         validarDireccion(ur.getDireccion());
         validarLocalidad(ur.getLocalidad());
-        validarCodigoPostal(String.format("%5",ur.getCp()));
+
+        EditText editTextCp = findViewById(R.id.editTextCodigoPostal);
+        validarCodigoPostal(editTextCp.getText().toString());
 
         return errUsuario.getVisibility() == View.GONE && errContrasena.getVisibility() == View.GONE
                 && errNombreReal.getVisibility() == View.GONE && errApellidos.getVisibility() == View.GONE

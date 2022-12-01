@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="esei.uvigo.easyfooding">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -14,17 +13,72 @@
         android:theme="@style/Theme.EasyFooding"
         tools:targetApi="31">
         <activity
-            android:name=".BuscarComida"
+            android:name=".view.RegisterUserActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.LoginUserActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.ProcesoPagoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.TicketActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.PedidosActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.CarritoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".view.DetalleComidaActivity"
             android:exported="false" />
         <activity
-            android:name=".PerfilActivity"
+            android:name=".view.BuscarComidaActivity"
             android:exported="false" />
         <activity
-            android:name=".InicioActivity"
+            android:name=".view.PerfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.OptionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.InicioActivity"
+            android:exported="false" >
+        </activity>
+        <activity
+            android:name=".view.PrivacyPolicityDetail"
+            android:exported="false" >
+        </activity>
+        <activity
+            android:name=".view.WelcomeUserActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

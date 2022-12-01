@@ -11,6 +11,32 @@
         <entry key="..\:/Users/bruno/Desktop/Proyecto_DM/app/src/main/res/layout/cuadro_categoria.xml" value="0.253531786074672" />
         <entry key="..\:/Users/bruno/Desktop/Proyecto_DM/app/src/main/res/layout/inicio_activity.xml" value="0.253531786074672" />
         <entry key="..\:/Users/bruno/Desktop/Proyecto_DM/app/src/main/res/layout/perfil_activity.xml" value="0.253531786074672" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/add_cart_btn.xml" value="0.222" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/barra_busqueda_background.xml" value="0.1" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/boton_carrito_1.xml" value="0.2125" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/categoria_background.xml" value="0.1" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/gre_btn_background.xml" value="0.1" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/grey_bar.xml" value="0.1" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/grey_btn_background.xml" value="0.159" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/grey_btn_background_rounded.xml" value="0.148" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/white_background.xml" value="0.1" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/white_circle.xml" value="0.189" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/drawable/yellow_bar.xml" value="0.1" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/activity_carrito.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/activity_detalle_comida.xml" value="0.6666666666666666" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/activity_inicio.xml" value="0.2537840565085772" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/activity_pedidos.xml" value="0.24592391304347827" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/activity_proceso_pago.xml" value="0.2537840565085772" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/activity_ticket.xml" value="0.2537840565085772" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/buscar_comida_activity.xml" value="0.2537840565085772" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/cuadro_categoria.xml" value="0.2537840565085772" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/historial_compras.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/inicio_activity.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/linea_pedidos_layout.xml" value="0.2537840565085772" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/options_activity.xml" value="0.3319746376811594" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/perfil_activity.xml" value="0.2537840565085772" />
+        <entry key="..\:/Users/bruno/Desktop/proyectoDM/easyfooding/app/src/main/res/layout/privacy_policy.xml" value="0.3319746376811594" />
       </map>
     </option>
   </component>

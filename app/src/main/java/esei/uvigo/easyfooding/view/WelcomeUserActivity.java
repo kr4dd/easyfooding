@@ -21,10 +21,6 @@ public class WelcomeUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_user);
 
-        //Ocultar la barra con el titulo
-        //Objects.requireNonNull(getSupportActionBar()).hide();
-
-
         //Ir a pantalla de registro
         Button btnGoToRegistro = findViewById(R.id.btnGoRegistro);
         btnGoToRegistro.setOnClickListener(

@@ -46,7 +46,7 @@ public class BuscarComidaActivity extends AppCompatActivity {
                 android.R.layout.simple_selectable_list_item,
                 this.arrayItems
         ){
-            // Brozada para cambiar color texto ListView
+            // Cambiar color texto ListView
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view =super.getView(position, convertView, parent);

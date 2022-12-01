@@ -43,16 +43,20 @@ public class OptionsActivity extends AppCompatActivity {
         LinearLayout privacyLayout = findViewById(R.id.privacy_policy_layout);
         privacyLayout.setOnClickListener( view -> {
             finish();
-            startActivity(new Intent(OptionsActivity.this, PrivacyPolictyDetail.class));
+            startActivity(new Intent(OptionsActivity.this, PrivacyPolicityDetail.class));
         });
     }
 
     private void setLogoutEvent(Context context)
     {
+
         LinearLayout languageLayout = findViewById(R.id.logout_layout);
         languageLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { onLogoutPressed(context); }
+            public void onClick(View view) {
+                OperationsUser.setSession(getApplicationContext(), "");
+                onLogoutPressed(context);
+            }
         });
     }
 

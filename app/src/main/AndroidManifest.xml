@@ -71,7 +71,7 @@
             android:exported="false" >
         </activity>
         <activity
-            android:name=".view.PrivacyPolictyDetail"
+            android:name=".view.PrivacyPolicityDetail"
             android:exported="false" >
         </activity>
         <activity

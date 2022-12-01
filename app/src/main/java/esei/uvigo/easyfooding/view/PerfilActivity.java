@@ -166,7 +166,7 @@ public class PerfilActivity extends AppCompatActivity implements View.OnClickLis
         TextView codigo_postal = findViewById(R.id.profile_codigoPostal);
         String cp = String.valueOf(currentUser.getCodigo_postal());
 
-        // Brozada para mantener longitud de CP con 0 iniciales.
+        // Mantener longitud de CP con 0 iniciales.
         while(cp.length() < 5){
             cp = "0" + cp;
         }

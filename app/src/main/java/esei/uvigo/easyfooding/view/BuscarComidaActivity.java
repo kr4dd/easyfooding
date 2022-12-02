@@ -87,6 +87,7 @@ public class BuscarComidaActivity extends AppCompatActivity {
         listViewItems.setOnItemClickListener((adapterView, view, pos, l) -> {
             Intent i = new Intent(BuscarComidaActivity.this, DetalleComidaActivity.class);
             i.putExtra("codigo_comida", arrayItemsId.get(pos).toString()); //Pasarle a la nueva actividad por parametro el id de la comida en la que se ha clickado
+            finish();
             startActivity(i);
         });
 

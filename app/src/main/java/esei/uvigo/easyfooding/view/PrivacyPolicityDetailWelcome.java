@@ -2,16 +2,15 @@ package esei.uvigo.easyfooding.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Objects;
 
 import esei.uvigo.easyfooding.R;
-import esei.uvigo.easyfooding.core.OperationsUser;
 
-public class PrivacyPolicityDetail extends AppCompatActivity {
+public class PrivacyPolicityDetailWelcome extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,7 +28,7 @@ public class PrivacyPolicityDetail extends AppCompatActivity {
         Button goBack = findViewById(R.id.privacy_button);
         goBack.setOnClickListener( view -> {
             finish();
-            startActivity(new Intent(PrivacyPolicityDetail.this, OptionsActivity.class));
+            startActivity(new Intent(PrivacyPolicityDetailWelcome.this, WelcomeUserActivity.class));
         });
 
     }

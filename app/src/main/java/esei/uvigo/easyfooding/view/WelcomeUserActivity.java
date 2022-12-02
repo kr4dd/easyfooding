@@ -53,7 +53,7 @@ public class WelcomeUserActivity extends AppCompatActivity {
             case R.id.privacyTitlePanel:
 
                 // Cargar politicade privacidad
-                startActivity(new Intent(this, PrivacyPolicityDetail.class));
+                startActivity(new Intent(this, PrivacyPolicityDetailWelcome.class));
 
                 toret = true;
                 break;

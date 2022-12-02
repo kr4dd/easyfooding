@@ -75,6 +75,10 @@
             android:exported="false" >
         </activity>
         <activity
+            android:name=".view.PrivacyPolicityDetailWelcome"
+            android:exported="false" >
+        </activity>
+        <activity
             android:name=".view.WelcomeUserActivity"
             android:exported="true">
             <intent-filter>
